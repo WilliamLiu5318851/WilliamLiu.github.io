@@ -11,14 +11,14 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- 核心修复：自定义 Tailwind 配置，增加大屏断点 -->
+    <!-- Tailwind 配置扩展：自定义超大屏幕断点 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     screens: {
-                        '3xl': '1920px', // 1080p 全屏
-                        '4xl': '2560px', // 2K/4K 超大屏
+                        '3xl': '1920px', // 针对 1080p 全屏或更大
+                        '4xl': '2560px', // 针对 2K/4K
                     },
                     maxWidth: {
                         '8xl': '88rem',
@@ -36,20 +36,20 @@
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .font-cjk { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
         
-        /* 简单的淡入动画 */
-        @keyframes fadeIn {
+        /* 动画：淡入上浮 */
+        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
         }
     </style>
 </head>
 <body>
     <div id="root">
-        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: #333; font-family: monospace;">
-            SYSTEM INITIALIZING...
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: #333;">
+            INITIALIZING SYSTEM...
         </div>
     </div>
 
@@ -63,6 +63,7 @@
             </svg>
         );
 
+        // 品牌图标定义
         const BrandIcons = {
             Unreal: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S16.63 0 12 0zm0 2.25c5.38 0 9.75 4.37 9.75 9.75S17.38 21.75 12 21.75 2.25 17.38 2.25 12 6.62 2.25 12 2.25zm0 3.75a6 6 0 0 0-6 6v1.5h1.5v-1.5a4.5 4.5 0 0 1 4.5-4.5 4.5 4.5 0 0 1 4.5 4.5v1.5H18v-1.5a6 6 0 0 0-6-6z"/></svg>),
             Cpp: (props) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M10 16.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5"></path><path d="M15.5 10v4"></path><path d="M13.5 12h4"></path><path d="M20.5 10v4"></path><path d="M18.5 12h4"></path></svg>),
@@ -90,6 +91,7 @@
             Languages: (props) => <Icon {...props} path={<React.Fragment><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></React.Fragment>} />,
         };
 
+        // 翻译数据
         const translations = {
             en: {
                 nav: { about: "ABT", proj: "PROJ", skill: "SKILL", contact: "CNT" },
@@ -140,7 +142,14 @@
                     title: "Technical Toolkit",
                     cat_lang: "Languages & Core",
                     cat_game: "Game Engineering",
-                    cat_tools: "Tools & Environment"
+                    cat_tools: "Tools & Environment",
+                    cat_domains: "Domains & Specialties",
+                    items: {
+                        lang: ["C++", "Python", "Java", "C", "MIPS Assembly", "SQL"],
+                        game: ["Unreal Engine 5", "Gameplay Programming", "Physics Simulation", "3D Math (Vector/Matrix)", "State Machines", "Performance Optimization"],
+                        tools: ["Git / GitHub", "Visual Studio", "Jira / Agile", "VS Code", "Linux"],
+                        domains: ["Computer Vision", "Algorithm Design", "Generative AI Integration"]
+                    }
                 },
                 timeline: {
                     title: "Timeline",
@@ -148,20 +157,26 @@
                         {
                             title: "Bachelor of Computer Science",
                             date: "Expected Mid 2026",
-                            loc: "University of New South Wales (UNSW)",
-                            desc: "Coursework: Computer Graphics, Computer Vision, Algorithm Design, AI, Object-Oriented Design."
+                            loc: "University of New South Wales (UNSW) | Sydney, Australia",
+                            desc: "Relevant Coursework: Computer Graphics, Computer Vision, Algorithm Design & Analysis, Data Structures & Algorithms, AI, OOP, Software Engineering."
                         },
                         {
                             title: "Student Intern - Enterprise Dev",
-                            date: "Jan 2023 (Summer)",
+                            date: "Dec 2023 (Summer Break)",
                             loc: "Zhongshan Overseas Scholars Science & Technology Innovation Park",
                             desc: "Assisted in technical feasibility analysis and market research for local tech startups. Collaborated with cross-functional teams to optimize business plans."
                         },
                         {
-                            title: "Student Manager",
-                            date: "2019 - 2020",
-                            loc: "Non-Profit Coffee Shop, Sacramento, CA",
-                            desc: "Led a team of 5+ staff, managed operational scheduling and inventory logistics."
+                            title: "High School Diploma",
+                            date: "Graduated 2020",
+                            loc: "Christian Brothers High School | Sacramento, CA, USA",
+                            desc: "Completed secondary education with a focus on STEM subjects."
+                        },
+                        {
+                            title: "Middle School",
+                            date: "Graduated 2016",
+                            loc: "Sun Yat-sen Memorial Middle School | Zhongshan, Guangdong, China",
+                            desc: "Foundation education."
                         }
                     ]
                 },
@@ -221,7 +236,14 @@
                     title: "技术工具集",
                     cat_lang: "编程语言 & 核心",
                     cat_game: "游戏工程",
-                    cat_tools: "开发工具 & 环境"
+                    cat_tools: "开发工具 & 环境",
+                    cat_domains: "专业领域",
+                    items: {
+                        lang: ["C++", "Python", "Java", "C", "MIPS Assembly", "SQL"],
+                        game: ["Unreal Engine 5", "Gameplay Programming", "Physics Simulation", "3D Math (Vector/Matrix)", "State Machines", "Performance Optimization"],
+                        tools: ["Git / GitHub", "Visual Studio", "Jira / Agile", "VS Code", "Linux"],
+                        domains: ["Computer Vision", "Algorithm Design", "Generative AI Integration"]
+                    }
                 },
                 timeline: {
                     title: "经历时间轴",
@@ -229,20 +251,26 @@
                         {
                             title: "计算机科学学士",
                             date: "预计 2026 年中毕业",
-                            loc: "新南威尔士大学 (UNSW)",
-                            desc: "课程：计算机图形学、计算机视觉、算法设计、AI、面向对象设计。"
+                            loc: "新南威尔士大学 (UNSW) | 澳大利亚 悉尼",
+                            desc: "相关课程：计算机图形学、计算机视觉、算法设计与分析、数据结构与算法、人工智能、面向对象设计、软件工程、计算机系统基础。"
                         },
                         {
                             title: "实习生",
-                            date: "2024 年 12 月 (暑期)",
+                            date: "2023 年 12 月 (暑期)",
                             loc: "中国中山留学人员创业园 (Zhongshan OSTA)",
                             desc: "协助初创科技企业进行技术可行性分析和市场调研。与跨职能团队合作，优化商业计划书与服务策略。"
                         },
                         {
-                            title: "学生经理",
-                            date: "2019 - 2020",
-                            loc: "非营利咖啡店, 美国萨克拉门托",
-                            desc: "领导 5 人以上的团队，管理运营排班和库存物流。"
+                            title: "高中毕业文凭",
+                            date: "2020 年毕业",
+                            loc: "Christian Brothers High School | 美国 加州 萨克拉门托",
+                            desc: "完成高中教育，侧重于 STEM 学科。"
+                        },
+                        {
+                            title: "初中",
+                            date: "2016 年毕业",
+                            loc: "中山纪念中学 | 中国 广东 中山",
+                            desc: "基础教育。"
                         }
                     ]
                 },
@@ -302,7 +330,14 @@
                     title: "技術工具集",
                     cat_lang: "程式語言 & 核心",
                     cat_game: "遊戲工程",
-                    cat_tools: "開發工具 & 環境"
+                    cat_tools: "開發工具 & 環境",
+                    cat_domains: "專業領域",
+                    items: {
+                        lang: ["C++", "Python", "Java", "C", "MIPS Assembly", "SQL"],
+                        game: ["Unreal Engine 5", "Gameplay Programming", "Physics Simulation", "3D Math (Vector/Matrix)", "State Machines", "Performance Optimization"],
+                        tools: ["Git / GitHub", "Visual Studio", "Jira / Agile", "VS Code", "Linux"],
+                        domains: ["Computer Vision", "Algorithm Design", "Generative AI Integration"]
+                    }
                 },
                 timeline: {
                     title: "經歷時間軸",
@@ -310,20 +345,26 @@
                         {
                             title: "計算機科學學士",
                             date: "預計 2026 年中畢業",
-                            loc: "新南威爾斯大學 (UNSW)",
-                            desc: "課程：電腦圖學、電腦視覺、演算法設計、AI、物件導向設計。"
+                            loc: "新南威爾斯大學 (UNSW) | 澳洲 雪梨",
+                            desc: "相關課程：電腦圖學、電腦視覺、演算法設計與分析、資料結構與演算法、人工智慧、物件導向設計、軟體工程、計算機系統基礎。"
                         },
                         {
                             title: "實習生",
-                            date: "2024 年 12 月 (暑期)",
+                            date: "2023 年 12 月 (暑期)",
                             loc: "中國中山留學人員創業園 (Zhongshan OSTA)",
                             desc: "協助初創科技企業進行技術可行性分析和市場調研。與跨職能團隊合作，最佳化商業計劃書與服務策略。"
                         },
                         {
-                            title: "學生經理",
-                            date: "2019 - 2020",
-                            loc: "非營利咖啡店, 美國薩克拉門托",
-                            desc: "領導 5 人以上的團隊，管理營運排班和庫存物流。"
+                            title: "高中畢業文憑",
+                            date: "2020 年畢業",
+                            loc: "Christian Brothers High School | 美國 加州 薩克拉門托",
+                            desc: "完成高中教育，側重於 STEM 學科。"
+                        },
+                        {
+                            title: "初中",
+                            date: "2016 年畢業",
+                            loc: "中山紀念中學 | 中國 廣東 中山",
+                            desc: "基礎教育。"
                         }
                     ]
                 },
@@ -336,6 +377,7 @@
             }
         };
 
+        // --- 星空背景组件 ---
         const Starfield = () => {
             const canvasRef = useRef(null);
             useEffect(() => {
@@ -372,18 +414,6 @@
             return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
         };
 
-        const SkillBar = ({ name, level, color }) => (
-            <div className="mb-4">
-                <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium 2xl:text-lg text-gray-300">{name}</span>
-                    <span className="text-sm font-medium 2xl:text-lg text-gray-400">{level}%</span>
-                </div>
-                <div className="w-full bg-gray-800 rounded-full h-2.5 2xl:h-3 border border-gray-700">
-                    <div className={`h-2.5 2xl:h-3 rounded-full ${color} transition-all duration-1000 ease-out`} style={{ width: `${level}%` }}></div>
-                </div>
-            </div>
-        );
-
         const HighlightText = ({ text }) => {
             if (!text) return null;
             const parts = text.split('*');
@@ -399,31 +429,19 @@
         };
 
         // --- 核心修复：智能自适应宽屏组件 ---
-        // 逻辑：在小屏幕保持紧凑，在超大屏幕(3xl, 4xl)上自动扩展宽度并放大内容
         const Section = ({ title, icon, children, id }) => {
             const IconComponent = icon;
             return (
-                // 1. 宽度控制：w-11/12 确保在所有屏幕都有边距
-                // 2. 最大宽度：从 max-w-7xl 扩展到 max-w-8xl/9xl (自定义断点)
-                // 3. 居中：mx-auto 确保在大屏上也是居中的，而不是偏左
                 <section id={id} className="py-12 md:py-20 2xl:py-32 w-11/12 max-w-7xl 2xl:max-w-8xl 3xl:max-w-9xl mx-auto relative">
-                    {/* 左侧时间线：绝对定位，跟随父容器 */}
                     <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-800 hidden md:block"></div>
-                    
-                    {/* 内容偏移：为时间线留出空间，并随屏幕增大增加偏移量 */}
                     <div className="pl-4 md:pl-12 2xl:pl-20 relative">
-                         {/* 装饰点 */}
                         <div className="absolute -left-[5px] md:-left-[5px] top-12 md:top-20 2xl:top-32 w-3 h-3 md:w-4 md:h-4 2xl:w-6 2xl:h-6 bg-cyan-500 rounded-full border-2 md:border-4 border-black flex items-center justify-center z-10">
                             <div className="w-1 h-1 md:w-2 md:h-2 2xl:w-3 2xl:h-3 bg-white rounded-full animate-pulse"></div>
                         </div>
-
-                        {/* 标题区域：大屏字体自动放大 */}
                         <div className="mb-8 2xl:mb-16 flex items-center space-x-4 2xl:space-x-8">
                             <IconComponent className="w-8 h-8 md:w-10 md:h-10 2xl:w-16 2xl:h-16 text-cyan-400" />
                             <h2 className="text-3xl md:text-5xl 2xl:text-7xl font-bold text-white uppercase tracking-wider font-cjk">{title}</h2>
                         </div>
-                        
-                        {/* 内容区域：字体和行高自适应 */}
                         <div className="text-base md:text-lg 2xl:text-2xl leading-relaxed">
                             {children}
                         </div>
@@ -456,7 +474,7 @@
                 <div className="min-h-screen text-gray-300 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden font-cjk w-full text-lg 2xl:text-2xl">
                     <Starfield />
                     
-                    {/* Navigation - 导航栏随屏幕变宽 */}
+                    {/* Navigation */}
                     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-gray-800 py-3 2xl:py-6' : 'py-6 2xl:py-10'}`}>
                         <div className="w-11/12 max-w-7xl 2xl:max-w-8xl 3xl:max-w-9xl mx-auto flex justify-between items-center">
                             <div className="flex items-center gap-3 2xl:gap-5">
@@ -486,7 +504,7 @@
                         </div>
                     </nav>
 
-                    {/* Hero - 巨幕适配 */}
+                    {/* Hero */}
                     <header className="min-h-screen flex flex-col justify-center items-center relative px-4 text-center">
                         <div className="absolute top-1/4 w-64 h-64 2xl:w-96 2xl:h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
                         <h1 className="text-4xl sm:text-5xl md:text-7xl 2xl:text-9xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-6 2xl:mb-10 tracking-tight z-10 font-cjk">
@@ -510,10 +528,9 @@
                         </div>
                     </header>
 
-                    {/* About Section - 保持左对齐，但容器变宽 */}
+                    {/* About Section */}
                     <Section title={t.about.title} icon={Icons.Terminal} id="about">
                         <div className="bg-gray-900/50 backdrop-blur border border-gray-800 p-8 2xl:p-16 rounded-lg shadow-2xl font-cjk">
-                            
                             <div className="space-y-10 2xl:space-y-16">
                                 {t.about.paragraphs.map((para, index) => (
                                     <div key={index}>
@@ -524,7 +541,6 @@
                                     </div>
                                 ))}
                             </div>
-
                             <div className="mt-16 2xl:mt-24 pt-10 2xl:pt-16 border-t border-gray-800">
                                 <h4 className="text-sm 2xl:text-xl font-mono text-cyan-500 mb-8 2xl:mb-12 tracking-widest uppercase">{t.about.toolkit_title}</h4>
                                 <div className="flex flex-wrap gap-10 2xl:gap-20 items-center text-gray-400">
@@ -550,7 +566,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div className="flex flex-wrap gap-6 2xl:gap-10 mt-10 2xl:mt-16 pt-8 border-t border-gray-800/50">
                                 <div className="flex items-center gap-3 px-4 2xl:px-6 py-2 2xl:py-4 bg-gray-800 rounded text-sm 2xl:text-xl">
                                     <Icons.Globe size={16} className="2xl:w-6 2xl:h-6 text-blue-400" /> {t.about.loc}
@@ -639,24 +654,28 @@
                         <div className="grid md:grid-cols-2 gap-12 2xl:gap-32 font-cjk">
                             <div>
                                 <h3 className="text-xl 2xl:text-3xl font-bold text-white mb-6 2xl:mb-10 border-l-4 border-cyan-500 pl-4 2xl:pl-6">{t.skills.cat_lang}</h3>
-                                <div className="space-y-4 2xl:space-y-8">
-                                    <SkillBar name="C / C++ / Unreal Engine" level={90} color="bg-blue-600" />
-                                    <SkillBar name="Data Structures & Algorithms" level={90} color="bg-purple-500" />
-                                    <SkillBar name="Python" level={85} color="bg-yellow-500" />
-                                    <SkillBar name="Java" level={80} color="bg-orange-600" />
-                                    <SkillBar name="SQL / MIPS Assembly" level={75} color="bg-gray-500" />
+                                <div className="flex flex-wrap gap-3 2xl:gap-6 mb-8">
+                                    {t.skills.items.lang.map((skill, i) => (
+                                        <span key={i} className="px-3 2xl:px-5 py-1 2xl:py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-sm 2xl:text-xl text-blue-200 transition-colors cursor-default">{skill}</span>
+                                    ))}
+                                </div>
+                                <h3 className="text-xl 2xl:text-3xl font-bold text-white mb-6 2xl:mb-10 border-l-4 border-green-500 pl-4 2xl:pl-6">{t.skills.cat_domains}</h3>
+                                <div className="flex flex-wrap gap-3 2xl:gap-6">
+                                    {t.skills.items.domains.map((skill, i) => (
+                                        <span key={i} className="px-3 2xl:px-5 py-1 2xl:py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-sm 2xl:text-xl text-green-200 transition-colors cursor-default">{skill}</span>
+                                    ))}
                                 </div>
                             </div>
                             <div>
                                 <h3 className="text-xl 2xl:text-3xl font-bold text-white mb-6 2xl:mb-10 border-l-4 border-purple-500 pl-4 2xl:pl-6">{t.skills.cat_game}</h3>
-                                <div className="bg-gray-900 p-6 2xl:p-12 rounded-lg border border-gray-800">
+                                <div className="bg-gray-900 p-6 2xl:p-12 rounded-lg border border-gray-800 mb-10">
                                     <div className="flex flex-wrap gap-3 2xl:gap-6">
-                                        {["Unreal Engine 5", "Gameplay Programming", "Physics Simulation", "3D Math", "State Machines", "Performance Optimization", "Computer Vision", "Generative AI Integration"].map((skill, i) => (
-                                            <span key={i} className="px-3 2xl:px-5 py-1 2xl:py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-sm 2xl:text-xl text-cyan-100 transition-colors cursor-default">{skill}</span>
+                                        {t.skills.items.game.map((skill, i) => (
+                                            <span key={i} className="px-3 2xl:px-5 py-1 2xl:py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-sm 2xl:text-xl text-purple-200 transition-colors cursor-default">{skill}</span>
                                         ))}
                                     </div>
                                 </div>
-                                <h3 className="text-xl 2xl:text-3xl font-bold text-white mt-10 2xl:mt-16 mb-6 2xl:mb-10 border-l-4 border-green-500 pl-4 2xl:pl-6">{t.skills.cat_tools}</h3>
+                                <h3 className="text-xl 2xl:text-3xl font-bold text-white mt-10 2xl:mt-16 mb-6 2xl:mb-10 border-l-4 border-yellow-500 pl-4 2xl:pl-6">{t.skills.cat_tools}</h3>
                                 <div className="flex gap-6 2xl:gap-12 text-gray-400 flex-wrap">
                                     <div className="flex flex-col items-center gap-2 group"><div className="p-3 2xl:p-5 bg-gray-800 rounded-full group-hover:bg-purple-900/30 transition-colors"><Icons.Github size={20} className="2xl:w-10 2xl:h-10 group-hover:text-purple-400 transition-colors" /></div><span className="text-xs 2xl:text-lg">Git</span></div>
                                     <div className="flex flex-col items-center gap-2 group"><div className="p-3 2xl:p-5 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><Icons.Terminal size={20} className="2xl:w-10 2xl:h-10 group-hover:text-blue-400 transition-colors" /></div><span className="text-xs 2xl:text-lg">Visual Studio</span></div>
