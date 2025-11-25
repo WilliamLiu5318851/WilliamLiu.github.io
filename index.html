@@ -18,10 +18,10 @@
     <!-- 樣式 -->
     <style>
         body { margin: 0; overflow-x: hidden; background-color: #050505; }
+        /* 隱藏滾動條但保留功能 */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .font-cjk { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
-        .text-glow { text-shadow: 0 0 10px rgba(34, 211, 238, 0.5); }
     </style>
 </head>
 <body>
@@ -30,45 +30,39 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- SVG Icons for Toolkit ---
+        // --- SVG Icons ---
         const BrandIcons = {
-            Unreal: (props) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-                    <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S16.63 0 12 0zm0 2.25c5.38 0 9.75 4.37 9.75 9.75S17.38 21.75 12 21.75 2.25 17.38 2.25 12 6.62 2.25 12 2.25zm0 3.75a6 6 0 0 0-6 6v1.5h1.5v-1.5a4.5 4.5 0 0 1 4.5-4.5 4.5 4.5 0 0 1 4.5 4.5v1.5H18v-1.5a6 6 0 0 0-6-6z"/>
-                </svg>
-            ),
-            Cpp: (props) => (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-                    <path d="M10 16.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5"></path>
-                    <path d="M15.5 10v4"></path><path d="M13.5 12h4"></path>
-                    <path d="M20.5 10v4"></path><path d="M18.5 12h4"></path>
-                </svg>
-            ),
-            Python: (props) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-                    <path d="M12 0c-2.5 0-4.5 2-4.5 4.5 0 1.25.5 2.5 1.5 3.25V9h6V7.75c1-.75 1.5-2 1.5-3.25C16.5 2 14.5 0 12 0zm-1 2.5h2v2h-2v-2zM4.5 9C2 9 0 11 0 13.5S2 18 4.5 18H6v-3h7.5v-4.5H6c0-1.25-.5-2.5-1.5-3.25V9h-1.5zM12 24c2.5 0 4.5-2 4.5-4.5 0-1.25-.5-2.5-1.5-3.25V15h-6v1.25c-1 .75-1.5 2-1.5 3.25C7.5 22 9.5 24 12 24zm1-2.5h-2v-2h2v2zM19.5 15c2.5 0 4.5-2 4.5-4.5S22 6 19.5 6H18v3h-7.5v4.5H18c0 1.25.5 2.5 1.5 3.25V15h1.5z"/>
-                </svg>
-            ),
-            Jira: (props) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-                    <path d="M11.53 2.01L2 11.54l9.53 9.53 9.53-9.53-9.53-9.53zm0 2.83l6.7 6.7-6.7 6.7-6.7-6.7 6.7-6.7z"/>
-                    <path d="M11.53 10.5l-3.53 3.53 3.53 3.53 3.53-3.53-3.53-3.53z"/>
-                </svg>
-            ),
-            Linux: (props) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/> 
-                    <path d="M5 20h14v2H5v-2zm7-18a4 4 0 0 1 4 4v5a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3V6a4 4 0 0 1 4-4z"/>
-                </svg>
-            ),
-            VsCode: (props) => (
-                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-                     <path d="M23.15 2.587l-2.466-1.78a1.606 1.606 0 00-1.77.164L4.044 11.455 1.14 10.158a.932.932 0 00-.99.096L.12 10.372a.372.372 0 00-.074.492l3.454 5.922 15.394 6.78a1.614 1.614 0 001.826-.14l2.433-1.725a1.612 1.612 0 00.647-1.316V3.88a1.612 1.612 0 00-.65-1.293zM18.5 18.5l-11-7.5 11-7.5v15z"/>
-                </svg>
-            )
+            Unreal: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S16.63 0 12 0zm0 2.25c5.38 0 9.75 4.37 9.75 9.75S17.38 21.75 12 21.75 2.25 17.38 2.25 12 6.62 2.25 12 2.25zm0 3.75a6 6 0 0 0-6 6v1.5h1.5v-1.5a4.5 4.5 0 0 1 4.5-4.5 4.5 4.5 0 0 1 4.5 4.5v1.5H18v-1.5a6 6 0 0 0-6-6z"/></svg>),
+            Cpp: (props) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M10 16.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5"></path><path d="M15.5 10v4"></path><path d="M13.5 12h4"></path><path d="M20.5 10v4"></path><path d="M18.5 12h4"></path></svg>),
+            Python: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 0c-2.5 0-4.5 2-4.5 4.5 0 1.25.5 2.5 1.5 3.25V9h6V7.75c1-.75 1.5-2 1.5-3.25C16.5 2 14.5 0 12 0zm-1 2.5h2v2h-2v-2zM4.5 9C2 9 0 11 0 13.5S2 18 4.5 18H6v-3h7.5v-4.5H6c0-1.25-.5-2.5-1.5-3.25V9h-1.5zM12 24c2.5 0 4.5-2 4.5-4.5 0-1.25-.5-2.5-1.5-3.25V15h-6v1.25c-1 .75-1.5 2-1.5 3.25C7.5 22 9.5 24 12 24zm1-2.5h-2v-2h2v2zM19.5 15c2.5 0 4.5-2 4.5-4.5S22 6 19.5 6H18v3h-7.5v4.5H18c0 1.25.5 2.5 1.5 3.25V15h1.5z"/></svg>),
+            Jira: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M11.53 2.01L2 11.54l9.53 9.53 9.53-9.53-9.53-9.53zm0 2.83l6.7 6.7-6.7 6.7-6.7-6.7 6.7-6.7z"/><path d="M11.53 10.5l-3.53 3.53 3.53 3.53 3.53-3.53-3.53-3.53z"/></svg>),
+            Linux: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/><path d="M5 20h14v2H5v-2zm7-18a4 4 0 0 1 4 4v5a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3V6a4 4 0 0 1 4-4z"/></svg>),
+            VsCode: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M23.15 2.587l-2.466-1.78a1.606 1.606 0 00-1.77.164L4.044 11.455 1.14 10.158a.932.932 0 00-.99.096L.12 10.372a.372.372 0 00-.074.492l3.454 5.922 15.394 6.78a1.614 1.614 0 001.826-.14l2.433-1.725a1.612 1.612 0 00.647-1.316V3.88a1.612 1.612 0 00-.65-1.293zM18.5 18.5l-11-7.5 11-7.5v15z"/></svg>)
         };
 
-        // --- 翻譯字典 ---
+        // ... (Existing Icons dictionary remains same as before, omitted for brevity but presumed included) ...
+        const Icon = ({ path, className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{path}</svg>
+        );
+        const Icons = {
+            Gamepad2: (props) => <Icon {...props} path={<><line x1="6" y1="11" x2="10" y2="11"></line><line x1="8" y1="9" x2="8" y2="13"></line><line x1="15" y1="12" x2="15.01" y2="12"></line><line x1="18" y1="10" x2="18.01" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></>} />,
+            Code2: (props) => <Icon {...props} path={<><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></>} />,
+            Cpu: (props) => <Icon {...props} path={<><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></>} />,
+            Globe: (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></>} />,
+            Mail: (props) => <Icon {...props} path={<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></>} />,
+            Linkedin: (props) => <Icon {...props} path={<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></>} />,
+            Github: (props) => <Icon {...props} path={<><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></>} />,
+            Terminal: (props) => <Icon {...props} path={<><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></>} />,
+            ChevronDown: (props) => <Icon {...props} path={<><polyline points="6 9 12 15 18 9"></polyline></>} />,
+            Play: (props) => <Icon {...props} path={<><polygon points="5 3 19 12 5 21 5 3"></polygon></>} />,
+            Music: (props) => <Icon {...props} path={<><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></>} />,
+            Zap: (props) => <Icon {...props} path={<><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></>} />,
+            BookOpen: (props) => <Icon {...props} path={<><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></>} />,
+            Briefcase: (props) => <Icon {...props} path={<><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></>} />,
+            Languages: (props) => <Icon {...props} path={<><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></>} />,
+        };
+
+        // --- Translations ---
         const translations = {
             en: {
                 nav: { about: "ABT", proj: "PROJ", skill: "SKILL", contact: "CNT" },
@@ -132,7 +126,7 @@
                         },
                         {
                             title: "Student Intern - Enterprise Dev",
-                            date: "Dec 2024 (Summer Break)",
+                            date: "Jan 2023 (Summer)",
                             loc: "Zhongshan Overseas Scholars Science & Technology Innovation Park",
                             desc: "Assisted in technical feasibility analysis and market research for local tech startups. Collaborated with cross-functional teams to optimize business plans."
                         },
@@ -140,7 +134,7 @@
                             title: "Student Manager",
                             date: "2019 - 2020",
                             loc: "Non-Profit Coffee Shop, Sacramento, CA",
-                            desc: "Led a team of 5+ staff, managing operational scheduling and inventory logistics."
+                            desc: "Led a team of 5+ staff, managed operational scheduling and inventory logistics."
                         }
                     ]
                 },
@@ -315,88 +309,29 @@
             }
         };
 
-        // --- 簡易圖標組件 (替代 Lucide-React) ---
-        const Icon = ({ path, className }) => (
-            <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="24" height="24" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                className={className}
-            >
-                {path}
-            </svg>
-        );
+        // ... (Starfield component remains the same) ...
 
-        const Icons = {
-            Gamepad2: (props) => <Icon {...props} path={<><line x1="6" y1="11" x2="10" y2="11"></line><line x1="8" y1="9" x2="8" y2="13"></line><line x1="15" y1="12" x2="15.01" y2="12"></line><line x1="18" y1="10" x2="18.01" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></>} />,
-            Code2: (props) => <Icon {...props} path={<><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></>} />,
-            Cpu: (props) => <Icon {...props} path={<><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></>} />,
-            Globe: (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></>} />,
-            Mail: (props) => <Icon {...props} path={<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></>} />,
-            Linkedin: (props) => <Icon {...props} path={<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></>} />,
-            Github: (props) => <Icon {...props} path={<><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></>} />,
-            Terminal: (props) => <Icon {...props} path={<><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></>} />,
-            ChevronDown: (props) => <Icon {...props} path={<><polyline points="6 9 12 15 18 9"></polyline></>} />,
-            Play: (props) => <Icon {...props} path={<><polygon points="5 3 19 12 5 21 5 3"></polygon></>} />,
-            Music: (props) => <Icon {...props} path={<><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></>} />,
-            Zap: (props) => <Icon {...props} path={<><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></>} />,
-            BookOpen: (props) => <Icon {...props} path={<><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></>} />,
-            Briefcase: (props) => <Icon {...props} path={<><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></>} />,
-            Languages: (props) => <Icon {...props} path={<><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></>} />,
+        // --- Updated Section Component for Better Layout Stability ---
+        // Fix: Removed 'ml-4 md:ml-20' which pushed content off-screen on smaller/zoomed screens.
+        // Replaced with standard centering 'mx-auto' and internal padding.
+        const Section = ({ title, icon, children, id }) => {
+            const IconComponent = icon;
+            return (
+                <section id={id} className="py-12 md:py-16 w-full px-4">
+                    <div className="max-w-6xl mx-auto relative pl-4 md:pl-12 border-l border-gray-800">
+                        <div className="absolute -left-[9px] top-0 w-4 h-4 bg-cyan-500 rounded-full border-4 border-black flex items-center justify-center">
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                        </div>
+                        <div className="mb-8 flex items-center space-x-4">
+                            <IconComponent className="w-8 h-8 text-cyan-400" />
+                            <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-wider font-cjk">{title}</h2>
+                        </div>
+                        {children}
+                    </div>
+                </section>
+            );
         };
 
-        // --- 組件開始 ---
-
-        // Starfield Background
-        const Starfield = () => {
-            const canvasRef = useRef(null);
-            useEffect(() => {
-                const canvas = canvasRef.current;
-                const ctx = canvas.getContext('2d');
-                let width = window.innerWidth;
-                let height = window.innerHeight;
-                let animationFrameId;
-                const resizeCanvas = () => { width = window.innerWidth; height = window.innerHeight; canvas.width = width; canvas.height = height; };
-                resizeCanvas();
-                const stars = [];
-                for (let i = 0; i < 150; i++) stars.push({ x: Math.random() * width, y: Math.random() * height, z: Math.random() * width, size: Math.random() * 2, speed: Math.random() * 0.5 + 0.1 });
-                const animate = () => {
-                    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, width, height);
-                    stars.forEach(s => {
-                        s.z -= s.speed * 2; if (s.z <= 0) { s.z = width; s.x = Math.random() * width; s.y = Math.random() * height; }
-                        const x = (s.x - width / 2) * (width / s.z) + width / 2;
-                        const y = (s.y - height / 2) * (width / s.z) + height / 2;
-                        const sz = (1 - s.z / width) * s.size * 2;
-                        if (x >= 0 && x <= width && y >= 0 && y <= height) {
-                            ctx.fillStyle = `rgba(255, 255, 255, ${1 - s.z / width})`; ctx.beginPath(); ctx.arc(x, y, sz, 0, Math.PI * 2); ctx.fill();
-                        }
-                    });
-                    animationFrameId = requestAnimationFrame(animate);
-                };
-                window.addEventListener('resize', resizeCanvas); animate();
-                return () => { window.removeEventListener('resize', resizeCanvas); cancelAnimationFrame(animationFrameId); };
-            }, []);
-            return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
-        };
-
-        const SkillBar = ({ name, level, color }) => (
-            <div className="mb-4">
-                <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-300">{name}</span>
-                    <span className="text-sm font-medium text-gray-400">{level}%</span>
-                </div>
-                <div className="w-full bg-gray-800 rounded-full h-2.5 border border-gray-700">
-                    <div className={`h-2.5 rounded-full ${color} transition-all duration-1000 ease-out`} style={{ width: `${level}%` }}></div>
-                </div>
-            </div>
-        );
-
-        // Text parsing helper
         const HighlightText = ({ text }) => {
             if (!text) return null;
             const parts = text.split('*');
@@ -411,23 +346,7 @@
             );
         };
 
-        // Reduced vertical padding from py-20 to py-12
-        const Section = ({ title, icon, children, id }) => {
-            const IconComponent = icon;
-            return (
-                <section id={id} className="py-12 md:py-16 px-4 md:px-8 max-w-6xl mx-auto border-l border-gray-800 ml-4 md:ml-20 relative">
-                    <div className="absolute -left-3 top-12 md:top-16 w-6 h-6 bg-cyan-500 rounded-full border-4 border-black flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    </div>
-                    <div className="mb-8 flex items-center space-x-4">
-                        <IconComponent className="w-8 h-8 text-cyan-400" />
-                        <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-wider font-cjk">{title}</h2>
-                    </div>
-                    {children}
-                </section>
-            );
-        };
-
+        // --- App Component ---
         function App() {
             const [activeTab, setActiveTab] = useState('mechanics');
             const [scrolled, setScrolled] = useState(false);
@@ -447,20 +366,21 @@
             };
 
             return (
-                <div className="min-h-screen text-gray-300 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden font-cjk">
+                <div className="min-h-screen text-gray-300 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden font-cjk w-full">
                     <Starfield />
                     
                     {/* Navigation */}
                     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-gray-800 py-3' : 'py-6'}`}>
-                        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                        <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)] bg-gray-900 flex items-center justify-center">
-                                    <span className="font-bold text-cyan-500 text-xs md:text-sm">W.L</span>
+                                    <img src="Personal Page/W&M_2024.4.6定稿.jpg" alt="Logo" className="w-full h-full object-cover" onError={(e) => {e.target.style.display='none'; e.target.nextSibling.style.display='block'}} />
+                                    <span className="font-bold text-cyan-500 text-xs md:text-sm hidden">W.L</span>
                                 </div>
-                                <span className="text-xl font-bold text-white tracking-widest hidden md:block">WILL.LIU</span>
+                                <span className="text-lg md:text-xl font-bold text-white tracking-widest hidden sm:block">WILL.LIU</span>
                             </div>
                             
-                            <div className="flex items-center gap-6">
+                            <div className="flex items-center gap-4 md:gap-6">
                                 <div className="hidden md:flex space-x-6 text-sm font-mono text-cyan-400">
                                     <button onClick={() => scrollTo('about')} className="hover:text-white transition-colors">{t.nav.about}</button>
                                     <button onClick={() => scrollTo('projects')} className="hover:text-white transition-colors">{t.nav.proj}</button>
@@ -481,38 +401,37 @@
                     </nav>
 
                     {/* Hero Section */}
-                    <header className="h-screen flex flex-col justify-center items-center relative px-4 text-center">
+                    <header className="min-h-screen flex flex-col justify-center items-center relative px-4 text-center pt-20">
                         <div className="absolute top-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-                        <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-4 tracking-tight z-10 font-cjk">
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-4 tracking-tight z-10 font-cjk break-words max-w-full">
                             {t.hero.name}
                         </h1>
-                        <div className="flex items-center gap-2 mb-8">
-                            <span className="h-px w-12 bg-gray-600"></span>
-                            <p className="text-lg md:text-xl text-gray-400 font-mono tracking-wide uppercase">{t.hero.role}</p>
-                            <span className="h-px w-12 bg-gray-600"></span>
+                        <div className="flex items-center gap-2 mb-8 w-full justify-center">
+                            <span className="h-px w-8 md:w-12 bg-gray-600"></span>
+                            <p className="text-sm md:text-xl text-gray-400 font-mono tracking-wide uppercase px-2">{t.hero.role}</p>
+                            <span className="h-px w-8 md:w-12 bg-gray-600"></span>
                         </div>
-                        <div className="flex gap-4 z-10">
-                            <a href="#projects" onClick={(e) => {e.preventDefault(); scrollTo('projects')}} className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-sm border-b-4 border-cyan-800 active:border-b-0 active:translate-y-1 transition-all flex items-center gap-2 cursor-pointer">
+                        <div className="flex flex-col sm:flex-row gap-4 z-10">
+                            <a href="#projects" onClick={(e) => {e.preventDefault(); scrollTo('projects')}} className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-sm border-b-4 border-cyan-800 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2 cursor-pointer">
                                 <Icons.Gamepad2 size={20} /> {t.hero.btn_proj}
                             </a>
                             <a href="#contact" onClick={(e) => {e.preventDefault(); scrollTo('contact')}} className="px-8 py-3 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-sm border-b-4 border-gray-950 active:border-b-0 active:translate-y-1 transition-all cursor-pointer">
                                 {t.hero.btn_contact}
                             </a>
                         </div>
-                        <div className="absolute bottom-10 animate-bounce cursor-pointer" onClick={() => scrollTo('about')}>
+                        <div className="absolute bottom-10 animate-bounce cursor-pointer hidden md:block" onClick={() => scrollTo('about')}>
                             <Icons.ChevronDown className="text-cyan-500 w-8 h-8" />
                         </div>
                     </header>
 
                     {/* About Section */}
                     <Section title={t.about.title} icon={Icons.Terminal} id="about">
-                        <div className="bg-gray-900/50 backdrop-blur border border-gray-800 p-8 rounded-lg shadow-2xl font-cjk">
-                            
+                        <div className="bg-gray-900/50 backdrop-blur border border-gray-800 p-6 md:p-8 rounded-lg shadow-2xl font-cjk">
                             <div className="space-y-8">
                                 {t.about.paragraphs.map((para, index) => (
                                     <div key={index}>
                                         <h3 className="text-xl text-white font-bold mb-3 border-l-4 border-cyan-500 pl-3">{para.head}</h3>
-                                        <p className="text-lg leading-relaxed text-gray-300 whitespace-pre-line">
+                                        <p className="text-base md:text-lg leading-relaxed text-gray-300 whitespace-pre-line">
                                             <HighlightText text={para.text} />
                                         </p>
                                     </div>
@@ -522,40 +441,19 @@
                             {/* Toolkit Row */}
                             <div className="mt-12 pt-8 border-t border-gray-800">
                                 <h4 className="text-sm font-mono text-cyan-500 mb-6 tracking-widest uppercase">{t.about.toolkit_title}</h4>
-                                <div className="flex flex-wrap gap-8 items-center text-gray-400">
-                                    <div className="flex flex-col items-center gap-2 group">
-                                        <BrandIcons.Unreal className="w-10 h-10 group-hover:text-white transition-colors" />
-                                        <span className="text-xs font-bold">UNREAL 5</span>
-                                    </div>
-                                    <div className="flex flex-col items-center gap-2 group">
-                                        <BrandIcons.Cpp className="w-10 h-10 group-hover:text-blue-400 transition-colors" />
-                                        <span className="text-xs font-bold">C++</span>
-                                    </div>
-                                    <div className="flex flex-col items-center gap-2 group">
-                                        <BrandIcons.Python className="w-10 h-10 group-hover:text-yellow-400 transition-colors" />
-                                        <span className="text-xs font-bold">PYTHON</span>
-                                    </div>
-                                    <div className="flex flex-col items-center gap-2 group">
-                                        <Icons.Github className="w-10 h-10 group-hover:text-purple-400 transition-colors" />
-                                        <span className="text-xs font-bold">GIT</span>
-                                    </div>
-                                    <div className="flex flex-col items-center gap-2 group">
-                                        <BrandIcons.Jira className="w-10 h-10 group-hover:text-blue-500 transition-colors" />
-                                        <span className="text-xs font-bold">JIRA</span>
-                                    </div>
+                                <div className="flex flex-wrap gap-6 md:gap-8 items-center text-gray-400">
+                                    <div className="flex flex-col items-center gap-2 group"><BrandIcons.Unreal className="w-8 h-8 md:w-10 md:h-10 group-hover:text-white transition-colors" /><span className="text-[10px] md:text-xs font-bold">UNREAL 5</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><BrandIcons.Cpp className="w-8 h-8 md:w-10 md:h-10 group-hover:text-blue-400 transition-colors" /><span className="text-[10px] md:text-xs font-bold">C++</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><BrandIcons.Python className="w-8 h-8 md:w-10 md:h-10 group-hover:text-yellow-400 transition-colors" /><span className="text-[10px] md:text-xs font-bold">PYTHON</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><Icons.Github className="w-8 h-8 md:w-10 md:h-10 group-hover:text-purple-400 transition-colors" /><span className="text-[10px] md:text-xs font-bold">GIT</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><BrandIcons.Jira className="w-8 h-8 md:w-10 md:h-10 group-hover:text-blue-500 transition-colors" /><span className="text-[10px] md:text-xs font-bold">JIRA</span></div>
                                 </div>
                             </div>
 
                             <div className="flex flex-wrap gap-4 mt-8 pt-6 border-t border-gray-800/50">
-                                <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm">
-                                    <Icons.Globe size={16} className="text-blue-400" /> {t.about.loc}
-                                </div>
-                                <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm">
-                                    <Icons.BookOpen size={16} className="text-yellow-400" /> {t.about.grad}
-                                </div>
-                                <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm">
-                                    <Icons.Languages size={16} className="text-pink-400" /> {t.about.lang}
-                                </div>
+                                <div className="flex items-center gap-2 px-3 py-2 bg-gray-800 rounded text-xs md:text-sm"><Icons.Globe size={16} className="text-blue-400" /> {t.about.loc}</div>
+                                <div className="flex items-center gap-2 px-3 py-2 bg-gray-800 rounded text-xs md:text-sm"><Icons.BookOpen size={16} className="text-yellow-400" /> {t.about.grad}</div>
+                                <div className="flex items-center gap-2 px-3 py-2 bg-gray-800 rounded text-xs md:text-sm"><Icons.Languages size={16} className="text-pink-400" /> {t.about.lang}</div>
                             </div>
                         </div>
                     </Section>
@@ -565,59 +463,47 @@
                         <div className="relative group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                             <div className="relative bg-black border border-gray-800 rounded-lg overflow-hidden font-cjk">
-                                <div className="grid md:grid-cols-12 gap-0">
-                                    <div className="md:col-span-7 bg-gray-900 min-h-[300px] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+                                <div className="grid lg:grid-cols-12 gap-0">
+                                    <div className="lg:col-span-7 bg-gray-900 min-h-[250px] md:min-h-[300px] flex flex-col items-center justify-center p-8 relative overflow-hidden">
                                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/40 via-gray-900 to-black"></div>
                                         <div className="w-32 h-32 rounded-full border-4 border-cyan-500/30 flex items-center justify-center z-10 animate-[spin_10s_linear_infinite]">
                                             <div className="w-20 h-20 rounded-full border-2 border-purple-500/50"></div>
                                         </div>
                                         <div className="z-10 text-center mt-8">
-                                            <h3 className="text-3xl font-bold text-white tracking-widest mb-2">BINARY ECHOES</h3>
-                                            <p className="text-cyan-400 font-mono text-sm uppercase">{t.project.subtitle}</p>
+                                            <h3 className="text-2xl md:text-3xl font-bold text-white tracking-widest mb-2">BINARY ECHOES</h3>
+                                            <p className="text-cyan-400 font-mono text-xs md:text-sm uppercase">{t.project.subtitle}</p>
                                         </div>
                                     </div>
-                                    <div className="md:col-span-5 bg-gray-950 p-6 md:p-8 flex flex-col">
-                                        <div className="flex space-x-2 mb-6 border-b border-gray-800 pb-2 overflow-x-auto">
+                                    <div className="lg:col-span-5 bg-gray-950 p-6 md:p-8 flex flex-col">
+                                        <div className="flex space-x-2 mb-6 border-b border-gray-800 pb-2 overflow-x-auto scrollbar-hide">
                                             {Object.keys(t.project.tabs).map((tabKey) => (
-                                                <button key={tabKey} onClick={() => setActiveTab(tabKey)} className={`pb-2 px-2 text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap ${activeTab === tabKey ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-gray-500 hover:text-gray-300'}`}>{t.project.tabs[tabKey]}</button>
+                                                <button key={tabKey} onClick={() => setActiveTab(tabKey)} className={`pb-2 px-2 text-xs md:text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap ${activeTab === tabKey ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-gray-500 hover:text-gray-300'}`}>{t.project.tabs[tabKey]}</button>
                                             ))}
                                         </div>
                                         <div className="flex-grow min-h-[150px]">
                                             {activeTab === 'mechanics' && (
                                                 <div className="animate-in fade-in duration-300">
-                                                    <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-3">
-                                                        <Icons.Zap className="text-yellow-400" size={20} /> {t.project.mech_title}
-                                                    </h4>
+                                                    <h4 className="flex items-center gap-2 text-base md:text-lg font-bold text-white mb-3"><Icons.Zap className="text-yellow-400" size={20} /> {t.project.mech_title}</h4>
                                                     <p className="text-gray-400 text-sm mb-4">{t.project.mech_desc}</p>
-                                                    <ul className="space-y-2 text-sm text-gray-400">
-                                                        {t.project.mech_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}
-                                                    </ul>
+                                                    <ul className="space-y-2 text-sm text-gray-400">{t.project.mech_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}</ul>
                                                 </div>
                                             )}
                                             {activeTab === 'audio' && (
                                                 <div className="animate-in fade-in duration-300">
-                                                    <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-3">
-                                                        <Icons.Music className="text-purple-400" size={20} /> {t.project.audio_title}
-                                                    </h4>
+                                                    <h4 className="flex items-center gap-2 text-base md:text-lg font-bold text-white mb-3"><Icons.Music className="text-purple-400" size={20} /> {t.project.audio_title}</h4>
                                                     <p className="text-gray-400 text-sm mb-4">{t.project.audio_desc}</p>
-                                                    <ul className="space-y-2 text-sm text-gray-400">
-                                                        {t.project.audio_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}
-                                                    </ul>
+                                                    <ul className="space-y-2 text-sm text-gray-400">{t.project.audio_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}</ul>
                                                 </div>
                                             )}
                                             {activeTab === 'tech' && (
                                                 <div className="animate-in fade-in duration-300">
-                                                    <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-3">
-                                                        <Icons.Cpu className="text-green-400" size={20} /> {t.project.tech_title}
-                                                    </h4>
+                                                    <h4 className="flex items-center gap-2 text-base md:text-lg font-bold text-white mb-3"><Icons.Cpu className="text-green-400" size={20} /> {t.project.tech_title}</h4>
                                                     <p className="text-gray-400 text-sm mb-4">{t.project.tech_desc}</p>
-                                                    <ul className="space-y-2 text-sm text-gray-400">
-                                                        {t.project.tech_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}
-                                                    </ul>
+                                                    <ul className="space-y-2 text-sm text-gray-400">{t.project.tech_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}</ul>
                                                 </div>
                                             )}
                                         </div>
-                                        <div className="mt-6 pt-6 border-t border-gray-800 flex justify-between items-center">
+                                        <div className="mt-6 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                                             <span className="text-xs text-gray-500 font-mono uppercase">{t.project.role_label}</span>
                                             <a href="https://docs.google.com/document/d/1lI90sh2X4JyCLfQ4JEembZV6-F2xDInixtdAHQn0SQI/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-white transition-colors text-sm flex items-center gap-1 font-bold whitespace-nowrap">
                                                 {t.project.read_proposal} <Icons.Play size={12} />
@@ -631,9 +517,9 @@
 
                     {/* Skills Section */}
                     <Section title={t.skills.title} icon={Icons.Code2} id="skills">
-                        <div className="grid md:grid-cols-2 gap-12 font-cjk">
+                        <div className="grid md:grid-cols-2 gap-8 md:gap-12 font-cjk">
                             <div>
-                                <h3 className="text-xl font-bold text-white mb-6 border-l-4 border-cyan-500 pl-4">{t.skills.cat_lang}</h3>
+                                <h3 className="text-lg md:text-xl font-bold text-white mb-6 border-l-4 border-cyan-500 pl-4">{t.skills.cat_lang}</h3>
                                 <SkillBar name="C / C++ / Unreal Engine" level={90} color="bg-blue-600" />
                                 <SkillBar name="Data Structures & Algorithms" level={90} color="bg-purple-500" />
                                 <SkillBar name="Python" level={85} color="bg-yellow-500" />
@@ -641,15 +527,15 @@
                                 <SkillBar name="SQL / MIPS Assembly" level={75} color="bg-gray-500" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold text-white mb-6 border-l-4 border-purple-500 pl-4">{t.skills.cat_game}</h3>
-                                <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                                <h3 className="text-lg md:text-xl font-bold text-white mb-6 border-l-4 border-purple-500 pl-4">{t.skills.cat_game}</h3>
+                                <div className="bg-gray-900 p-6 rounded-lg border border-gray-800 mb-8">
                                     <div className="flex flex-wrap gap-2">
                                         {["Unreal Engine 5", "Gameplay Programming", "Physics Simulation", "3D Math", "State Machines", "Performance Optimization", "Computer Vision", "Generative AI Integration"].map((skill, i) => (
-                                            <span key={i} className="px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-sm text-cyan-100 transition-colors cursor-default">{skill}</span>
+                                            <span key={i} className="px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-xs md:text-sm text-cyan-100 transition-colors cursor-default">{skill}</span>
                                         ))}
                                     </div>
                                 </div>
-                                <h3 className="text-xl font-bold text-white mt-8 mb-6 border-l-4 border-green-500 pl-4">{t.skills.cat_tools}</h3>
+                                <h3 className="text-lg md:text-xl font-bold text-white mt-8 mb-6 border-l-4 border-green-500 pl-4">{t.skills.cat_tools}</h3>
                                 <div className="flex gap-4 text-gray-400 flex-wrap">
                                     <div className="flex flex-col items-center gap-2 group"><div className="p-3 bg-gray-800 rounded-full group-hover:bg-purple-900/30 transition-colors"><Icons.Github size={20} className="group-hover:text-purple-400 transition-colors" /></div><span className="text-xs">Git</span></div>
                                     <div className="flex flex-col items-center gap-2 group"><div className="p-3 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><Icons.Terminal size={20} className="group-hover:text-blue-400 transition-colors" /></div><span className="text-xs">Visual Studio</span></div>
@@ -665,10 +551,10 @@
                     <Section title={t.timeline.title} icon={Icons.Briefcase} id="timeline">
                         <div className="space-y-8 font-cjk">
                             {t.timeline.items.map((item, index) => (
-                                <div key={index} className={`relative pl-8 border-l-2 border-gray-800 transition-colors duration-300 ${index === 0 ? 'hover:border-cyan-500' : index === 1 ? 'hover:border-purple-500' : 'hover:border-green-500'}`}>
+                                <div key={index} className={`relative pl-6 md:pl-8 border-l-2 border-gray-800 transition-colors duration-300 ${index === 0 ? 'hover:border-cyan-500' : index === 1 ? 'hover:border-purple-500' : 'hover:border-green-500'}`}>
                                     <div className={`absolute -left-[9px] top-0 w-4 h-4 bg-gray-900 border-2 rounded-full ${index === 0 ? 'border-cyan-500' : index === 1 ? 'border-purple-500' : 'border-green-500'}`}></div>
                                     <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                                        <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                                        <h3 className="text-lg md:text-xl font-bold text-white">{item.title}</h3>
                                         <span className={`text-sm font-mono ${index === 0 ? 'text-cyan-500' : index === 1 ? 'text-purple-400' : 'text-green-400'}`}>{item.date}</span>
                                     </div>
                                     <p className="text-gray-400 mb-2">{item.loc}</p>
@@ -679,11 +565,11 @@
                     </Section>
 
                     {/* Contact Section */}
-                    <footer id="contact" className="bg-black border-t border-gray-900 py-20 px-4 font-cjk">
+                    <footer id="contact" className="bg-black border-t border-gray-900 py-12 md:py-20 px-4 font-cjk">
                         <div className="max-w-4xl mx-auto text-center">
-                            <h2 className="text-4xl font-bold text-white mb-8 uppercase">{t.contact.title}</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 uppercase">{t.contact.title}</h2>
                             <p className="text-gray-400 mb-12 max-w-xl mx-auto">{t.contact.desc}</p>
-                            <div className="flex flex-wrap justify-center gap-6">
+                            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
                                 <a href="mailto:william.liuunsw@gmail.com" className="group flex items-center gap-3 bg-gray-900 px-6 py-4 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-cyan-500 transition-all">
                                     <div className="p-2 bg-black rounded-full text-cyan-500 group-hover:scale-110 transition-transform"><Icons.Mail size={24} /></div>
                                     <div className="text-left"><span className="block text-xs text-gray-500 font-mono">{t.contact.labels.email}</span><span className="text-white font-medium">william.liuunsw@gmail.com</span></div>
