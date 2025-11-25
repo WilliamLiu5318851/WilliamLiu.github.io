@@ -485,7 +485,7 @@
 
                     {/* About Section - Centered */}
                     <Section title={t.about.title} icon={Icons.Terminal} id="about">
-                        <div className="bg-gray-900/50 backdrop-blur border border-gray-800 p-6 md:p-10 rounded-lg shadow-2xl font-cjk mx-auto">
+                        <div className="bg-gray-900/50 backdrop-blur border border-gray-800 p-6 md:p-10 rounded-lg shadow-2xl font-cjk mx-auto text-left">
                             <div className="space-y-10">
                                 {t.about.paragraphs.map((para, index) => (
                                     <div key={index} className="flex flex-col items-start">
@@ -498,8 +498,8 @@
                             </div>
 
                             <div className="mt-12 pt-8 border-t border-gray-800">
-                                <h4 className="text-sm font-mono text-cyan-500 mb-6 tracking-widest uppercase text-center">{t.about.toolkit_title}</h4>
-                                <div className="flex flex-wrap justify-center gap-8 md:gap-12 items-center text-gray-400">
+                                <h4 className="text-sm font-mono text-cyan-500 mb-6 tracking-widest uppercase text-left">{t.about.toolkit_title}</h4>
+                                <div className="flex flex-wrap justify-start gap-8 md:gap-12 items-center text-gray-400">
                                     <div className="flex flex-col items-center gap-2 group"><BrandIcons.Unreal className="w-10 h-10 md:w-12 md:h-12 group-hover:text-white transition-colors" /><span className="text-[10px] md:text-xs font-bold">UNREAL 5</span></div>
                                     <div className="flex flex-col items-center gap-2 group"><BrandIcons.Cpp className="w-10 h-10 md:w-12 md:h-12 group-hover:text-blue-400 transition-colors" /><span className="text-[10px] md:text-xs font-bold">C++</span></div>
                                     <div className="flex flex-col items-center gap-2 group"><BrandIcons.Python className="w-10 h-10 md:w-12 md:h-12 group-hover:text-yellow-400 transition-colors" /><span className="text-[10px] md:text-xs font-bold">PYTHON</span></div>
@@ -508,7 +508,7 @@
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-gray-800/50">
+                            <div className="flex flex-wrap justify-start gap-4 mt-8 pt-6 border-t border-gray-800/50">
                                 <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm"><Icons.Globe size={16} className="text-blue-400" /> {t.about.loc}</div>
                                 <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm"><Icons.BookOpen size={16} className="text-yellow-400" /> {t.about.grad}</div>
                                 <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm"><Icons.Languages size={16} className="text-pink-400" /> {t.about.lang}</div>
@@ -532,7 +532,7 @@
                                             <p className="text-cyan-400 font-mono text-xs md:text-sm uppercase">{t.project.subtitle}</p>
                                         </div>
                                     </div>
-                                    <div className="lg:col-span-5 bg-gray-950 p-6 md:p-8 flex flex-col">
+                                    <div className="lg:col-span-5 bg-gray-950 p-6 md:p-8 flex flex-col text-left">
                                         <div className="flex space-x-2 mb-6 border-b border-gray-800 pb-2 overflow-x-auto scrollbar-hide">
                                             {Object.keys(t.project.tabs).map((tabKey) => (
                                                 <button key={tabKey} onClick={() => setActiveTab(tabKey)} className={`pb-2 px-2 text-xs md:text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap ${activeTab === tabKey ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-gray-500 hover:text-gray-300'}`}>{t.project.tabs[tabKey]}</button>
@@ -576,7 +576,7 @@
 
                     {/* Skills Section - Centered Grid */}
                     <Section title={t.skills.title} icon={Icons.Code2} id="skills">
-                        <div className="grid md:grid-cols-2 gap-8 md:gap-12 font-cjk">
+                        <div className="grid md:grid-cols-2 gap-8 md:gap-12 font-cjk text-left">
                             <div>
                                 <h3 className="text-lg md:text-xl font-bold text-white mb-6 border-l-4 border-cyan-500 pl-4">{t.skills.cat_lang}</h3>
                                 <SkillBar name="C / C++ / Unreal Engine" level={90} color="bg-blue-600" />
@@ -610,7 +610,7 @@
                     <Section title={t.timeline.title} icon={Icons.Briefcase} id="timeline">
                         <div className="space-y-6 font-cjk max-w-3xl mx-auto">
                             {t.timeline.items.map((item, index) => (
-                                <div key={index} className="bg-gray-900/40 border border-gray-800 p-6 rounded-lg hover:border-gray-600 transition-all hover:shadow-lg hover:-translate-y-1">
+                                <div key={index} className="bg-gray-900/40 border border-gray-800 p-6 rounded-lg hover:border-gray-600 transition-all hover:shadow-lg hover:-translate-y-1 text-left">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
                                         <h3 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                                             <div className={`w-2 h-2 rounded-full ${index === 0 ? 'bg-cyan-500' : index === 1 ? 'bg-purple-500' : 'bg-green-500'}`}></div>
