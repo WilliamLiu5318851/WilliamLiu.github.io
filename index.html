@@ -11,14 +11,18 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Tailwind 配置扩展：自定义超大屏幕断点 -->
+    <!-- 核心修复：自定义 Tailwind 配置，增加大屏断点 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     screens: {
-                        '3xl': '1920px', // 针对 1080p 全屏或更大
-                        '4xl': '2560px', // 针对 2K/4K
+                        '3xl': '1920px', // 1080p 全屏
+                        '4xl': '2560px', // 2K/4K 超大屏
+                    },
+                    maxWidth: {
+                        '8xl': '88rem',
+                        '9xl': '110rem',
                     }
                 }
             }
@@ -32,20 +36,20 @@
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .font-cjk { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
         
-        /* 动画：淡入上浮 */
-        @keyframes fadeInUp {
+        /* 简单的淡入动画 */
+        @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in-up {
-            animation: fadeInUp 0.6s ease-out forwards;
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
         }
     </style>
 </head>
 <body>
     <div id="root">
-        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: #333;">
-            INITIALIZING SYSTEM...
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: #333; font-family: monospace;">
+            SYSTEM INITIALIZING...
         </div>
     </div>
 
@@ -59,7 +63,6 @@
             </svg>
         );
 
-        // 品牌图标定义
         const BrandIcons = {
             Unreal: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S16.63 0 12 0zm0 2.25c5.38 0 9.75 4.37 9.75 9.75S17.38 21.75 12 21.75 2.25 17.38 2.25 12 6.62 2.25 12 2.25zm0 3.75a6 6 0 0 0-6 6v1.5h1.5v-1.5a4.5 4.5 0 0 1 4.5-4.5 4.5 4.5 0 0 1 4.5 4.5v1.5H18v-1.5a6 6 0 0 0-6-6z"/></svg>),
             Cpp: (props) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M10 16.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5"></path><path d="M15.5 10v4"></path><path d="M13.5 12h4"></path><path d="M20.5 10v4"></path><path d="M18.5 12h4"></path></svg>),
@@ -69,7 +72,6 @@
             VsCode: (props) => (<svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M23.15 2.587l-2.466-1.78a1.606 1.606 0 00-1.77.164L4.044 11.455 1.14 10.158a.932.932 0 00-.99.096L.12 10.372a.372.372 0 00-.074.492l3.454 5.922 15.394 6.78a1.614 1.614 0 001.826-.14l2.433-1.725a1.612 1.612 0 00.647-1.316V3.88a1.612 1.612 0 00-.65-1.293zM18.5 18.5l-11-7.5 11-7.5v15z"/></svg>)
         };
 
-        // 通用图标定义
         const Icons = {
             Gamepad2: (props) => <Icon {...props} path={<React.Fragment><line x1="6" y1="11" x2="10" y2="11"></line><line x1="8" y1="9" x2="8" y2="13"></line><line x1="15" y1="12" x2="15.01" y2="12"></line><line x1="18" y1="10" x2="18.01" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></React.Fragment>} />,
             Code2: (props) => <Icon {...props} path={<React.Fragment><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></React.Fragment>} />,
@@ -88,7 +90,6 @@
             Languages: (props) => <Icon {...props} path={<React.Fragment><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></React.Fragment>} />,
         };
 
-        // 翻译数据
         const translations = {
             en: {
                 nav: { about: "ABT", proj: "PROJ", skill: "SKILL", contact: "CNT" },
@@ -335,7 +336,6 @@
             }
         };
 
-        // --- 星空背景组件 ---
         const Starfield = () => {
             const canvasRef = useRef(null);
             useEffect(() => {
@@ -384,7 +384,6 @@
             </div>
         );
 
-        // --- 文本高亮组件 ---
         const HighlightText = ({ text }) => {
             if (!text) return null;
             const parts = text.split('*');
@@ -399,30 +398,32 @@
             );
         };
 
-        // --- 核心改动：自适应宽屏 Section 组件 ---
+        // --- 核心修复：智能自适应宽屏组件 ---
+        // 逻辑：在小屏幕保持紧凑，在超大屏幕(3xl, 4xl)上自动扩展宽度并放大内容
         const Section = ({ title, icon, children, id }) => {
             const IconComponent = icon;
             return (
-                // 1. 基础布局：mx-auto 居中整个容器
-                // 2. 宽度控制：w-11/12 (91%) 占据大部分屏幕宽度
-                // 3. 2xl+ 屏幕：允许更宽的内容 max-w-[90rem] (1440px)，确保不浪费空间
-                <section id={id} className="py-12 md:py-20 2xl:py-32 w-11/12 max-w-7xl 2xl:max-w-[90rem] mx-auto relative">
-                    {/* 左侧装饰线：现在相对于居中的容器定位，而不是整个视口 */}
+                // 1. 宽度控制：w-11/12 确保在所有屏幕都有边距
+                // 2. 最大宽度：从 max-w-7xl 扩展到 max-w-8xl/9xl (自定义断点)
+                // 3. 居中：mx-auto 确保在大屏上也是居中的，而不是偏左
+                <section id={id} className="py-12 md:py-20 2xl:py-32 w-11/12 max-w-7xl 2xl:max-w-8xl 3xl:max-w-9xl mx-auto relative">
+                    {/* 左侧时间线：绝对定位，跟随父容器 */}
                     <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-800 hidden md:block"></div>
                     
+                    {/* 内容偏移：为时间线留出空间，并随屏幕增大增加偏移量 */}
                     <div className="pl-4 md:pl-12 2xl:pl-20 relative">
                          {/* 装饰点 */}
                         <div className="absolute -left-[5px] md:-left-[5px] top-12 md:top-20 2xl:top-32 w-3 h-3 md:w-4 md:h-4 2xl:w-6 2xl:h-6 bg-cyan-500 rounded-full border-2 md:border-4 border-black flex items-center justify-center z-10">
                             <div className="w-1 h-1 md:w-2 md:h-2 2xl:w-3 2xl:h-3 bg-white rounded-full animate-pulse"></div>
                         </div>
 
-                        {/* 标题区域：放大字体以适应大屏幕 */}
+                        {/* 标题区域：大屏字体自动放大 */}
                         <div className="mb-8 2xl:mb-16 flex items-center space-x-4 2xl:space-x-8">
                             <IconComponent className="w-8 h-8 md:w-10 md:h-10 2xl:w-16 2xl:h-16 text-cyan-400" />
                             <h2 className="text-3xl md:text-5xl 2xl:text-7xl font-bold text-white uppercase tracking-wider font-cjk">{title}</h2>
                         </div>
                         
-                        {/* 内容区域：放大正文 */}
+                        {/* 内容区域：字体和行高自适应 */}
                         <div className="text-base md:text-lg 2xl:text-2xl leading-relaxed">
                             {children}
                         </div>
@@ -449,16 +450,15 @@
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
             };
 
-            // 注意：Logo 路径可能需要根据实际部署调整
             const logoPath = "Personal Page/W&M_2024.4.6定稿.jpg";
 
             return (
-                <div className="min-h-screen text-gray-300 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden font-cjk">
+                <div className="min-h-screen text-gray-300 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden font-cjk w-full text-lg 2xl:text-2xl">
                     <Starfield />
                     
-                    {/* Navigation */}
+                    {/* Navigation - 导航栏随屏幕变宽 */}
                     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-gray-800 py-3 2xl:py-6' : 'py-6 2xl:py-10'}`}>
-                        <div className="w-11/12 max-w-7xl 2xl:max-w-[90rem] mx-auto flex justify-between items-center">
+                        <div className="w-11/12 max-w-7xl 2xl:max-w-8xl 3xl:max-w-9xl mx-auto flex justify-between items-center">
                             <div className="flex items-center gap-3 2xl:gap-5">
                                 <div className="w-10 h-10 md:w-12 md:h-12 2xl:w-16 2xl:h-16 rounded-full overflow-hidden border-2 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)] bg-gray-900 flex items-center justify-center">
                                     <img src={logoPath} alt="Logo" className="w-full h-full object-cover" onError={(e) => {e.target.style.display='none'; e.target.nextSibling.style.display='block'}} />
@@ -486,10 +486,10 @@
                         </div>
                     </nav>
 
-                    {/* Hero Section */}
-                    <header className="h-screen flex flex-col justify-center items-center relative px-4 text-center">
+                    {/* Hero - 巨幕适配 */}
+                    <header className="min-h-screen flex flex-col justify-center items-center relative px-4 text-center">
                         <div className="absolute top-1/4 w-64 h-64 2xl:w-96 2xl:h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-                        <h1 className="text-5xl md:text-7xl 2xl:text-9xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-6 2xl:mb-10 tracking-tight z-10 font-cjk">
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl 2xl:text-9xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-6 2xl:mb-10 tracking-tight z-10 font-cjk">
                             {t.hero.name}
                         </h1>
                         <div className="flex items-center gap-4 2xl:gap-8 mb-10 2xl:mb-16">
@@ -510,7 +510,7 @@
                         </div>
                     </header>
 
-                    {/* About Section */}
+                    {/* About Section - 保持左对齐，但容器变宽 */}
                     <Section title={t.about.title} icon={Icons.Terminal} id="about">
                         <div className="bg-gray-900/50 backdrop-blur border border-gray-800 p-8 2xl:p-16 rounded-lg shadow-2xl font-cjk">
                             
@@ -525,7 +525,6 @@
                                 ))}
                             </div>
 
-                            {/* Toolkit Row - Scaled */}
                             <div className="mt-16 2xl:mt-24 pt-10 2xl:pt-16 border-t border-gray-800">
                                 <h4 className="text-sm 2xl:text-xl font-mono text-cyan-500 mb-8 2xl:mb-12 tracking-widest uppercase">{t.about.toolkit_title}</h4>
                                 <div className="flex flex-wrap gap-10 2xl:gap-20 items-center text-gray-400">
@@ -566,13 +565,12 @@
                         </div>
                     </Section>
 
-                    {/* Featured Project Section - 2XL Scaled */}
+                    {/* Featured Project Section */}
                     <Section title={t.project.title} icon={Icons.Gamepad2} id="projects">
                         <div className="relative group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                             <div className="relative bg-black border border-gray-800 rounded-lg overflow-hidden font-cjk">
                                 <div className="grid md:grid-cols-12 gap-0">
-                                    {/* Image Area - Scaled up height on 2XL */}
                                     <div className="md:col-span-7 bg-gray-900 min-h-[300px] 2xl:min-h-[600px] flex flex-col items-center justify-center p-8 2xl:p-16 relative overflow-hidden">
                                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/40 via-gray-900 to-black"></div>
                                         <div className="w-32 h-32 2xl:w-64 2xl:h-64 rounded-full border-4 2xl:border-8 border-cyan-500/30 flex items-center justify-center z-10 animate-[spin_10s_linear_infinite]">
@@ -636,7 +634,7 @@
                         </div>
                     </Section>
 
-                    {/* Skills Section - Scaled Grid */}
+                    {/* Skills Section */}
                     <Section title={t.skills.title} icon={Icons.Code2} id="skills">
                         <div className="grid md:grid-cols-2 gap-12 2xl:gap-32 font-cjk">
                             <div>
@@ -670,7 +668,7 @@
                         </div>
                     </Section>
 
-                    {/* Experience Section - Scaled */}
+                    {/* Experience Section */}
                     <Section title={t.timeline.title} icon={Icons.Briefcase} id="timeline">
                         <div className="space-y-8 2xl:space-y-12 font-cjk">
                             {t.timeline.items.map((item, index) => (
