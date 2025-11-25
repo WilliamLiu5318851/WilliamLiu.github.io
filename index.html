@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>William Liu - Game Developer Portfolio</title>
+    
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 引入 React 和 ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- 引入 Babel 用於解析 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- 樣式 -->
+    <style>
+        body { margin: 0; overflow-x: hidden; background-color: #050505; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .font-cjk { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+        .text-glow { text-shadow: 0 0 10px rgba(34, 211, 238, 0.5); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- SVG Icons for Toolkit ---
+        const BrandIcons = {
+            Unreal: (props) => (
+                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                    <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S16.63 0 12 0zm0 2.25c5.38 0 9.75 4.37 9.75 9.75S17.38 21.75 12 21.75 2.25 17.38 2.25 12 6.62 2.25 12 2.25zm0 3.75a6 6 0 0 0-6 6v1.5h1.5v-1.5a4.5 4.5 0 0 1 4.5-4.5 4.5 4.5 0 0 1 4.5 4.5v1.5H18v-1.5a6 6 0 0 0-6-6z"/>
+                </svg>
+            ),
+            Cpp: (props) => (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <path d="M10 16.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5"></path>
+                    <path d="M15.5 10v4"></path><path d="M13.5 12h4"></path>
+                    <path d="M20.5 10v4"></path><path d="M18.5 12h4"></path>
+                </svg>
+            ),
+            Python: (props) => (
+                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                    <path d="M12 0c-2.5 0-4.5 2-4.5 4.5 0 1.25.5 2.5 1.5 3.25V9h6V7.75c1-.75 1.5-2 1.5-3.25C16.5 2 14.5 0 12 0zm-1 2.5h2v2h-2v-2zM4.5 9C2 9 0 11 0 13.5S2 18 4.5 18H6v-3h7.5v-4.5H6c0-1.25-.5-2.5-1.5-3.25V9h-1.5zM12 24c2.5 0 4.5-2 4.5-4.5 0-1.25-.5-2.5-1.5-3.25V15h-6v1.25c-1 .75-1.5 2-1.5 3.25C7.5 22 9.5 24 12 24zm1-2.5h-2v-2h2v2zM19.5 15c2.5 0 4.5-2 4.5-4.5S22 6 19.5 6H18v3h-7.5v4.5H18c0 1.25.5 2.5 1.5 3.25V15h1.5z"/>
+                </svg>
+            ),
+            Jira: (props) => (
+                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                    <path d="M11.53 2.01L2 11.54l9.53 9.53 9.53-9.53-9.53-9.53zm0 2.83l6.7 6.7-6.7 6.7-6.7-6.7 6.7-6.7z"/>
+                    <path d="M11.53 10.5l-3.53 3.53 3.53 3.53 3.53-3.53-3.53-3.53z"/>
+                </svg>
+            ),
+            Linux: (props) => (
+                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/> 
+                    <path d="M5 20h14v2H5v-2zm7-18a4 4 0 0 1 4 4v5a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3V6a4 4 0 0 1 4-4z"/>
+                </svg>
+            ),
+            VsCode: (props) => (
+                <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                     <path d="M23.15 2.587l-2.466-1.78a1.606 1.606 0 00-1.77.164L4.044 11.455 1.14 10.158a.932.932 0 00-.99.096L.12 10.372a.372.372 0 00-.074.492l3.454 5.922 15.394 6.78a1.614 1.614 0 001.826-.14l2.433-1.725a1.612 1.612 0 00.647-1.316V3.88a1.612 1.612 0 00-.65-1.293zM18.5 18.5l-11-7.5 11-7.5v15z"/>
+                </svg>
+            )
+        };
+
+        // --- 翻譯字典 ---
+        const translations = {
+            en: {
+                nav: { about: "ABT", proj: "PROJ", skill: "SKILL", contact: "CNT" },
+                hero: {
+                    name: "JUNYOU (WILLIAM) LIU",
+                    role: "GAME DEVELOPER | SOFTWARE ENGINEER | CS UNDERGRAD",
+                    btn_proj: "VIEW PROJECTS",
+                    btn_contact: "CONTACT ME"
+                },
+                about: {
+                    title: "About Me",
+                    paragraphs: [
+                        {
+                            head: "Driven by Curiosity, Grounded in Engineering",
+                            text: "I am a final-year Computer Science student at *UNSW* with a deep passion for the \"how\" behind the \"wow.\" While I love the visual spectacle of games, my true excitement comes from the engine room—optimizing the code that makes those visuals possible."
+                        },
+                        {
+                            head: "Turning Math into Magic",
+                            text: "I specialize in *Unreal Engine 5* and *C++*, with a focus on gameplay mechanics and physics. I enjoy diving into the math that others might find daunting. Whether it's calculating dual-body gravitational pulls for my project *Binary Echoes* or designing a procedural audio system that reacts to game states in real-time, I thrive on solving complex technical challenges to deliver seamless user experiences."
+                        },
+                        {
+                            head: "Always Evolving",
+                            text: "Technology never stands still, and neither do I. From mastering *3D transformation matrices* to integrating *Generative AI* into asset pipelines, I am constantly expanding my toolkit. I am looking for a team where I can bring my technical rigor and creative problem-solving skills to build the next generation of immersive games."
+                        }
+                    ],
+                    toolkit_title: "MY TOOLKIT",
+                    loc: "Sydney, NSW",
+                    grad: "Graduation: Mid 2026",
+                    lang: "Eng / Mand / Cant"
+                },
+                project: {
+                    title: "Featured Project",
+                    subtitle: "3D PUZZLE PLATFORMER • UNREAL ENGINE 5",
+                    tabs: { mechanics: "MECHANICS", audio: "AUDIO", tech: "TECH" },
+                    mech_title: "Gravitational Attunement",
+                    mech_desc: "A custom physics system utilizing real-time vector math to calculate dual-body gravitational pulls.",
+                    mech_list: ["Physics-based orbital trajectories.", "Dynamic spherical surface collision.", "Character state machine for zero-G transitions."],
+                    audio_title: "Procedural Symphony",
+                    audio_desc: "Engineered an audio system where game state variables drive real-time music composition.",
+                    audio_list: ["Music evolves with level progression.", "Links gameplay directly to audio engine parameters."],
+                    tech_title: "Pipeline Optimization",
+                    tech_desc: "Solved asset production bottlenecks for a small team using modern tech.",
+                    tech_list: ["Generative AI for 80% of environmental models/textures.", "Complex 3rd-person camera logic in C++."],
+                    role_label: "ROLE: CORE GAMEPLAY ENGINEER",
+                    read_proposal: "READ PROPOSAL"
+                },
+                skills: {
+                    title: "Technical Toolkit",
+                    cat_lang: "Languages & Core",
+                    cat_game: "Game Engineering",
+                    cat_tools: "Tools & Environment"
+                },
+                timeline: {
+                    title: "Timeline",
+                    items: [
+                        {
+                            title: "Bachelor of Computer Science",
+                            date: "Expected Mid 2026",
+                            loc: "University of New South Wales (UNSW)",
+                            desc: "Coursework: Computer Graphics, Computer Vision, Algorithm Design, AI, Object-Oriented Design."
+                        },
+                        {
+                            title: "Student Intern - Enterprise Dev",
+                            date: "Dec 2024 (Summer Break)",
+                            loc: "Zhongshan Overseas Scholars Science & Technology Innovation Park",
+                            desc: "Assisted in technical feasibility analysis and market research for local tech startups. Collaborated with cross-functional teams to optimize business plans."
+                        },
+                        {
+                            title: "Student Manager",
+                            date: "2019 - 2020",
+                            loc: "Non-Profit Coffee Shop, Sacramento, CA",
+                            desc: "Led a team of 5+ staff, managing operational scheduling and inventory logistics."
+                        }
+                    ]
+                },
+                contact: {
+                    title: "INITIALIZE_CONNECTION",
+                    desc: "Currently looking for opportunities in Game Development and Software Engineering. Let's build something extraordinary together.",
+                    labels: { email: "EMAIL", linkedin: "LINKEDIN", github: "GITHUB" },
+                    footer_rights: "© 2025 William Liu. All systems nominal."
+                }
+            },
+            zhCN: {
+                nav: { about: "关于", proj: "项目", skill: "技能", contact: "联系" },
+                hero: {
+                    name: "刘军佑 (WILLIAM LIU)",
+                    role: "游戏开发者 | 软件工程师 | 计算机科学本科生",
+                    btn_proj: "查看项目",
+                    btn_contact: "联系我"
+                },
+                about: {
+                    title: "关于我",
+                    paragraphs: [
+                        {
+                            head: "以代码为笔，构建虚拟世界",
+                            text: "从萨克拉门托到悉尼，跨文化的成长经历赋予了我开阔的视野，也让我学会了如何从不同角度思考问题。作为 *UNSW* 计算机科学专业的应届生，我不仅热衷于编写代码，更痴迷于用技术手段解决创意难题。"
+                        },
+                        {
+                            head: "硬核技术与解决问题",
+                            text: "对我而言，游戏开发是数学与艺术的完美结合。我不满足于调用现成的 API，而是喜欢深入底层逻辑。\n• 物理仿真：在项目 *Binary Echoes* 中，我利用 *Vector Math* 通过 *C++* 构建了自定义的“重力调谐”系统，实现了复杂的双体轨道力学模拟。\n• 管线优化：我擅长利用现代工具提升效率，曾通过引入 *Generative AI* 解决了团队的美术资源瓶颈，将环境资产的制作自动化。"
+                        },
+                        {
+                            head: "未来展望",
+                            text: "我精通 *C++* 和 *Unreal Engine 5*，熟悉计算机图形学与算法。我正在寻找一个能让我发挥工程思维与创造力的平台，去挑战更复杂的游戏技术难题。"
+                        }
+                    ],
+                    toolkit_title: "我的工具箱",
+                    loc: "澳大利亚 悉尼",
+                    grad: "毕业时间：2026 年中",
+                    lang: "英语 / 普通话 / 粤语"
+                },
+                project: {
+                    title: "精选项目",
+                    subtitle: "3D 解谜平台游戏 • UNREAL ENGINE 5",
+                    tabs: { mechanics: "核心机制", audio: "音频系统", tech: "技术管线" },
+                    mech_title: "引力调谐系统",
+                    mech_desc: "利用实时向量数学计算双体引力牵引的自定义物理系统。",
+                    mech_list: ["基于物理的轨道轨迹计算。", "动态球体表面碰撞检测。", "零重力过渡的角色状态机。"],
+                    audio_title: "程序化交响乐",
+                    audio_desc: "构建了一个音频系统，通过游戏状态变量驱动实时音乐合成。",
+                    audio_list: ["音乐随关卡进度演变。", "将游戏玩法直接关联至音频引擎参数。"],
+                    tech_title: "管线优化",
+                    tech_desc: "利用现代技术解决小团队的资产生产瓶颈。",
+                    tech_list: ["利用生成式 AI 制作 80% 的环境模型/纹理。", "C++ 实现复杂的第三人称相机逻辑。"],
+                    role_label: "角色：核心玩法工程师",
+                    read_proposal: "阅读提案"
+                },
+                skills: {
+                    title: "技术工具集",
+                    cat_lang: "编程语言 & 核心",
+                    cat_game: "游戏工程",
+                    cat_tools: "开发工具 & 环境"
+                },
+                timeline: {
+                    title: "经历时间轴",
+                    items: [
+                        {
+                            title: "计算机科学学士",
+                            date: "预计 2026 年中毕业",
+                            loc: "新南威尔士大学 (UNSW)",
+                            desc: "课程：计算机图形学、计算机视觉、算法设计、AI、面向对象设计。"
+                        },
+                        {
+                            title: "实习生",
+                            date: "2024 年 12 月 (暑期)",
+                            loc: "中国中山留学人员创业园 (Zhongshan OSTA)",
+                            desc: "协助初创科技企业进行技术可行性分析和市场调研。与跨职能团队合作，优化商业计划书与服务策略。"
+                        },
+                        {
+                            title: "学生经理",
+                            date: "2019 - 2020",
+                            loc: "非营利咖啡店, 美国萨克拉门托",
+                            desc: "领导 5 人以上的团队，管理运营排班和库存物流。"
+                        }
+                    ]
+                },
+                contact: {
+                    title: "建立连接",
+                    desc: "目前正在寻找游戏开发和软件工程领域的工作机会。让我们一起创造非凡。",
+                    labels: { email: "邮箱", linkedin: "领英", github: "GITHUB" },
+                    footer_rights: "© 2025 刘军佑. 所有系统正常运行。"
+                }
+            },
+            zhTW: {
+                nav: { about: "關於", proj: "專案", skill: "技能", contact: "聯絡" },
+                hero: {
+                    name: "劉軍佑 (WILLIAM LIU)",
+                    role: "遊戲開發者 | 軟體工程師 | 計算機科學本科生",
+                    btn_proj: "檢視專案",
+                    btn_contact: "聯絡我"
+                },
+                about: {
+                    title: "關於我",
+                    paragraphs: [
+                        {
+                            head: "以程式碼為筆，構建虛擬世界",
+                            text: "從薩克拉門托到雪梨，跨文化的成長經歷賦予了我開闊的視野，也讓我學會了如何從不同角度思考問題。作為 *UNSW* 計算機科學專業的應屆生，我不僅熱衷於編寫程式碼，更痴迷於用技術手段解決創意難題。"
+                        },
+                        {
+                            head: "硬核技術與解決問題",
+                            text: "對我而言，遊戲開發是數學與藝術的完美結合。我不滿足於調用現成的 API，而是喜歡深入底層邏輯。\n• 物理仿真：在專案 *Binary Echoes* 中，我利用 *Vector Math* 透過 *C++* 構建了自定義的「引力調諧」系統，實現了複雜的雙體軌道力學模擬。\n• 管線最佳化：我擅長利用現代工具提升效率，曾透過引入 *Generative AI* 解決了團隊的美術資源瓶頸，將環境資產的製作自動化。"
+                        },
+                        {
+                            head: "未來展望",
+                            text: "我精通 *C++* 和 *Unreal Engine 5*，熟悉電腦圖學與演算法。我正在尋找一個能讓我發揮工程思維與創造力的平台，去挑戰更複雜的遊戲技術難題。"
+                        }
+                    ],
+                    toolkit_title: "我的工具箱",
+                    loc: "澳洲 雪梨",
+                    grad: "畢業時間：2026 年中",
+                    lang: "英語 / 普通話 / 粵語"
+                },
+                project: {
+                    title: "精選專案",
+                    subtitle: "3D 解謎平台遊戲 • UNREAL ENGINE 5",
+                    tabs: { mechanics: "核心機制", audio: "音訊系統", tech: "技術管線" },
+                    mech_title: "引力調諧系統",
+                    mech_desc: "利用即時向量數學計算雙體引力牽引的自定義物理系統。",
+                    mech_list: ["基於物理的軌道軌跡計算。", "動態球體表面碰撞檢測。", "零重力過渡的角色狀態機。"],
+                    audio_title: "程序化交響樂",
+                    audio_desc: "構建了一個音訊系統，透過遊戲狀態變數驅動即時音樂合成。",
+                    audio_list: ["音樂隨關卡進度演變。", "將遊戲玩法直接關聯至音訊引擎參數。"],
+                    tech_title: "管線最佳化",
+                    tech_desc: "利用現代技術解決小團隊的資產生產瓶頸。",
+                    tech_list: ["利用生成式 AI 製作 80% 的環境模型/紋理。", "C++ 實現複雜的第三人稱相機邏輯。"],
+                    role_label: "角色：核心玩法工程師",
+                    read_proposal: "閱讀提案"
+                },
+                skills: {
+                    title: "技術工具集",
+                    cat_lang: "程式語言 & 核心",
+                    cat_game: "遊戲工程",
+                    cat_tools: "開發工具 & 環境"
+                },
+                timeline: {
+                    title: "經歷時間軸",
+                    items: [
+                        {
+                            title: "計算機科學學士",
+                            date: "預計 2026 年中畢業",
+                            loc: "新南威爾斯大學 (UNSW)",
+                            desc: "課程：電腦圖學、電腦視覺、演算法設計、AI、物件導向設計。"
+                        },
+                        {
+                            title: "實習生",
+                            date: "2024 年 12 月 (暑期)",
+                            loc: "中國中山留學人員創業園 (Zhongshan OSTA)",
+                            desc: "協助初創科技企業進行技術可行性分析和市場調研。與跨職能團隊合作，最佳化商業計劃書與服務策略。"
+                        },
+                        {
+                            title: "學生經理",
+                            date: "2019 - 2020",
+                            loc: "非營利咖啡店, 美國薩克拉門托",
+                            desc: "領導 5 人以上的團隊，管理營運排班和庫存物流。"
+                        }
+                    ]
+                },
+                contact: {
+                    title: "建立連線",
+                    desc: "目前正在尋找遊戲開發和軟體工程領域的工作機會。讓我們一起創造非凡。",
+                    labels: { email: "信箱", linkedin: "領英", github: "GITHUB" },
+                    footer_rights: "© 2025 劉軍佑. 所有系統正常運行。"
+                }
+            }
+        };
+
+        // --- 簡易圖標組件 (替代 Lucide-React) ---
+        const Icon = ({ path, className }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className}
+            >
+                {path}
+            </svg>
+        );
+
+        const Icons = {
+            Gamepad2: (props) => <Icon {...props} path={<><line x1="6" y1="11" x2="10" y2="11"></line><line x1="8" y1="9" x2="8" y2="13"></line><line x1="15" y1="12" x2="15.01" y2="12"></line><line x1="18" y1="10" x2="18.01" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></>} />,
+            Code2: (props) => <Icon {...props} path={<><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="m14.5 4-5 16"></path></>} />,
+            Cpu: (props) => <Icon {...props} path={<><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></>} />,
+            Globe: (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></>} />,
+            Mail: (props) => <Icon {...props} path={<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></>} />,
+            Linkedin: (props) => <Icon {...props} path={<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></>} />,
+            Github: (props) => <Icon {...props} path={<><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></>} />,
+            Terminal: (props) => <Icon {...props} path={<><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></>} />,
+            ChevronDown: (props) => <Icon {...props} path={<><polyline points="6 9 12 15 18 9"></polyline></>} />,
+            Play: (props) => <Icon {...props} path={<><polygon points="5 3 19 12 5 21 5 3"></polygon></>} />,
+            Music: (props) => <Icon {...props} path={<><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></>} />,
+            Zap: (props) => <Icon {...props} path={<><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></>} />,
+            BookOpen: (props) => <Icon {...props} path={<><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></>} />,
+            Briefcase: (props) => <Icon {...props} path={<><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></>} />,
+            Languages: (props) => <Icon {...props} path={<><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></>} />,
+        };
+
+        // --- 組件開始 ---
+
+        // Starfield Background
+        const Starfield = () => {
+            const canvasRef = useRef(null);
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let width = window.innerWidth;
+                let height = window.innerHeight;
+                let animationFrameId;
+                const resizeCanvas = () => { width = window.innerWidth; height = window.innerHeight; canvas.width = width; canvas.height = height; };
+                resizeCanvas();
+                const stars = [];
+                for (let i = 0; i < 150; i++) stars.push({ x: Math.random() * width, y: Math.random() * height, z: Math.random() * width, size: Math.random() * 2, speed: Math.random() * 0.5 + 0.1 });
+                const animate = () => {
+                    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, width, height);
+                    stars.forEach(s => {
+                        s.z -= s.speed * 2; if (s.z <= 0) { s.z = width; s.x = Math.random() * width; s.y = Math.random() * height; }
+                        const x = (s.x - width / 2) * (width / s.z) + width / 2;
+                        const y = (s.y - height / 2) * (width / s.z) + height / 2;
+                        const sz = (1 - s.z / width) * s.size * 2;
+                        if (x >= 0 && x <= width && y >= 0 && y <= height) {
+                            ctx.fillStyle = `rgba(255, 255, 255, ${1 - s.z / width})`; ctx.beginPath(); ctx.arc(x, y, sz, 0, Math.PI * 2); ctx.fill();
+                        }
+                    });
+                    animationFrameId = requestAnimationFrame(animate);
+                };
+                window.addEventListener('resize', resizeCanvas); animate();
+                return () => { window.removeEventListener('resize', resizeCanvas); cancelAnimationFrame(animationFrameId); };
+            }, []);
+            return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
+        };
+
+        const SkillBar = ({ name, level, color }) => (
+            <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-300">{name}</span>
+                    <span className="text-sm font-medium text-gray-400">{level}%</span>
+                </div>
+                <div className="w-full bg-gray-800 rounded-full h-2.5 border border-gray-700">
+                    <div className={`h-2.5 rounded-full ${color} transition-all duration-1000 ease-out`} style={{ width: `${level}%` }}></div>
+                </div>
+            </div>
+        );
+
+        // Text parsing helper
+        const HighlightText = ({ text }) => {
+            if (!text) return null;
+            const parts = text.split('*');
+            return (
+                <span>
+                    {parts.map((part, index) => 
+                        index % 2 === 1 ? 
+                            <span key={index} className="text-cyan-400 font-bold">{part}</span> : 
+                            <span key={index}>{part}</span>
+                    )}
+                </span>
+            );
+        };
+
+        // Reduced vertical padding from py-20 to py-12
+        const Section = ({ title, icon, children, id }) => {
+            const IconComponent = icon;
+            return (
+                <section id={id} className="py-12 md:py-16 px-4 md:px-8 max-w-6xl mx-auto border-l border-gray-800 ml-4 md:ml-20 relative">
+                    <div className="absolute -left-3 top-12 md:top-16 w-6 h-6 bg-cyan-500 rounded-full border-4 border-black flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    </div>
+                    <div className="mb-8 flex items-center space-x-4">
+                        <IconComponent className="w-8 h-8 text-cyan-400" />
+                        <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-wider font-cjk">{title}</h2>
+                    </div>
+                    {children}
+                </section>
+            );
+        };
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('mechanics');
+            const [scrolled, setScrolled] = useState(false);
+            const [lang, setLang] = useState('en');
+
+            const t = translations[lang];
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const scrollTo = (id) => {
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="min-h-screen text-gray-300 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden font-cjk">
+                    <Starfield />
+                    
+                    {/* Navigation */}
+                    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-gray-800 py-3' : 'py-6'}`}>
+                        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)] bg-gray-900 flex items-center justify-center">
+                                    <span className="font-bold text-cyan-500 text-xs md:text-sm">W.L</span>
+                                </div>
+                                <span className="text-xl font-bold text-white tracking-widest hidden md:block">WILL.LIU</span>
+                            </div>
+                            
+                            <div className="flex items-center gap-6">
+                                <div className="hidden md:flex space-x-6 text-sm font-mono text-cyan-400">
+                                    <button onClick={() => scrollTo('about')} className="hover:text-white transition-colors">{t.nav.about}</button>
+                                    <button onClick={() => scrollTo('projects')} className="hover:text-white transition-colors">{t.nav.proj}</button>
+                                    <button onClick={() => scrollTo('skills')} className="hover:text-white transition-colors">{t.nav.skill}</button>
+                                    <button onClick={() => scrollTo('contact')} className="hover:text-white transition-colors">{t.nav.contact}</button>
+                                </div>
+                                
+                                {/* Language Switcher */}
+                                <div className="flex items-center bg-gray-900 rounded-full px-2 py-1 border border-gray-800 text-xs font-bold font-mono">
+                                    <button onClick={() => setLang('en')} className={`px-2 py-1 rounded transition-colors ${lang === 'en' ? 'bg-cyan-900 text-cyan-400' : 'text-gray-500 hover:text-white'}`}>EN</button>
+                                    <span className="text-gray-700">|</span>
+                                    <button onClick={() => setLang('zhCN')} className={`px-2 py-1 rounded transition-colors ${lang === 'zhCN' ? 'bg-cyan-900 text-cyan-400' : 'text-gray-500 hover:text-white'}`}>简</button>
+                                    <span className="text-gray-700">|</span>
+                                    <button onClick={() => setLang('zhTW')} className={`px-2 py-1 rounded transition-colors ${lang === 'zhTW' ? 'bg-cyan-900 text-cyan-400' : 'text-gray-500 hover:text-white'}`}>繁</button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header className="h-screen flex flex-col justify-center items-center relative px-4 text-center">
+                        <div className="absolute top-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+                        <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-4 tracking-tight z-10 font-cjk">
+                            {t.hero.name}
+                        </h1>
+                        <div className="flex items-center gap-2 mb-8">
+                            <span className="h-px w-12 bg-gray-600"></span>
+                            <p className="text-lg md:text-xl text-gray-400 font-mono tracking-wide uppercase">{t.hero.role}</p>
+                            <span className="h-px w-12 bg-gray-600"></span>
+                        </div>
+                        <div className="flex gap-4 z-10">
+                            <a href="#projects" onClick={(e) => {e.preventDefault(); scrollTo('projects')}} className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-sm border-b-4 border-cyan-800 active:border-b-0 active:translate-y-1 transition-all flex items-center gap-2 cursor-pointer">
+                                <Icons.Gamepad2 size={20} /> {t.hero.btn_proj}
+                            </a>
+                            <a href="#contact" onClick={(e) => {e.preventDefault(); scrollTo('contact')}} className="px-8 py-3 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-sm border-b-4 border-gray-950 active:border-b-0 active:translate-y-1 transition-all cursor-pointer">
+                                {t.hero.btn_contact}
+                            </a>
+                        </div>
+                        <div className="absolute bottom-10 animate-bounce cursor-pointer" onClick={() => scrollTo('about')}>
+                            <Icons.ChevronDown className="text-cyan-500 w-8 h-8" />
+                        </div>
+                    </header>
+
+                    {/* About Section */}
+                    <Section title={t.about.title} icon={Icons.Terminal} id="about">
+                        <div className="bg-gray-900/50 backdrop-blur border border-gray-800 p-8 rounded-lg shadow-2xl font-cjk">
+                            
+                            <div className="space-y-8">
+                                {t.about.paragraphs.map((para, index) => (
+                                    <div key={index}>
+                                        <h3 className="text-xl text-white font-bold mb-3 border-l-4 border-cyan-500 pl-3">{para.head}</h3>
+                                        <p className="text-lg leading-relaxed text-gray-300 whitespace-pre-line">
+                                            <HighlightText text={para.text} />
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Toolkit Row */}
+                            <div className="mt-12 pt-8 border-t border-gray-800">
+                                <h4 className="text-sm font-mono text-cyan-500 mb-6 tracking-widest uppercase">{t.about.toolkit_title}</h4>
+                                <div className="flex flex-wrap gap-8 items-center text-gray-400">
+                                    <div className="flex flex-col items-center gap-2 group">
+                                        <BrandIcons.Unreal className="w-10 h-10 group-hover:text-white transition-colors" />
+                                        <span className="text-xs font-bold">UNREAL 5</span>
+                                    </div>
+                                    <div className="flex flex-col items-center gap-2 group">
+                                        <BrandIcons.Cpp className="w-10 h-10 group-hover:text-blue-400 transition-colors" />
+                                        <span className="text-xs font-bold">C++</span>
+                                    </div>
+                                    <div className="flex flex-col items-center gap-2 group">
+                                        <BrandIcons.Python className="w-10 h-10 group-hover:text-yellow-400 transition-colors" />
+                                        <span className="text-xs font-bold">PYTHON</span>
+                                    </div>
+                                    <div className="flex flex-col items-center gap-2 group">
+                                        <Icons.Github className="w-10 h-10 group-hover:text-purple-400 transition-colors" />
+                                        <span className="text-xs font-bold">GIT</span>
+                                    </div>
+                                    <div className="flex flex-col items-center gap-2 group">
+                                        <BrandIcons.Jira className="w-10 h-10 group-hover:text-blue-500 transition-colors" />
+                                        <span className="text-xs font-bold">JIRA</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-wrap gap-4 mt-8 pt-6 border-t border-gray-800/50">
+                                <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm">
+                                    <Icons.Globe size={16} className="text-blue-400" /> {t.about.loc}
+                                </div>
+                                <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm">
+                                    <Icons.BookOpen size={16} className="text-yellow-400" /> {t.about.grad}
+                                </div>
+                                <div className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded text-sm">
+                                    <Icons.Languages size={16} className="text-pink-400" /> {t.about.lang}
+                                </div>
+                            </div>
+                        </div>
+                    </Section>
+
+                    {/* Featured Project Section */}
+                    <Section title={t.project.title} icon={Icons.Gamepad2} id="projects">
+                        <div className="relative group">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                            <div className="relative bg-black border border-gray-800 rounded-lg overflow-hidden font-cjk">
+                                <div className="grid md:grid-cols-12 gap-0">
+                                    <div className="md:col-span-7 bg-gray-900 min-h-[300px] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/40 via-gray-900 to-black"></div>
+                                        <div className="w-32 h-32 rounded-full border-4 border-cyan-500/30 flex items-center justify-center z-10 animate-[spin_10s_linear_infinite]">
+                                            <div className="w-20 h-20 rounded-full border-2 border-purple-500/50"></div>
+                                        </div>
+                                        <div className="z-10 text-center mt-8">
+                                            <h3 className="text-3xl font-bold text-white tracking-widest mb-2">BINARY ECHOES</h3>
+                                            <p className="text-cyan-400 font-mono text-sm uppercase">{t.project.subtitle}</p>
+                                        </div>
+                                    </div>
+                                    <div className="md:col-span-5 bg-gray-950 p-6 md:p-8 flex flex-col">
+                                        <div className="flex space-x-2 mb-6 border-b border-gray-800 pb-2 overflow-x-auto">
+                                            {Object.keys(t.project.tabs).map((tabKey) => (
+                                                <button key={tabKey} onClick={() => setActiveTab(tabKey)} className={`pb-2 px-2 text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap ${activeTab === tabKey ? 'text-cyan-400 border-b-2 border-cyan-400' : 'text-gray-500 hover:text-gray-300'}`}>{t.project.tabs[tabKey]}</button>
+                                            ))}
+                                        </div>
+                                        <div className="flex-grow min-h-[150px]">
+                                            {activeTab === 'mechanics' && (
+                                                <div className="animate-in fade-in duration-300">
+                                                    <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-3">
+                                                        <Icons.Zap className="text-yellow-400" size={20} /> {t.project.mech_title}
+                                                    </h4>
+                                                    <p className="text-gray-400 text-sm mb-4">{t.project.mech_desc}</p>
+                                                    <ul className="space-y-2 text-sm text-gray-400">
+                                                        {t.project.mech_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                            {activeTab === 'audio' && (
+                                                <div className="animate-in fade-in duration-300">
+                                                    <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-3">
+                                                        <Icons.Music className="text-purple-400" size={20} /> {t.project.audio_title}
+                                                    </h4>
+                                                    <p className="text-gray-400 text-sm mb-4">{t.project.audio_desc}</p>
+                                                    <ul className="space-y-2 text-sm text-gray-400">
+                                                        {t.project.audio_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                            {activeTab === 'tech' && (
+                                                <div className="animate-in fade-in duration-300">
+                                                    <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-3">
+                                                        <Icons.Cpu className="text-green-400" size={20} /> {t.project.tech_title}
+                                                    </h4>
+                                                    <p className="text-gray-400 text-sm mb-4">{t.project.tech_desc}</p>
+                                                    <ul className="space-y-2 text-sm text-gray-400">
+                                                        {t.project.tech_list.map((item, i) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-500 mt-1">▹</span><span>{item}</span></li>)}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="mt-6 pt-6 border-t border-gray-800 flex justify-between items-center">
+                                            <span className="text-xs text-gray-500 font-mono uppercase">{t.project.role_label}</span>
+                                            <a href="https://docs.google.com/document/d/1lI90sh2X4JyCLfQ4JEembZV6-F2xDInixtdAHQn0SQI/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-white transition-colors text-sm flex items-center gap-1 font-bold whitespace-nowrap">
+                                                {t.project.read_proposal} <Icons.Play size={12} />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Section>
+
+                    {/* Skills Section */}
+                    <Section title={t.skills.title} icon={Icons.Code2} id="skills">
+                        <div className="grid md:grid-cols-2 gap-12 font-cjk">
+                            <div>
+                                <h3 className="text-xl font-bold text-white mb-6 border-l-4 border-cyan-500 pl-4">{t.skills.cat_lang}</h3>
+                                <SkillBar name="C / C++ / Unreal Engine" level={90} color="bg-blue-600" />
+                                <SkillBar name="Data Structures & Algorithms" level={90} color="bg-purple-500" />
+                                <SkillBar name="Python" level={85} color="bg-yellow-500" />
+                                <SkillBar name="Java" level={80} color="bg-orange-600" />
+                                <SkillBar name="SQL / MIPS Assembly" level={75} color="bg-gray-500" />
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-white mb-6 border-l-4 border-purple-500 pl-4">{t.skills.cat_game}</h3>
+                                <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                                    <div className="flex flex-wrap gap-2">
+                                        {["Unreal Engine 5", "Gameplay Programming", "Physics Simulation", "3D Math", "State Machines", "Performance Optimization", "Computer Vision", "Generative AI Integration"].map((skill, i) => (
+                                            <span key={i} className="px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded text-sm text-cyan-100 transition-colors cursor-default">{skill}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-bold text-white mt-8 mb-6 border-l-4 border-green-500 pl-4">{t.skills.cat_tools}</h3>
+                                <div className="flex gap-4 text-gray-400 flex-wrap">
+                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 bg-gray-800 rounded-full group-hover:bg-purple-900/30 transition-colors"><Icons.Github size={20} className="group-hover:text-purple-400 transition-colors" /></div><span className="text-xs">Git</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><Icons.Terminal size={20} className="group-hover:text-blue-400 transition-colors" /></div><span className="text-xs">Visual Studio</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><BrandIcons.VsCode className="w-5 h-5 group-hover:text-blue-400 transition-colors" /></div><span className="text-xs">VS Code</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 bg-gray-800 rounded-full group-hover:bg-yellow-900/30 transition-colors"><BrandIcons.Linux className="w-5 h-5 group-hover:text-yellow-400 transition-colors" /></div><span className="text-xs">Linux</span></div>
+                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><BrandIcons.Jira className="w-5 h-5 group-hover:text-blue-500 transition-colors" /></div><span className="text-xs">Jira</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </Section>
+
+                    {/* Experience Section */}
+                    <Section title={t.timeline.title} icon={Icons.Briefcase} id="timeline">
+                        <div className="space-y-8 font-cjk">
+                            {t.timeline.items.map((item, index) => (
+                                <div key={index} className={`relative pl-8 border-l-2 border-gray-800 transition-colors duration-300 ${index === 0 ? 'hover:border-cyan-500' : index === 1 ? 'hover:border-purple-500' : 'hover:border-green-500'}`}>
+                                    <div className={`absolute -left-[9px] top-0 w-4 h-4 bg-gray-900 border-2 rounded-full ${index === 0 ? 'border-cyan-500' : index === 1 ? 'border-purple-500' : 'border-green-500'}`}></div>
+                                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
+                                        <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                                        <span className={`text-sm font-mono ${index === 0 ? 'text-cyan-500' : index === 1 ? 'text-purple-400' : 'text-green-400'}`}>{item.date}</span>
+                                    </div>
+                                    <p className="text-gray-400 mb-2">{item.loc}</p>
+                                    <p className="text-sm text-gray-500 max-w-2xl">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </Section>
+
+                    {/* Contact Section */}
+                    <footer id="contact" className="bg-black border-t border-gray-900 py-20 px-4 font-cjk">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <h2 className="text-4xl font-bold text-white mb-8 uppercase">{t.contact.title}</h2>
+                            <p className="text-gray-400 mb-12 max-w-xl mx-auto">{t.contact.desc}</p>
+                            <div className="flex flex-wrap justify-center gap-6">
+                                <a href="mailto:william.liuunsw@gmail.com" className="group flex items-center gap-3 bg-gray-900 px-6 py-4 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-cyan-500 transition-all">
+                                    <div className="p-2 bg-black rounded-full text-cyan-500 group-hover:scale-110 transition-transform"><Icons.Mail size={24} /></div>
+                                    <div className="text-left"><span className="block text-xs text-gray-500 font-mono">{t.contact.labels.email}</span><span className="text-white font-medium">william.liuunsw@gmail.com</span></div>
+                                </a>
+                                <a href="https://linkedin.com/in/liu-william-819849368" target="_blank" className="group flex items-center gap-3 bg-gray-900 px-6 py-4 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-blue-500 transition-all">
+                                    <div className="p-2 bg-black rounded-full text-blue-500 group-hover:scale-110 transition-transform"><Icons.Linkedin size={24} /></div>
+                                    <div className="text-left"><span className="block text-xs text-gray-500 font-mono">{t.contact.labels.linkedin}</span><span className="text-white font-medium">Connect</span></div>
+                                </a>
+                                <a href="https://github.com/WilliamLiu5318851" target="_blank" className="group flex items-center gap-3 bg-gray-900 px-6 py-4 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-purple-500 transition-all">
+                                    <div className="p-2 bg-black rounded-full text-purple-500 group-hover:scale-110 transition-transform"><Icons.Github size={24} /></div>
+                                    <div className="text-left"><span className="block text-xs text-gray-500 font-mono">{t.contact.labels.github}</span><span className="text-white font-medium">WilliamLiu5318851</span></div>
+                                </a>
+                            </div>
+                            <div className="mt-20 pt-8 border-t border-gray-900 text-gray-600 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                    <span>{t.contact.footer_rights}</span>
+                                </div>
+                                <div className="font-mono text-xs text-cyan-900">ID: 819849368 // LOC: SYD_AU</div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
