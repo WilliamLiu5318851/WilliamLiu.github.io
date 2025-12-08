@@ -47,11 +47,7 @@
     </style>
 </head>
 <body>
-    <div id="root">
-        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: #333;">
-            INITIALIZING SYSTEM...
-        </div>
-    </div>
+    <div id="root"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
@@ -380,36 +376,90 @@
         // --- 星空背景组件 ---
         const Starfield = () => {
             const canvasRef = useRef(null);
+
             useEffect(() => {
                 const canvas = canvasRef.current;
+                if (!canvas) return;
                 const ctx = canvas.getContext('2d');
-                let width = window.innerWidth;
-                let height = window.innerHeight;
+
+                let width = 0;
+                let height = 0;
+                let stars = [];
+                // 增加星星数量，因为优化后性能更高
+                const starCount = 300; 
                 let animationFrameId;
-                const resizeCanvas = () => { 
-                    width = window.innerWidth; 
-                    height = window.innerHeight; 
-                    canvas.width = width; 
-                    canvas.height = height; 
+                let resizeTimeout;
+
+                const createStar = (isInitial) => ({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    // 初始时随机分布z，重置时从最远处开始
+                    z: isInitial ? Math.random() * width : width, 
+                    size: Math.random() * 1.5 + 0.5,
+                    speed: Math.random() * 0.5 + 0.2
+                });
+
+                // 初始化或重置画布和星星
+                const setup = () => {
+                    width = window.innerWidth;
+                    height = window.innerHeight;
+                    canvas.width = width;
+                    canvas.height = height;
+                    stars = Array.from({ length: starCount }, () => createStar(true));
                 };
-                resizeCanvas();
-                const stars = [];
-                for (let i = 0; i < 150; i++) stars.push({ x: Math.random() * width, y: Math.random() * height, z: Math.random() * width, size: Math.random() * 2, speed: Math.random() * 0.5 + 0.1 });
+
                 const animate = () => {
-                    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, width, height);
-                    stars.forEach(s => {
-                        s.z -= s.speed * 2; if (s.z <= 0) { s.z = width; s.x = Math.random() * width; s.y = Math.random() * height; }
-                        const x = (s.x - width / 2) * (width / s.z) + width / 2;
-                        const y = (s.y - height / 2) * (width / s.z) + height / 2;
-                        const sz = (1 - s.z / width) * s.size * 2;
-                        if (x >= 0 && x <= width && y >= 0 && y <= height) {
-                            ctx.fillStyle = `rgba(255, 255, 255, ${1 - s.z / width})`; ctx.beginPath(); ctx.arc(x, y, sz, 0, Math.PI * 2); ctx.fill();
+                    const halfWidth = width / 2;
+                    const halfHeight = height / 2;
+
+                    ctx.fillStyle = '#050505';
+                    ctx.fillRect(0, 0, width, height);
+
+                    stars.forEach(star => {
+                        star.z -= star.speed;
+
+                        if (star.z <= 0) {
+                            // 重置星星
+                            Object.assign(star, createStar(false));
+                        }
+
+                        const k = width / star.z;
+                        const px = (star.x - halfWidth) * k + halfWidth;
+                        const py = (star.y - halfHeight) * k + halfHeight;
+
+                        if (px >= 0 && px < width && py >= 0 && py < height) {
+                            const size = (1 - star.z / width) * star.size * 2;
+                            const alpha = (1 - star.z / width);
+
+                            // 性能优化 #1: 使用 fillRect 代替 arc，绘制小方块比绘制圆形快得多
+                            ctx.fillStyle = `rgba(255, 255, 255, ${alpha * alpha})`; // alpha平方使亮度变化更自然
+                            ctx.fillRect(Math.floor(px), Math.floor(py), size, size); // 使用 floor 提高渲染性能
                         }
                     });
                     animationFrameId = requestAnimationFrame(animate);
                 };
-                window.addEventListener('resize', resizeCanvas); animate();
-                return () => { window.removeEventListener('resize', resizeCanvas); cancelAnimationFrame(animationFrameId); };
+
+                // 性能优化 #2: 使用 debounce（防抖）处理 resize 事件
+                const handleResize = () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        cancelAnimationFrame(animationFrameId);
+                        setup();
+                        animate();
+                    }, 250);
+                };
+
+                setup();
+                animate();
+
+                window.addEventListener('resize', handleResize);
+
+                // 清理函数
+                return () => {
+                    window.removeEventListener('resize', handleResize);
+                    cancelAnimationFrame(animationFrameId);
+                    clearTimeout(resizeTimeout);
+                };
             }, []);
             return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
         };
