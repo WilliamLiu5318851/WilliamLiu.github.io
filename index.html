@@ -385,50 +385,9 @@
 
         const Starfield = () => {
             const canvasRef = useRef(null);
-<<<<<<< HEAD
-            const animationRef = useRef({
-                stars: [],
-                width: 0,
-                height: 0,
-                animationFrameId: null,
-            });
-
-=======
->>>>>>> parent of 8cbbe4c (Update index.html)
             useEffect(() => {
                 const canvas = canvasRef.current;
                 const ctx = canvas.getContext('2d');
-<<<<<<< HEAD
-                const anim = animationRef.current;
-
-                let resizeTimeout;
-                const debounce = (func, delay) => {
-                    return (...args) => {
-                        clearTimeout(resizeTimeout);
-                        resizeTimeout = setTimeout(() => func.apply(this, args), delay);
-                    };
-                };
-
-                const initStars = () => {
-                    anim.stars = [];
-                    for (let i = 0; i < 150; i++) {
-                        anim.stars.push({
-                            x: Math.random() * anim.width,
-                            y: Math.random() * anim.height,
-                            z: Math.random() * anim.width,
-                            size: Math.random() * 2,
-                            speed: Math.random() * 0.5 + 0.1
-                        });
-                    }
-                };
-
-                const handleResize = () => {
-                    anim.width = window.innerWidth;
-                    anim.height = window.innerHeight;
-                    canvas.width = anim.width;
-                    canvas.height = anim.height;
-                    initStars();
-=======
                 let width = window.innerWidth;
                 let height = window.innerHeight;
                 let animationFrameId;
@@ -437,40 +396,11 @@
                     height = window.innerHeight; 
                     canvas.width = width; 
                     canvas.height = height; 
->>>>>>> parent of 8cbbe4c (Update index.html)
                 };
                 resizeCanvas();
                 const stars = [];
                 for (let i = 0; i < 150; i++) stars.push({ x: Math.random() * width, y: Math.random() * height, z: Math.random() * width, size: Math.random() * 2, speed: Math.random() * 0.5 + 0.1 });
                 const animate = () => {
-<<<<<<< HEAD
-                    const centerX = anim.width / 2;
-                    const centerY = anim.height / 2;
-
-                    ctx.fillStyle = '#050505';
-                    ctx.fillRect(0, 0, anim.width, anim.height);
-
-                    ctx.fillStyle = 'white';
-
-                    anim.stars.forEach(s => {
-                        s.z -= s.speed * 2;
-                        if (s.z <= 0) {
-                            s.z = anim.width;
-                            s.x = Math.random() * anim.width;
-                            s.y = Math.random() * anim.height;
-                        }
-
-                        const k = anim.width / s.z;
-                        const x = (s.x - centerX) * k + centerX;
-                        const y = (s.y - centerY) * k + centerY;
-
-                        if (x >= 0 && x < anim.width && y >= 0 && y < anim.height) {
-                            const sz = (1 - s.z / anim.width) * s.size * 2;
-                            ctx.globalAlpha = 1 - s.z / anim.width;
-                            ctx.beginPath();
-                            ctx.arc(x, y, sz, 0, Math.PI * 2);
-                            ctx.fill();
-=======
                     ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, width, height);
                     stars.forEach(s => {
                         s.z -= s.speed * 2; if (s.z <= 0) { s.z = width; s.x = Math.random() * width; s.y = Math.random() * height; }
@@ -479,29 +409,12 @@
                         const sz = (1 - s.z / width) * s.size * 2;
                         if (x >= 0 && x <= width && y >= 0 && y <= height) {
                             ctx.fillStyle = `rgba(255, 255, 255, ${1 - s.z / width})`; ctx.beginPath(); ctx.arc(x, y, sz, 0, Math.PI * 2); ctx.fill();
->>>>>>> parent of 8cbbe4c (Update index.html)
                         }
                     });
-                    ctx.globalAlpha = 1;
-                    anim.animationFrameId = requestAnimationFrame(animate);
+                    animationFrameId = requestAnimationFrame(animate);
                 };
-<<<<<<< HEAD
-
-                const debouncedResize = debounce(handleResize, 250);
-                window.addEventListener('resize', debouncedResize);
-                
-                handleResize();
-                animate();
-
-                return () => {
-                    window.removeEventListener('resize', debouncedResize);
-                    cancelAnimationFrame(anim.animationFrameId);
-                    clearTimeout(resizeTimeout);
-                };
-=======
                 window.addEventListener('resize', resizeCanvas); animate();
                 return () => { window.removeEventListener('resize', resizeCanvas); cancelAnimationFrame(animationFrameId); };
->>>>>>> parent of 8cbbe4c (Update index.html)
             }, []);
             return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
         };
@@ -555,12 +468,17 @@
 
         // --- Map Component ---
         const WorldMap = ({ locations, activeLoc, onLocClick }) => {
-            const mapPathData = "M995 233.3c-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7
             return (
                 <div className="relative w-full pb-[50%] bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
-                    {/* Stylized World Map SVG */}
-                    <svg viewBox="0 0 1000 500" className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
-                        <path fill="#1e293b" d="M995 233.3c-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4-6-1.3-2-2.7-4-4
+                    {/* Simple SVG World Map Outline */}
+                    <svg viewBox="0 0 100 50" className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+                        <path d="M12,10 Q20,5 25,12 T35,15 T45,10 T55,15 T70,10 T85,15 T90,25 T80,35 T60,40 T40,35 T20,40 T10,30 Z" fill="none" stroke="#334155" strokeWidth="0.5" />
+                        {/* Simplified continents for visual context */}
+                        <path d="M10,10 L25,8 L30,20 L15,25 Z" fill="#1e293b" /> {/* NA */}
+                        <path d="M35,30 L45,25 L50,35 L40,42 Z" fill="#1e293b" /> {/* SA */}
+                        <path d="M45,10 L60,8 L65,20 L55,25 Z" fill="#1e293b" /> {/* EU/AF */}
+                        <path d="M65,10 L85,8 L90,25 L70,30 Z" fill="#1e293b" /> {/* ASIA */}
+                        <path d="M75,35 L85,32 L88,40 L80,42 Z" fill="#1e293b" /> {/* AUS */}
                     </svg>
 
                     {locations.map(loc => (
