@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -511,6 +511,11 @@
                 const handleScroll = () => setScrolled(window.scrollY > 50);
                 window.addEventListener('scroll', handleScroll);
                 return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            useEffect(() => {
+                // 根据选择的语言动态更新 <html> 标签的 lang 属性
+                document.documentElement.lang = lang.startsWith('zh') ? lang.replace('CN', '-CN').replace('TW', '-TW') : lang;
             }, []);
 
             const scrollTo = (id) => {
