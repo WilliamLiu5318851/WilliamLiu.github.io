@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,10 +44,28 @@
         .animate-fade-in-up {
             animation: fadeInUp 0.6s ease-out forwards;
         }
+        
+        /* 地图标记动画 */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); }
+            80%, 100% { opacity: 0; }
+        }
+        .pulse-ring {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            border: 2px solid #22d3ee; /* cyan-400 */
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: #333;">
+            INITIALIZING SYSTEM...
+        </div>
+    </div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
@@ -85,12 +103,13 @@
             BookOpen: (props) => <Icon {...props} path={<React.Fragment><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></React.Fragment>} />,
             Briefcase: (props) => <Icon {...props} path={<React.Fragment><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></React.Fragment>} />,
             Languages: (props) => <Icon {...props} path={<React.Fragment><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></React.Fragment>} />,
+            MapPin: (props) => <Icon {...props} path={<React.Fragment><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></React.Fragment>} />,
         };
 
         // 翻译数据
         const translations = {
             en: {
-                nav: { about: "ABT", proj: "PROJ", skill: "SKILL", contact: "CNT" },
+                nav: { about: "ABT", proj: "PROJ", skill: "SKILL", edu: "EDU", contact: "CNT" },
                 hero: {
                     name: "JUNYOU (WILLIAM) LIU",
                     role: "GAME DEVELOPER | SOFTWARE ENGINEER | CS UNDERGRAD",
@@ -147,15 +166,18 @@
                         domains: ["Computer Vision", "Algorithm Design", "Generative AI Integration"]
                     }
                 },
+                education: {
+                    title: "Academic Journey",
+                    map_instruction: "Click on a location to see details",
+                    locations: [
+                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "University of New South Wales", degree: "Bachelor of Computer Science", period: "Expected 2026", details: "Coursework: Computer Graphics, Computer Vision, Algorithms, AI" },
+                        { id: 'cbhs', name: 'CBHS', x: 15, y: 35, full: "Christian Brothers High School", degree: "High School Diploma", period: "Graduated 2020", details: "Sacramento, CA, USA" },
+                        { id: 'zs', name: 'Zhongshan', x: 78, y: 45, full: "Sun Yat-sen Memorial Middle School", degree: "Middle School Diploma", period: "Graduated 2016", details: "Zhongshan, Guangdong, China" }
+                    ]
+                },
                 timeline: {
-                    title: "Timeline",
+                    title: "Experience",
                     items: [
-                        {
-                            title: "Bachelor of Computer Science",
-                            date: "Expected Mid 2026",
-                            loc: "University of New South Wales (UNSW) | Sydney, Australia",
-                            desc: "Relevant Coursework: Computer Graphics, Computer Vision, Algorithm Design & Analysis, Data Structures & Algorithms, AI, OOP, Software Engineering."
-                        },
                         {
                             title: "Student Intern - Enterprise Dev",
                             date: "Dec 2023 (Summer Break)",
@@ -163,16 +185,10 @@
                             desc: "Assisted in technical feasibility analysis and market research for local tech startups. Collaborated with cross-functional teams to optimize business plans."
                         },
                         {
-                            title: "High School Diploma",
-                            date: "Graduated 2020",
-                            loc: "Christian Brothers High School | Sacramento, CA, USA",
-                            desc: "Completed secondary education with a focus on STEM subjects."
-                        },
-                        {
-                            title: "Middle School",
-                            date: "Graduated 2016",
-                            loc: "Sun Yat-sen Memorial Middle School | Zhongshan, Guangdong, China",
-                            desc: "Foundation education."
+                            title: "Student Manager",
+                            date: "2019 - 2020",
+                            loc: "Non-Profit Coffee Shop, Sacramento, CA",
+                            desc: "Led a team of 5+ staff, managed operational scheduling and inventory logistics."
                         }
                     ]
                 },
@@ -184,7 +200,7 @@
                 }
             },
             zhCN: {
-                nav: { about: "关于", proj: "项目", skill: "技能", contact: "联系" },
+                nav: { about: "关于", proj: "项目", skill: "技能", edu: "教育", contact: "联系" },
                 hero: {
                     name: "刘军佑 (WILLIAM LIU)",
                     role: "游戏开发者 | 软件工程师 | 计算机科学本科生",
@@ -241,15 +257,18 @@
                         domains: ["Computer Vision", "Algorithm Design", "Generative AI Integration"]
                     }
                 },
+                education: {
+                    title: "求学足迹",
+                    map_instruction: "点击地点查看详情",
+                    locations: [
+                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "新南威尔士大学 (UNSW)", degree: "计算机科学学士", period: "预计 2026 毕业", details: "悉尼，澳大利亚 | 课程：图形学，计算机视觉，算法" },
+                        { id: 'cbhs', name: 'CBHS', x: 15, y: 35, full: "Christian Brothers High School", degree: "高中毕业文凭", period: "2020 毕业", details: "萨克拉门托，加州，美国" },
+                        { id: 'zs', name: '中山', x: 78, y: 45, full: "中山纪念中学", degree: "初中毕业", period: "2016 毕业", details: "中山，广东，中国" }
+                    ]
+                },
                 timeline: {
-                    title: "经历时间轴",
+                    title: "工作经历",
                     items: [
-                        {
-                            title: "计算机科学学士",
-                            date: "预计 2026 年中毕业",
-                            loc: "新南威尔士大学 (UNSW) | 澳大利亚 悉尼",
-                            desc: "相关课程：计算机图形学、计算机视觉、算法设计与分析、数据结构与算法、人工智能、面向对象设计、软件工程、计算机系统基础。"
-                        },
                         {
                             title: "实习生",
                             date: "2023 年 12 月 (暑期)",
@@ -257,16 +276,10 @@
                             desc: "协助初创科技企业进行技术可行性分析和市场调研。与跨职能团队合作，优化商业计划书与服务策略。"
                         },
                         {
-                            title: "高中毕业文凭",
-                            date: "2020 年毕业",
-                            loc: "Christian Brothers High School | 美国 加州 萨克拉门托",
-                            desc: "完成高中教育，侧重于 STEM 学科。"
-                        },
-                        {
-                            title: "初中",
-                            date: "2016 年毕业",
-                            loc: "中山纪念中学 | 中国 广东 中山",
-                            desc: "基础教育。"
+                            title: "学生经理",
+                            date: "2019 - 2020",
+                            loc: "非营利咖啡店, 美国萨克拉门托",
+                            desc: "领导 5 人以上的团队，管理运营排班和库存物流。"
                         }
                     ]
                 },
@@ -278,7 +291,7 @@
                 }
             },
             zhTW: {
-                nav: { about: "關於", proj: "專案", skill: "技能", contact: "聯絡" },
+                nav: { about: "關於", proj: "專案", skill: "技能", edu: "教育", contact: "聯絡" },
                 hero: {
                     name: "劉軍佑 (WILLIAM LIU)",
                     role: "遊戲開發者 | 軟體工程師 | 計算機科學本科生",
@@ -335,15 +348,18 @@
                         domains: ["Computer Vision", "Algorithm Design", "Generative AI Integration"]
                     }
                 },
+                education: {
+                    title: "求學足跡",
+                    map_instruction: "點擊地點查看詳情",
+                    locations: [
+                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "新南威爾斯大學 (UNSW)", degree: "計算機科學學士", period: "預計 2026 畢業", details: "雪梨，澳洲 | 課程：圖學，電腦視覺，演算法" },
+                        { id: 'cbhs', name: 'CBHS', x: 15, y: 35, full: "Christian Brothers High School", degree: "高中畢業文憑", period: "2020 畢業", details: "薩克拉門托，加州，美國" },
+                        { id: 'zs', name: '中山', x: 78, y: 45, full: "中山紀念中學", degree: "初中畢業", period: "2016 畢業", details: "中山，廣東，中國" }
+                    ]
+                },
                 timeline: {
-                    title: "經歷時間軸",
+                    title: "工作經歷",
                     items: [
-                        {
-                            title: "計算機科學學士",
-                            date: "預計 2026 年中畢業",
-                            loc: "新南威爾斯大學 (UNSW) | 澳洲 雪梨",
-                            desc: "相關課程：電腦圖學、電腦視覺、演算法設計與分析、資料結構與演算法、人工智慧、物件導向設計、軟體工程、計算機系統基礎。"
-                        },
                         {
                             title: "實習生",
                             date: "2023 年 12 月 (暑期)",
@@ -351,16 +367,10 @@
                             desc: "協助初創科技企業進行技術可行性分析和市場調研。與跨職能團隊合作，最佳化商業計劃書與服務策略。"
                         },
                         {
-                            title: "高中畢業文憑",
-                            date: "2020 年畢業",
-                            loc: "Christian Brothers High School | 美國 加州 薩克拉門托",
-                            desc: "完成高中教育，側重於 STEM 學科。"
-                        },
-                        {
-                            title: "初中",
-                            date: "2016 年畢業",
-                            loc: "中山紀念中學 | 中國 廣東 中山",
-                            desc: "基礎教育。"
+                            title: "學生經理",
+                            date: "2019 - 2020",
+                            loc: "非營利咖啡店, 美國薩克拉門托",
+                            desc: "領導 5 人以上的團隊，管理營運排班和庫存物流。"
                         }
                     ]
                 },
@@ -373,96 +383,109 @@
             }
         };
 
-        // --- 星空背景组件 ---
         const Starfield = () => {
             const canvasRef = useRef(null);
+            const animationRef = useRef({
+                stars: [],
+                width: 0,
+                height: 0,
+                animationFrameId: null,
+            });
 
             useEffect(() => {
                 const canvas = canvasRef.current;
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
+                const anim = animationRef.current;
 
-                let width = 0;
-                let height = 0;
-                let stars = [];
-                // 增加星星数量，因为优化后性能更高
-                const starCount = 300; 
-                let animationFrameId;
                 let resizeTimeout;
+                const debounce = (func, delay) => {
+                    return (...args) => {
+                        clearTimeout(resizeTimeout);
+                        resizeTimeout = setTimeout(() => func.apply(this, args), delay);
+                    };
+                };
 
-                const createStar = (isInitial) => ({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    // 初始时随机分布z，重置时从最远处开始
-                    z: isInitial ? Math.random() * width : width, 
-                    size: Math.random() * 1.5 + 0.5,
-                    speed: Math.random() * 0.5 + 0.2
-                });
+                const initStars = () => {
+                    anim.stars = [];
+                    for (let i = 0; i < 150; i++) {
+                        anim.stars.push({
+                            x: Math.random() * anim.width,
+                            y: Math.random() * anim.height,
+                            z: Math.random() * anim.width,
+                            size: Math.random() * 2,
+                            speed: Math.random() * 0.5 + 0.1
+                        });
+                    }
+                };
 
-                // 初始化或重置画布和星星
-                const setup = () => {
-                    width = window.innerWidth;
-                    height = window.innerHeight;
-                    canvas.width = width;
-                    canvas.height = height;
-                    stars = Array.from({ length: starCount }, () => createStar(true));
+                const handleResize = () => {
+                    anim.width = window.innerWidth;
+                    anim.height = window.innerHeight;
+                    canvas.width = anim.width;
+                    canvas.height = anim.height;
+                    initStars();
                 };
 
                 const animate = () => {
-                    const halfWidth = width / 2;
-                    const halfHeight = height / 2;
+                    const centerX = anim.width / 2;
+                    const centerY = anim.height / 2;
 
                     ctx.fillStyle = '#050505';
-                    ctx.fillRect(0, 0, width, height);
+                    ctx.fillRect(0, 0, anim.width, anim.height);
 
-                    stars.forEach(star => {
-                        star.z -= star.speed;
+                    ctx.fillStyle = 'white';
 
-                        if (star.z <= 0) {
-                            // 重置星星
-                            Object.assign(star, createStar(false));
+                    anim.stars.forEach(s => {
+                        s.z -= s.speed * 2;
+                        if (s.z <= 0) {
+                            s.z = anim.width;
+                            s.x = Math.random() * anim.width;
+                            s.y = Math.random() * anim.height;
                         }
 
-                        const k = width / star.z;
-                        const px = (star.x - halfWidth) * k + halfWidth;
-                        const py = (star.y - halfHeight) * k + halfHeight;
+                        const k = anim.width / s.z;
+                        const x = (s.x - centerX) * k + centerX;
+                        const y = (s.y - centerY) * k + centerY;
 
-                        if (px >= 0 && px < width && py >= 0 && py < height) {
-                            const size = (1 - star.z / width) * star.size * 2;
-                            const alpha = (1 - star.z / width);
-
-                            // 性能优化 #1: 使用 fillRect 代替 arc，绘制小方块比绘制圆形快得多
-                            ctx.fillStyle = `rgba(255, 255, 255, ${alpha * alpha})`; // alpha平方使亮度变化更自然
-                            ctx.fillRect(Math.floor(px), Math.floor(py), size, size); // 使用 floor 提高渲染性能
+                        if (x >= 0 && x < anim.width && y >= 0 && y < anim.height) {
+                            const sz = (1 - s.z / anim.width) * s.size * 2;
+                            ctx.globalAlpha = 1 - s.z / anim.width;
+                            ctx.beginPath();
+                            ctx.arc(x, y, sz, 0, Math.PI * 2);
+                            ctx.fill();
                         }
                     });
-                    animationFrameId = requestAnimationFrame(animate);
+                    ctx.globalAlpha = 1;
+                    anim.animationFrameId = requestAnimationFrame(animate);
                 };
 
-                // 性能优化 #2: 使用 debounce（防抖）处理 resize 事件
-                const handleResize = () => {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => {
-                        cancelAnimationFrame(animationFrameId);
-                        setup();
-                        animate();
-                    }, 250);
-                };
-
-                setup();
+                const debouncedResize = debounce(handleResize, 250);
+                window.addEventListener('resize', debouncedResize);
+                
+                handleResize();
                 animate();
 
-                window.addEventListener('resize', handleResize);
-
-                // 清理函数
                 return () => {
-                    window.removeEventListener('resize', handleResize);
-                    cancelAnimationFrame(animationFrameId);
+                    window.removeEventListener('resize', debouncedResize);
+                    cancelAnimationFrame(anim.animationFrameId);
                     clearTimeout(resizeTimeout);
                 };
             }, []);
             return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
         };
+
+        const SkillBar = ({ name, level, color }) => (
+            <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium 2xl:text-lg text-gray-300">{name}</span>
+                    <span className="text-sm font-medium 2xl:text-lg text-gray-400">{level}%</span>
+                </div>
+                <div className="w-full bg-gray-800 rounded-full h-2.5 2xl:h-3 border border-gray-700">
+                    <div className={`h-2.5 2xl:h-3 rounded-full ${color} transition-all duration-1000 ease-out`} style={{ width: `${level}%` }}></div>
+                </div>
+            </div>
+        );
 
         const HighlightText = ({ text }) => {
             if (!text) return null;
@@ -478,7 +501,6 @@
             );
         };
 
-        // --- 核心修复：智能自适应宽屏组件 ---
         const Section = ({ title, icon, children, id }) => {
             const IconComponent = icon;
             return (
@@ -500,10 +522,44 @@
             );
         };
 
+        // --- Map Component ---
+        const WorldMap = ({ locations, activeLoc, onLocClick }) => {
+            return (
+                <div className="relative w-full pb-[50%] bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
+                    {/* Simple SVG World Map Outline */}
+                    <svg viewBox="0 0 100 50" className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+                        <path d="M12,10 Q20,5 25,12 T35,15 T45,10 T55,15 T70,10 T85,15 T90,25 T80,35 T60,40 T40,35 T20,40 T10,30 Z" fill="none" stroke="#334155" strokeWidth="0.5" />
+                        {/* Simplified continents for visual context */}
+                        <path d="M10,10 L25,8 L30,20 L15,25 Z" fill="#1e293b" /> {/* NA */}
+                        <path d="M35,30 L45,25 L50,35 L40,42 Z" fill="#1e293b" /> {/* SA */}
+                        <path d="M45,10 L60,8 L65,20 L55,25 Z" fill="#1e293b" /> {/* EU/AF */}
+                        <path d="M65,10 L85,8 L90,25 L70,30 Z" fill="#1e293b" /> {/* ASIA */}
+                        <path d="M75,35 L85,32 L88,40 L80,42 Z" fill="#1e293b" /> {/* AUS */}
+                    </svg>
+
+                    {locations.map(loc => (
+                        <div 
+                            key={loc.id}
+                            className="absolute group cursor-pointer"
+                            style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
+                            onClick={() => onLocClick(loc.id)}
+                        >
+                            <div className={`pulse-ring ${activeLoc === loc.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`}></div>
+                            <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-black transition-all duration-300 ${activeLoc === loc.id ? 'bg-cyan-400 scale-125' : 'bg-gray-500 group-hover:bg-cyan-300'}`}></div>
+                            <div className={`absolute top-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap text-xs md:text-sm font-mono transition-all duration-300 ${activeLoc === loc.id ? 'text-cyan-400 opacity-100' : 'text-gray-400 opacity-0 group-hover:opacity-100'}`}>
+                                {loc.name}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
         function App() {
             const [activeTab, setActiveTab] = useState('mechanics');
             const [scrolled, setScrolled] = useState(false);
             const [lang, setLang] = useState('en');
+            const [activeEduLoc, setActiveEduLoc] = useState('unsw');
 
             const t = translations[lang];
 
@@ -538,6 +594,7 @@
                             <div className="flex items-center gap-6 2xl:gap-10">
                                 <div className="hidden md:flex space-x-6 2xl:space-x-10 text-sm 2xl:text-xl font-mono text-cyan-400">
                                     <button onClick={() => scrollTo('about')} className="hover:text-white transition-colors">{t.nav.about}</button>
+                                    <button onClick={() => scrollTo('education')} className="hover:text-white transition-colors">{t.nav.edu}</button>
                                     <button onClick={() => scrollTo('projects')} className="hover:text-white transition-colors">{t.nav.proj}</button>
                                     <button onClick={() => scrollTo('skills')} className="hover:text-white transition-colors">{t.nav.skill}</button>
                                     <button onClick={() => scrollTo('contact')} className="hover:text-white transition-colors">{t.nav.contact}</button>
@@ -626,6 +683,36 @@
                                 <div className="flex items-center gap-3 px-4 2xl:px-6 py-2 2xl:py-4 bg-gray-800 rounded text-sm 2xl:text-xl">
                                     <Icons.Languages size={16} className="2xl:w-6 2xl:h-6 text-pink-400" /> {t.about.lang}
                                 </div>
+                            </div>
+                        </div>
+                    </Section>
+
+                    {/* Education Section with Map */}
+                    <Section title={t.education.title} icon={Icons.BookOpen} id="education">
+                        <div className="grid lg:grid-cols-2 gap-12 2xl:gap-24 items-center">
+                            {/* Map Column */}
+                            <div className="w-full">
+                                <p className="mb-4 text-sm 2xl:text-lg text-gray-500 text-center lg:text-left">{t.education.map_instruction}</p>
+                                <WorldMap locations={t.education.locations} activeLoc={activeEduLoc} onLocClick={setActiveEduLoc} />
+                            </div>
+                            
+                            {/* Details Column */}
+                            <div className="w-full flex flex-col justify-center">
+                                {t.education.locations.map(loc => (
+                                    <div 
+                                        key={loc.id} 
+                                        className={`p-6 2xl:p-10 mb-6 rounded-lg border transition-all duration-500 ${activeEduLoc === loc.id ? 'bg-gray-900 border-cyan-500 shadow-lg shadow-cyan-900/20 scale-105' : 'bg-gray-900/30 border-transparent opacity-50 hover:opacity-80 cursor-pointer'}`}
+                                        onClick={() => setActiveEduLoc(loc.id)}
+                                    >
+                                        <div className="flex justify-between items-start mb-3">
+                                            <h3 className="text-2xl 2xl:text-4xl font-bold text-white">{loc.name}</h3>
+                                            <span className="text-cyan-400 font-mono text-sm 2xl:text-lg">{loc.period}</span>
+                                        </div>
+                                        <h4 className="text-xl 2xl:text-3xl text-gray-300 mb-2">{loc.full}</h4>
+                                        <p className="text-lg 2xl:text-2xl text-cyan-500 mb-3">{loc.degree}</p>
+                                        <p className="text-gray-400 text-sm 2xl:text-lg leading-relaxed">{loc.details}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </Section>
