@@ -385,6 +385,7 @@
 
         const Starfield = () => {
             const canvasRef = useRef(null);
+<<<<<<< HEAD
             const animationRef = useRef({
                 stars: [],
                 width: 0,
@@ -392,10 +393,12 @@
                 animationFrameId: null,
             });
 
+=======
+>>>>>>> parent of 8cbbe4c (Update index.html)
             useEffect(() => {
                 const canvas = canvasRef.current;
-                if (!canvas) return;
                 const ctx = canvas.getContext('2d');
+<<<<<<< HEAD
                 const anim = animationRef.current;
 
                 let resizeTimeout;
@@ -425,9 +428,22 @@
                     canvas.width = anim.width;
                     canvas.height = anim.height;
                     initStars();
+=======
+                let width = window.innerWidth;
+                let height = window.innerHeight;
+                let animationFrameId;
+                const resizeCanvas = () => { 
+                    width = window.innerWidth; 
+                    height = window.innerHeight; 
+                    canvas.width = width; 
+                    canvas.height = height; 
+>>>>>>> parent of 8cbbe4c (Update index.html)
                 };
-
+                resizeCanvas();
+                const stars = [];
+                for (let i = 0; i < 150; i++) stars.push({ x: Math.random() * width, y: Math.random() * height, z: Math.random() * width, size: Math.random() * 2, speed: Math.random() * 0.5 + 0.1 });
                 const animate = () => {
+<<<<<<< HEAD
                     const centerX = anim.width / 2;
                     const centerY = anim.height / 2;
 
@@ -454,11 +470,22 @@
                             ctx.beginPath();
                             ctx.arc(x, y, sz, 0, Math.PI * 2);
                             ctx.fill();
+=======
+                    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, width, height);
+                    stars.forEach(s => {
+                        s.z -= s.speed * 2; if (s.z <= 0) { s.z = width; s.x = Math.random() * width; s.y = Math.random() * height; }
+                        const x = (s.x - width / 2) * (width / s.z) + width / 2;
+                        const y = (s.y - height / 2) * (width / s.z) + height / 2;
+                        const sz = (1 - s.z / width) * s.size * 2;
+                        if (x >= 0 && x <= width && y >= 0 && y <= height) {
+                            ctx.fillStyle = `rgba(255, 255, 255, ${1 - s.z / width})`; ctx.beginPath(); ctx.arc(x, y, sz, 0, Math.PI * 2); ctx.fill();
+>>>>>>> parent of 8cbbe4c (Update index.html)
                         }
                     });
                     ctx.globalAlpha = 1;
                     anim.animationFrameId = requestAnimationFrame(animate);
                 };
+<<<<<<< HEAD
 
                 const debouncedResize = debounce(handleResize, 250);
                 window.addEventListener('resize', debouncedResize);
@@ -471,6 +498,10 @@
                     cancelAnimationFrame(anim.animationFrameId);
                     clearTimeout(resizeTimeout);
                 };
+=======
+                window.addEventListener('resize', resizeCanvas); animate();
+                return () => { window.removeEventListener('resize', resizeCanvas); cancelAnimationFrame(animationFrameId); };
+>>>>>>> parent of 8cbbe4c (Update index.html)
             }, []);
             return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
         };
