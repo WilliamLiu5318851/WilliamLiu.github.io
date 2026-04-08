@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>William Liu - Game Developer Portfolio</title>
-    
+    <meta name="description" content="William Liu (刘军佑) — Game Developer & Software Engineer. UNSW Computer Science undergrad specializing in Unreal Engine 5, C++, and physics simulation. View projects including Binary Echoes and Sydney Harbour Dioxin Calculator." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="William Liu - Game Developer Portfolio" />
+    <meta property="og:description" content="Game Developer & Software Engineer based in Sydney. Specializing in Unreal Engine 5, C++, and physics simulation." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://williamliu5318851.github.io/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="William Liu - Game Developer Portfolio" />
+    <meta name="twitter:description" content="Game Developer & Software Engineer based in Sydney. Specializing in Unreal Engine 5, C++, and physics simulation." />
+
     <!-- 引入库文件 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -66,6 +78,22 @@
         }
         .animate-chart-grow {
             animation: chart-grow 1.5s ease-out forwards;
+        }
+
+        /* Journey Path Animation */
+        @keyframes draw-journey {
+            from { stroke-dashoffset: 200; }
+            to { stroke-dashoffset: 0; }
+        }
+        .journey-path-1 {
+            stroke-dasharray: 3 1.5;
+            stroke-dashoffset: 200;
+            animation: draw-journey 2.5s ease-in-out forwards;
+        }
+        .journey-path-2 {
+            stroke-dasharray: 3 1.5;
+            stroke-dashoffset: 200;
+            animation: draw-journey 2.5s ease-in-out 1.5s forwards;
         }
     </style>
 </head>
@@ -172,6 +200,13 @@
                     tech_list: ["HTML5 / JavaScript (ES6+)", "Tailwind CSS", "Chart.js", "LocalStorage API"],
                     btn_text: "LAUNCH APP"
                 },
+                poker_project: {
+                    title: "Poker Advisor Pro",
+                    subtitle: "GTO DECISION TOOL • REACT.JS",
+                    desc: "A real-time Texas Hold'em advisor powered by Monte Carlo simulation. Calculates hand equity against multiple opponents, provides GTO-based action recommendations (raise/call/fold/bluff), and intelligently suggests bet sizing based on board texture and player position.",
+                    tech_list: ["React.js", "Chart.js", "Monte Carlo Sim", "Jest"],
+                    btn_text: "LAUNCH APP"
+                },
                 skills: {
                     title: "Technical Toolkit",
                     cat_lang: "Languages & Core",
@@ -215,7 +250,7 @@
                     title: "INITIALIZE_CONNECTION",
                     desc: "Currently looking for opportunities in Game Development and Software Engineering. Let's build something extraordinary together.",
                     labels: { email: "EMAIL", linkedin: "LINKEDIN", github: "GITHUB" },
-                    footer_rights: "© 2025 William Liu. All systems nominal."
+                    footer_rights: "© 2026 William Liu. All systems nominal."
                 }
             },
             zhCN: {
@@ -271,6 +306,13 @@
                     tech_list: ["HTML5 / JavaScript (ES6+)", "Tailwind CSS", "Chart.js", "LocalStorage API"],
                     btn_text: "启动应用"
                 },
+                poker_project: {
+                    title: "德州扑克助手 Pro",
+                    subtitle: "GTO 决策工具 • REACT.JS",
+                    desc: "基于蒙特卡洛模拟的德州扑克实时辅助工具。支持多人对战胜率计算、GTO 策略建议（加注/跟注/弃牌/诈唬）、智能下注尺寸推荐，并根据牌面纹理和位置动态调整策略，内置保守/激进/鲨鱼三种风格。",
+                    tech_list: ["React.js", "Chart.js", "蒙特卡洛模拟", "Jest"],
+                    btn_text: "启动应用"
+                },
                 skills: {
                     title: "技术工具集",
                     cat_lang: "编程语言 & 核心",
@@ -314,7 +356,7 @@
                     title: "建立连接",
                     desc: "目前正在寻找游戏开发和软件工程领域的工作机会。让我们一起创造非凡。",
                     labels: { email: "邮箱", linkedin: "领英", github: "GITHUB" },
-                    footer_rights: "© 2025 刘军佑. 所有系统正常运行。"
+                    footer_rights: "© 2026 刘军佑. 所有系统正常运行。"
                 }
             },
             zhTW: {
@@ -370,6 +412,13 @@
                     tech_list: ["HTML5 / JavaScript (ES6+)", "Tailwind CSS", "Chart.js", "LocalStorage API"],
                     btn_text: "啟動應用"
                 },
+                poker_project: {
+                    title: "德州撲克助手 Pro",
+                    subtitle: "GTO 決策工具 • REACT.JS",
+                    desc: "基於蒙特卡洛模擬的德州撲克即時輔助工具。支援多人對戰勝率計算、GTO 策略建議（加注/跟注/棄牌/詐唬）、智慧下注尺寸推薦，並根據牌面紋理和位置動態調整策略，內建保守/積極/鯊魚三種風格。",
+                    tech_list: ["React.js", "Chart.js", "蒙特卡洛模擬", "Jest"],
+                    btn_text: "啟動應用"
+                },
                 skills: {
                     title: "技術工具集",
                     cat_lang: "程式語言 & 核心",
@@ -413,10 +462,13 @@
                     title: "建立連線",
                     desc: "目前正在尋找遊戲開發和軟體工程領域的工作機會。讓我們一起創造非凡。",
                     labels: { email: "信箱", linkedin: "領英", github: "GITHUB" },
-                    footer_rights: "© 2025 劉軍佑. 所有系統正常運行。"
+                    footer_rights: "© 2026 劉軍佑. 所有系統正常運行。"
                 }
             }
         };
+
+        // Chronological journey order (middle school → high school → university)
+        const JOURNEY_ORDER = ['zs', 'cbhs', 'unsw'];
 
         const Starfield = () => {
             const canvasRef = useRef(null);
@@ -505,31 +557,71 @@
         const WorldMap = ({ locations, activeLoc, onLocClick }) => {
             return (
                 <div className="relative w-full pb-[50%] bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
-                    {/* Simple SVG World Map Outline */}
-                    <svg viewBox="0 0 100 50" className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-                        <path d="M12,10 Q20,5 25,12 T35,15 T45,10 T55,15 T70,10 T85,15 T90,25 T80,35 T60,40 T40,35 T20,40 T10,30 Z" fill="none" stroke="#334155" strokeWidth="0.5" />
-                        {/* Simplified continents for visual context */}
-                        <path d="M10,10 L25,8 L30,20 L15,25 Z" fill="#1e293b" /> {/* NA */}
-                        <path d="M35,30 L45,25 L50,35 L40,42 Z" fill="#1e293b" /> {/* SA */}
-                        <path d="M45,10 L60,8 L65,20 L55,25 Z" fill="#1e293b" /> {/* EU/AF */}
-                        <path d="M65,10 L85,8 L90,25 L70,30 Z" fill="#1e293b" /> {/* ASIA */}
-                        <path d="M75,35 L85,32 L88,40 L80,42 Z" fill="#1e293b" /> {/* AUS */}
+                    <svg viewBox="0 0 100 50" className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                        {/* Latitude/Longitude grid */}
+                        <g stroke="#151f2e" strokeWidth="0.25">
+                            {[10,20,30,40,50,60,70,80,90].map(x => <line key={x} x1={x} y1="0" x2={x} y2="50" />)}
+                            {[10,20,30,40].map(y => <line key={y} x1="0" y1={y} x2="100" y2={y} />)}
+                        </g>
+                        {/* Equator */}
+                        <line x1="0" y1="25" x2="100" y2="25" stroke="#1e3a4c" strokeWidth="0.4" />
+
+                        {/* Continents — recognizable outlines */}
+                        <g fill="#1e2d40" stroke="#2d4a6a" strokeWidth="0.3">
+                            {/* Greenland */}
+                            <path d="M 28,2 L 34,1 L 38,5 L 34,10 L 27,8 Z" />
+                            {/* North America */}
+                            <path d="M 5,8 L 10,5 L 18,5 L 23,9 L 25,16 L 22,22 L 25,28 L 21,31 L 14,29 L 9,23 L 6,17 Z" />
+                            {/* South America */}
+                            <path d="M 21,32 L 27,30 L 32,34 L 32,44 L 26,49 L 20,44 L 19,38 Z" />
+                            {/* Europe */}
+                            <path d="M 44,7 L 54,6 L 57,11 L 52,17 L 45,16 L 43,11 Z" />
+                            {/* Africa */}
+                            <path d="M 43,18 L 56,17 L 59,24 L 56,36 L 50,45 L 44,41 L 41,31 L 42,23 Z" />
+                            {/* Asia */}
+                            <path d="M 56,6 L 76,4 L 89,7 L 91,16 L 84,23 L 76,26 L 65,27 L 58,22 L 55,15 L 57,9 Z" />
+                            {/* Southeast Asia */}
+                            <path d="M 76,27 L 84,26 L 85,31 L 79,32 Z" />
+                            {/* Australia */}
+                            <path d="M 75,34 L 88,33 L 93,37 L 91,45 L 82,48 L 74,45 L 72,39 Z" />
+                        </g>
+
+                        {/* Journey paths: Zhongshan(78,22.5) → Sacramento(15,17.5) → Sydney(85,40) */}
+                        <path
+                            className="journey-path-1"
+                            d="M 78,22.5 Q 48,6 15,17.5"
+                            fill="none" stroke="#22d3ee" strokeWidth="0.7" opacity="0.85"
+                        />
+                        <path
+                            className="journey-path-2"
+                            d="M 15,17.5 Q 53,28 85,40"
+                            fill="none" stroke="#22d3ee" strokeWidth="0.7" opacity="0.85"
+                        />
+                        {/* Arrowheads at destinations */}
+                        <polygon points="13.5,16.5 17.5,15.5 16.5,19" fill="#22d3ee" opacity="0.85" />
+                        <polygon points="83.5,39 87.5,38.5 86.5,42" fill="#22d3ee" opacity="0.85" />
                     </svg>
 
-                    {locations.map(loc => (
-                        <div 
-                            key={loc.id}
-                            className="absolute group cursor-pointer"
-                            style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
-                            onClick={() => onLocClick(loc.id)}
-                        >
-                            <div className={`pulse-ring ${activeLoc === loc.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`}></div>
-                            <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-black transition-all duration-300 ${activeLoc === loc.id ? 'bg-cyan-400 scale-125' : 'bg-gray-500 group-hover:bg-cyan-300'}`}></div>
-                            <div className={`absolute top-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap text-xs md:text-sm font-mono transition-all duration-300 ${activeLoc === loc.id ? 'text-cyan-400 opacity-100' : 'text-gray-400 opacity-0 group-hover:opacity-100'}`}>
-                                {loc.name}
+                    {locations.map(loc => {
+                        const step = JOURNEY_ORDER.indexOf(loc.id) + 1;
+                        const isActive = activeLoc === loc.id;
+                        return (
+                            <div
+                                key={loc.id}
+                                className="absolute group cursor-pointer -translate-x-1/2 -translate-y-1/2"
+                                style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
+                                onClick={() => onLocClick(loc.id)}
+                            >
+                                <div className={`pulse-ring ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`}></div>
+                                <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-gray-900 flex items-center justify-center text-[10px] font-bold font-mono transition-all duration-300 ${isActive ? 'bg-cyan-400 text-black scale-125 shadow-[0_0_10px_rgba(34,211,238,0.7)]' : 'bg-gray-700 text-cyan-400 group-hover:bg-cyan-600 group-hover:text-black'}`}>
+                                    {step}
+                                </div>
+                                <div className={`absolute top-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-mono transition-all duration-300 ${isActive ? 'text-cyan-400 opacity-100' : 'text-gray-400 opacity-0 group-hover:opacity-100'}`}>
+                                    {loc.name}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             );
         };
@@ -677,21 +769,28 @@
                             
                             {/* Details Column */}
                             <div className="w-full flex flex-col justify-center">
-                                {t.education.locations.map(loc => (
-                                    <div 
-                                        key={loc.id} 
-                                        className={`p-6 2xl:p-10 mb-6 rounded-lg border transition-all duration-500 ${activeEduLoc === loc.id ? 'bg-gray-900 border-cyan-500 shadow-lg shadow-cyan-900/20 scale-105' : 'bg-gray-900/30 border-transparent opacity-50 hover:opacity-80 cursor-pointer'}`}
+                                {t.education.locations.map(loc => {
+                                    const step = JOURNEY_ORDER.indexOf(loc.id) + 1;
+                                    const isActive = activeEduLoc === loc.id;
+                                    return (
+                                    <div
+                                        key={loc.id}
+                                        className={`p-6 2xl:p-10 mb-6 rounded-lg border transition-all duration-500 ${isActive ? 'bg-gray-900 border-cyan-500 shadow-lg shadow-cyan-900/20 scale-105' : 'bg-gray-900/30 border-transparent opacity-50 hover:opacity-80 cursor-pointer'}`}
                                         onClick={() => setActiveEduLoc(loc.id)}
                                     >
                                         <div className="flex justify-between items-start mb-3">
-                                            <h3 className="text-2xl 2xl:text-4xl font-bold text-white">{loc.name}</h3>
+                                            <div className="flex items-center gap-3">
+                                                <span className={`w-6 h-6 2xl:w-9 2xl:h-9 rounded-full border flex items-center justify-center text-xs 2xl:text-base font-bold font-mono flex-shrink-0 transition-colors duration-300 ${isActive ? 'bg-cyan-500 border-cyan-400 text-black' : 'bg-gray-800 border-gray-600 text-cyan-500'}`}>{step}</span>
+                                                <h3 className="text-2xl 2xl:text-4xl font-bold text-white">{loc.name}</h3>
+                                            </div>
                                             <span className="text-cyan-400 font-mono text-sm 2xl:text-lg">{loc.period}</span>
                                         </div>
                                         <h4 className="text-xl 2xl:text-3xl text-gray-300 mb-2">{loc.full}</h4>
                                         <p className="text-lg 2xl:text-2xl text-cyan-500 mb-3">{loc.degree}</p>
                                         <p className="text-gray-400 text-sm 2xl:text-lg leading-relaxed">{loc.details}</p>
                                     </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
                     </Section>
@@ -724,7 +823,7 @@
                                                 {activeTab === 'mechanics' && (
                                                     <div className="animate-in fade-in duration-300">
                                                         <h4 className="flex items-center gap-3 text-lg 2xl:text-3xl font-bold text-white mb-4 2xl:mb-8">
-                                                            <Icons.Zap className="text-yellow-400" size={20} className="2xl:w-8 2xl:h-8" /> {t.project.mech_title}
+                                                            <Icons.Zap className="text-yellow-400 2xl:w-8 2xl:h-8" size={20} /> {t.project.mech_title}
                                                         </h4>
                                                         <p className="text-gray-400 text-sm 2xl:text-xl mb-6 2xl:mb-10">{t.project.mech_desc}</p>
                                                         <ul className="space-y-3 2xl:space-y-6 text-sm 2xl:text-xl text-gray-400">
@@ -735,7 +834,7 @@
                                                 {activeTab === 'audio' && (
                                                     <div className="animate-in fade-in duration-300">
                                                         <h4 className="flex items-center gap-3 text-lg 2xl:text-3xl font-bold text-white mb-4 2xl:mb-8">
-                                                            <Icons.Music className="text-purple-400" size={20} className="2xl:w-8 2xl:h-8" /> {t.project.audio_title}
+                                                            <Icons.Music className="text-purple-400 2xl:w-8 2xl:h-8" size={20} /> {t.project.audio_title}
                                                         </h4>
                                                         <p className="text-gray-400 text-sm 2xl:text-xl mb-6 2xl:mb-10">{t.project.audio_desc}</p>
                                                         <ul className="space-y-3 2xl:space-y-6 text-sm 2xl:text-xl text-gray-400">
@@ -746,7 +845,7 @@
                                                 {activeTab === 'tech' && (
                                                     <div className="animate-in fade-in duration-300">
                                                         <h4 className="flex items-center gap-3 text-lg 2xl:text-3xl font-bold text-white mb-4 2xl:mb-8">
-                                                            <Icons.Cpu className="text-green-400" size={20} className="2xl:w-8 2xl:h-8" /> {t.project.tech_title}
+                                                            <Icons.Cpu className="text-green-400 2xl:w-8 2xl:h-8" size={20} /> {t.project.tech_title}
                                                         </h4>
                                                         <p className="text-gray-400 text-sm 2xl:text-xl mb-6 2xl:mb-10">{t.project.tech_desc}</p>
                                                         <ul className="space-y-3 2xl:space-y-6 text-sm 2xl:text-xl text-gray-400">
@@ -838,6 +937,63 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {/* 3. Poker Advisor Pro */}
+                            <div className="relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-red-700 to-orange-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                                <div className="relative bg-black border border-gray-800 rounded-lg overflow-hidden font-cjk">
+                                    <div className="grid md:grid-cols-12 gap-0">
+                                        {/* Visual Side */}
+                                        <div className="md:col-span-5 bg-gray-900 min-h-[300px] 2xl:min-h-[500px] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+                                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/30 via-gray-900 to-black"></div>
+                                            {/* Playing cards visual */}
+                                            <div className="relative z-10 flex items-end justify-center mb-8 group-hover:scale-105 transition-transform duration-500">
+                                                {[{r:'A',s:'♠',red:false,rot:-14},{r:'K',s:'♥',red:true,rot:-5},{r:'Q',s:'♦',red:true,rot:5},{r:'J',s:'♣',red:false,rot:14}].map((card, i) => (
+                                                    <div key={i} className="w-12 h-18 md:w-14 bg-white rounded border border-gray-300 flex flex-col items-center justify-center py-2 shadow-xl" style={{transform:`rotate(${card.rot}deg)`, zIndex: i, marginLeft: i > 0 ? '-8px' : '0', height: '72px', width: '52px'}}>
+                                                        <span className={`text-base font-bold leading-none ${card.red ? 'text-red-600' : 'text-gray-900'}`}>{card.r}</span>
+                                                        <span className={`text-xl leading-none ${card.red ? 'text-red-600' : 'text-gray-900'}`}>{card.s}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="z-10 text-center">
+                                                <h3 className="text-2xl 2xl:text-4xl font-bold text-white tracking-widest mb-2">POKER ADVISOR</h3>
+                                                <p className="text-red-400 font-mono text-xs 2xl:text-lg uppercase">GTO Engine v7.0 • Monte Carlo</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Content Side */}
+                                        <div className="md:col-span-7 bg-gray-950 p-6 md:p-10 2xl:p-16 flex flex-col justify-center">
+                                            <div className="mb-2 flex items-center gap-2">
+                                                <Icons.Zap className="text-red-500" size={20} />
+                                                <span className="text-red-500 font-mono text-sm tracking-wider uppercase">GTO Strategy</span>
+                                            </div>
+                                            <h3 className="text-2xl 2xl:text-4xl font-bold text-white mb-2">{t.poker_project.title}</h3>
+                                            <p className="text-gray-500 font-mono text-sm 2xl:text-lg mb-6 uppercase">{t.poker_project.subtitle}</p>
+
+                                            <p className="text-gray-400 text-base 2xl:text-xl leading-relaxed mb-8">
+                                                {t.poker_project.desc}
+                                            </p>
+
+                                            <div className="mb-8">
+                                                <h4 className="text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">Tech Stack</h4>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {t.poker_project.tech_list.map((tech, i) => (
+                                                        <span key={i} className="px-3 py-1 bg-gray-900 border border-gray-700 rounded text-sm text-red-400 font-mono">
+                                                            {tech}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <div className="pt-6 border-t border-gray-800">
+                                                <a href="https://poker-advisor-pro.pages.dev/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-red-700 hover:bg-red-600 text-white font-bold rounded transition-colors group/btn">
+                                                    {t.poker_project.btn_text} <Icons.ExternalLink size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Section>
 
@@ -906,7 +1062,7 @@
                                     <div className="p-2 bg-black rounded-full text-cyan-500 group-hover:scale-110 transition-transform"><Icons.Mail size={24} className="2xl:w-8 2xl:h-8" /></div>
                                     <div className="text-left"><span className="block text-xs 2xl:text-base text-gray-500 font-mono">{t.contact.labels.email}</span><span className="text-white font-medium 2xl:text-xl">william.liuunsw@gmail.com</span></div>
                                 </a>
-                                <a href="https://linkedin.com/in/liu-william-819849368" target="_blank" className="group flex items-center gap-3 bg-gray-900 px-6 2xl:px-10 py-4 2xl:py-6 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-blue-500 transition-all">
+                                <a href="https://linkedin.com/in/liu-william-819849368" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 bg-gray-900 px-6 2xl:px-10 py-4 2xl:py-6 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-blue-500 transition-all">
                                     <div className="p-2 bg-black rounded-full text-blue-500 group-hover:scale-110 transition-transform"><Icons.Linkedin size={24} className="2xl:w-8 2xl:h-8" /></div>
                                     <div className="text-left"><span className="block text-xs 2xl:text-base text-gray-500 font-mono">{t.contact.labels.linkedin}</span><span className="text-white font-medium 2xl:text-xl">Connect</span></div>
                                 </a>
