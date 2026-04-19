@@ -225,6 +225,14 @@
                     tech_list: ["React.js", "Chart.js", "Monte Carlo Sim", "Jest"],
                     btn_text: "LAUNCH APP"
                 },
+                hooklogic_project: {
+                    title: "HookLogic",
+                    subtitle: "AI FISHING INTELLIGENCE • GEMINI AI",
+                    tag: "AI & Environmental Data",
+                    desc: "A hydrological-ecological AI advisor for anglers. Integrates real-time weather, tidal cycles, barometric pressure trends, and Solunar theory to deliver precision fish activity scores and species-specific recommendations.",
+                    tech_list: ["React", "TypeScript", "Vite", "Gemini AI", "Open-Meteo API"],
+                    btn_text: "LAUNCH APP"
+                },
                 skills: {
                     title: "Technical Toolkit",
                     cat_lang: "Languages & Core",
@@ -331,6 +339,14 @@
                     tech_list: ["React.js", "Chart.js", "蒙特卡洛模拟", "Jest"],
                     btn_text: "启动应用"
                 },
+                hooklogic_project: {
+                    title: "HookLogic 钓鱼助手",
+                    subtitle: "AI 鱼情智能分析 • GEMINI AI",
+                    tag: "AI 与环境数据",
+                    desc: "基于水文生态学多维模型的 AI 钓鱼顾问。整合实时气象、潮汐周期、气压波动趋势与日月节律理论，提供精准鱼类活动评分与针对鱼种的专属垂钓建议。",
+                    tech_list: ["React", "TypeScript", "Vite", "Gemini AI", "Open-Meteo API"],
+                    btn_text: "启动应用"
+                },
                 skills: {
                     title: "技术工具集",
                     cat_lang: "编程语言 & 核心",
@@ -435,6 +451,14 @@
                     subtitle: "GTO 決策工具 • REACT.JS",
                     desc: "基於蒙特卡洛模擬的德州撲克即時輔助工具。支援多人對戰勝率計算、GTO 策略建議（加注/跟注/棄牌/詐唬）、智慧下注尺寸推薦，並根據牌面紋理和位置動態調整策略，內建保守/積極/鯊魚三種風格。",
                     tech_list: ["React.js", "Chart.js", "蒙特卡洛模擬", "Jest"],
+                    btn_text: "啟動應用"
+                },
+                hooklogic_project: {
+                    title: "HookLogic 釣魚助手",
+                    subtitle: "AI 魚情智能分析 • GEMINI AI",
+                    tag: "AI 與環境數據",
+                    desc: "基於水文生態學多維模型的 AI 釣魚顧問。整合即時氣象、潮汐週期、氣壓波動趨勢與日月節律理論，提供精準魚類活動評分與針對魚種的專屬垂釣建議。",
+                    tech_list: ["React", "TypeScript", "Vite", "Gemini AI", "Open-Meteo API"],
                     btn_text: "啟動應用"
                 },
                 skills: {
@@ -1031,6 +1055,84 @@ const HighlightText = ({ text }) => {
                                             <div className="pt-6 border-t border-gray-800">
                                                 <a href="https://poker-advisor-pro.pages.dev/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-red-700 hover:bg-red-600 text-white font-bold rounded transition-colors group/btn">
                                                     {t.poker_project.btn_text} <Icons.ExternalLink size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* 4. HookLogic */}
+                            <div className="relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-teal-600 to-cyan-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                                <div className="relative bg-black border border-gray-800 rounded-lg overflow-hidden font-cjk">
+                                    <div className="grid md:grid-cols-12 gap-0">
+                                        {/* Visual Side */}
+                                        <div className="md:col-span-5 bg-gray-900 min-h-[300px] 2xl:min-h-[500px] flex flex-col items-center justify-center p-8 relative overflow-hidden order-last md:order-first">
+                                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-teal-900/40 via-gray-900 to-black"></div>
+                                            {/* Wave + fish visual */}
+                                            <div className="relative z-10 w-full flex flex-col items-center gap-6 group-hover:scale-105 transition-transform duration-500">
+                                                <svg viewBox="0 0 120 60" className="w-4/5 opacity-80">
+                                                    {/* Moon */}
+                                                    <circle cx="100" cy="12" r="8" fill="none" stroke="#99f6e4" strokeWidth="1.5" opacity="0.7" />
+                                                    <circle cx="103" cy="10" r="6" fill="#050505" />
+                                                    {/* Stars */}
+                                                    {[[20,8],[35,5],[55,10],[75,6],[15,18]].map(([x,y],i) => (
+                                                        <circle key={i} cx={x} cy={y} r="0.8" fill="#99f6e4" opacity="0.6" />
+                                                    ))}
+                                                    {/* Water surface waves */}
+                                                    <path d="M0 35 Q15 30 30 35 Q45 40 60 35 Q75 30 90 35 Q105 40 120 35 L120 60 L0 60 Z" fill="#0f4c5c" opacity="0.5" />
+                                                    <path d="M0 38 Q15 33 30 38 Q45 43 60 38 Q75 33 90 38 Q105 43 120 38 L120 60 L0 60 Z" fill="#0e7490" opacity="0.4" />
+                                                    {/* Fish */}
+                                                    <g transform="translate(30, 46)" opacity="0.9">
+                                                        <ellipse cx="0" cy="0" rx="10" ry="4" fill="#22d3ee" />
+                                                        <polygon points="-10,0 -16,-4 -16,4" fill="#22d3ee" />
+                                                        <circle cx="6" cy="-1" r="1.2" fill="#050505" />
+                                                    </g>
+                                                    <g transform="translate(80, 50)" opacity="0.6">
+                                                        <ellipse cx="0" cy="0" rx="7" ry="3" fill="#5eead4" />
+                                                        <polygon points="-7,0 -12,-3 -12,3" fill="#5eead4" />
+                                                        <circle cx="4" cy="-0.5" r="1" fill="#050505" />
+                                                    </g>
+                                                    {/* Score bar */}
+                                                    <rect x="10" y="18" width="60" height="8" rx="4" fill="#1e293b" stroke="#0e7490" strokeWidth="0.5" />
+                                                    <rect x="10" y="18" width="48" height="8" rx="4" fill="#0e7490" />
+                                                    <text x="73" y="25" fontSize="5" fill="#22d3ee" fontFamily="monospace">80%</text>
+                                                    <text x="10" y="15" fontSize="4.5" fill="#99f6e4" fontFamily="monospace" opacity="0.8">FISH ACTIVITY</text>
+                                                </svg>
+                                            </div>
+                                            <div className="z-10 text-center mt-4">
+                                                <h3 className="text-2xl 2xl:text-4xl font-bold text-white tracking-widest mb-1">HOOKLOGIC</h3>
+                                                <p className="text-teal-400 font-mono text-xs 2xl:text-lg uppercase">AI Fishing Intelligence</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Content Side */}
+                                        <div className="md:col-span-7 bg-gray-950 p-6 md:p-10 2xl:p-16 flex flex-col justify-center">
+                                            <div className="mb-2 flex items-center gap-2">
+                                                <Icons.Activity className="text-teal-400" size={20} />
+                                                <span className="text-teal-400 font-mono text-sm tracking-wider uppercase">{t.hooklogic_project.tag}</span>
+                                            </div>
+                                            <h3 className="text-2xl 2xl:text-4xl font-bold text-white mb-2">{t.hooklogic_project.title}</h3>
+                                            <p className="text-gray-500 font-mono text-sm 2xl:text-lg mb-6 uppercase">{t.hooklogic_project.subtitle}</p>
+
+                                            <p className="text-gray-400 text-base 2xl:text-xl leading-relaxed mb-8">
+                                                {t.hooklogic_project.desc}
+                                            </p>
+
+                                            <div className="mb-8">
+                                                <h4 className="text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">Tech Stack</h4>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {t.hooklogic_project.tech_list.map((tech, i) => (
+                                                        <span key={i} className="px-3 py-1 bg-gray-900 border border-gray-700 rounded text-sm text-teal-400 font-mono">
+                                                            {tech}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <div className="pt-6 border-t border-gray-800">
+                                                <a href="https://hooklogic-ai-fishing-intelligence-509101758262.us-west1.run.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-teal-700 hover:bg-teal-600 text-white font-bold rounded transition-colors group/btn">
+                                                    {t.hooklogic_project.btn_text} <Icons.ExternalLink size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                                                 </a>
                                             </div>
                                         </div>
