@@ -17,6 +17,11 @@
     <meta name="twitter:title" content="William Liu - Game Developer Portfolio" />
     <meta name="twitter:description" content="Game Developer & Software Engineer based in Sydney. Specializing in Unreal Engine 5, C++, and physics simulation." />
 
+    <!-- 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+
     <!-- 引入库文件 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -43,10 +48,12 @@
 
     <!-- 基础样式 -->
     <style>
-        body { margin: 0; overflow-x: hidden; background-color: #050505; color: white; font-family: sans-serif; }
+        body { margin: 0; overflow-x: hidden; background-color: #050505; color: white; font-family: 'Outfit', 'Noto Sans SC', sans-serif; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        .font-cjk { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+        .font-cjk { font-family: 'Outfit', 'Noto Sans SC', sans-serif; }
+        .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
+        h1, h2 { font-family: 'Unbounded', 'Noto Sans SC', sans-serif; }
         
         /* 动画：淡入上浮 */
         @keyframes fadeInUp {
@@ -78,6 +85,17 @@
         }
         .animate-chart-grow {
             animation: chart-grow 1.5s ease-out forwards;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Journey Path Animation */
@@ -506,19 +524,7 @@
             return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
         };
 
-        const SkillBar = ({ name, level, color }) => (
-            <div className="mb-4">
-                <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium 2xl:text-lg text-gray-300">{name}</span>
-                    <span className="text-sm font-medium 2xl:text-lg text-gray-400">{level}%</span>
-                </div>
-                <div className="w-full bg-gray-800 rounded-full h-2.5 2xl:h-3 border border-gray-700">
-                    <div className={`h-2.5 2xl:h-3 rounded-full ${color} transition-all duration-1000 ease-out`} style={{ width: `${level}%` }}></div>
-                </div>
-            </div>
-        );
-
-        const HighlightText = ({ text }) => {
+const HighlightText = ({ text }) => {
             if (!text) return null;
             const parts = text.split('*');
             return (
@@ -534,6 +540,19 @@
 
         const Section = ({ title, icon, children, id }) => {
             const IconComponent = icon;
+            const sectionRef = useRef(null);
+
+            useEffect(() => {
+                const el = sectionRef.current;
+                if (!el) return;
+                const observer = new IntersectionObserver(
+                    ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); observer.disconnect(); } },
+                    { threshold: 0.1 }
+                );
+                observer.observe(el);
+                return () => observer.disconnect();
+            }, []);
+
             return (
                 <section id={id} className="py-12 md:py-20 2xl:py-32 w-11/12 max-w-7xl 2xl:max-w-8xl 3xl:max-w-9xl mx-auto relative">
                     <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-800 hidden md:block"></div>
@@ -545,7 +564,7 @@
                             <IconComponent className="w-8 h-8 md:w-10 md:h-10 2xl:w-16 2xl:h-16 text-cyan-400" />
                             <h2 className="text-3xl md:text-5xl 2xl:text-7xl font-bold text-white uppercase tracking-wider font-cjk">{title}</h2>
                         </div>
-                        <div className="text-base md:text-lg 2xl:text-2xl leading-relaxed">
+                        <div ref={sectionRef} className="reveal text-base md:text-lg 2xl:text-2xl leading-relaxed">
                             {children}
                         </div>
                     </div>
@@ -631,6 +650,7 @@
             const [scrolled, setScrolled] = useState(false);
             const [lang, setLang] = useState('en');
             const [activeEduLoc, setActiveEduLoc] = useState('unsw');
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
             const t = translations[lang];
 
@@ -643,6 +663,7 @@
             const scrollTo = (id) => {
                 const element = document.getElementById(id);
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
+                setMobileMenuOpen(false);
             };
 
             const logoPath = "Personal Page/W&M_2024.4.6定稿.jpg";
@@ -662,7 +683,7 @@
                                 <span className="text-lg md:text-xl 2xl:text-3xl font-bold text-white tracking-widest hidden sm:block">WILL.LIU</span>
                             </div>
                             
-                            <div className="flex items-center gap-6 2xl:gap-10">
+                            <div className="flex items-center gap-4 2xl:gap-10">
                                 <div className="hidden md:flex space-x-6 2xl:space-x-10 text-sm 2xl:text-xl font-mono text-cyan-400">
                                     <button onClick={() => scrollTo('about')} className="hover:text-white transition-colors">{t.nav.about}</button>
                                     <button onClick={() => scrollTo('education')} className="hover:text-white transition-colors">{t.nav.edu}</button>
@@ -670,7 +691,7 @@
                                     <button onClick={() => scrollTo('skills')} className="hover:text-white transition-colors">{t.nav.skill}</button>
                                     <button onClick={() => scrollTo('contact')} className="hover:text-white transition-colors">{t.nav.contact}</button>
                                 </div>
-                                
+
                                 <div className="flex items-center bg-gray-900 rounded-full px-2 py-1 2xl:px-4 2xl:py-2 border border-gray-800 text-xs 2xl:text-lg font-bold font-mono">
                                     <button onClick={() => setLang('en')} className={`px-2 py-1 rounded transition-colors ${lang === 'en' ? 'bg-cyan-900 text-cyan-400' : 'text-gray-500 hover:text-white'}`}>EN</button>
                                     <span className="text-gray-700 mx-1">|</span>
@@ -678,6 +699,28 @@
                                     <span className="text-gray-700 mx-1">|</span>
                                     <button onClick={() => setLang('zhTW')} className={`px-2 py-1 rounded transition-colors ${lang === 'zhTW' ? 'bg-cyan-900 text-cyan-400' : 'text-gray-500 hover:text-white'}`}>繁</button>
                                 </div>
+
+                                {/* 汉堡菜单按钮（仅移动端） */}
+                                <button
+                                    className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5"
+                                    onClick={() => setMobileMenuOpen(o => !o)}
+                                    aria-label="Toggle menu"
+                                >
+                                    <span className={`block w-6 h-0.5 bg-cyan-400 transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                                    <span className={`block w-6 h-0.5 bg-cyan-400 transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
+                                    <span className={`block w-6 h-0.5 bg-cyan-400 transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* 移动端展开菜单 */}
+                        <div className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-64 border-t border-gray-800' : 'max-h-0'}`}>
+                            <div className="flex flex-col py-4 px-6 space-y-4 font-mono text-sm text-cyan-400 bg-black/90 backdrop-blur">
+                                <button onClick={() => scrollTo('about')} className="text-left hover:text-white transition-colors">{t.nav.about}</button>
+                                <button onClick={() => scrollTo('education')} className="text-left hover:text-white transition-colors">{t.nav.edu}</button>
+                                <button onClick={() => scrollTo('projects')} className="text-left hover:text-white transition-colors">{t.nav.proj}</button>
+                                <button onClick={() => scrollTo('skills')} className="text-left hover:text-white transition-colors">{t.nav.skill}</button>
+                                <button onClick={() => scrollTo('contact')} className="text-left hover:text-white transition-colors">{t.nav.contact}</button>
                             </div>
                         </div>
                     </nav>
@@ -1066,7 +1109,7 @@
                                     <div className="p-2 bg-black rounded-full text-blue-500 group-hover:scale-110 transition-transform"><Icons.Linkedin size={24} className="2xl:w-8 2xl:h-8" /></div>
                                     <div className="text-left"><span className="block text-xs 2xl:text-base text-gray-500 font-mono">{t.contact.labels.linkedin}</span><span className="text-white font-medium 2xl:text-xl">Connect</span></div>
                                 </a>
-                                <a href="https://github.com/WilliamLiu5318851" target="_blank" className="group flex items-center gap-3 bg-gray-900 px-6 2xl:px-10 py-4 2xl:py-6 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-purple-500 transition-all">
+                                <a href="https://github.com/WilliamLiu5318851" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 bg-gray-900 px-6 2xl:px-10 py-4 2xl:py-6 rounded-lg hover:bg-gray-800 border border-gray-800 hover:border-purple-500 transition-all">
                                     <div className="p-2 bg-black rounded-full text-purple-500 group-hover:scale-110 transition-transform"><Icons.Github size={24} className="2xl:w-8 2xl:h-8" /></div>
                                     <div className="text-left"><span className="block text-xs 2xl:text-base text-gray-500 font-mono">{t.contact.labels.github}</span><span className="text-white font-medium 2xl:text-xl">WilliamLiu5318851</span></div>
                                 </a>
