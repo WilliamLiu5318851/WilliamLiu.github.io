@@ -26,7 +26,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
 
     <!-- Tailwind 配置扩展：自定义超大屏幕断点 -->
     <script>
@@ -122,12 +122,7 @@
         </div>
     </div>
 
-    <script>
-        window.onerror = function(msg, src, line, col, err) {
-            document.getElementById('root').innerHTML = '<pre style="color:red;padding:20px;background:#111;font-size:13px">JS ERROR:\n' + msg + '\nLine: ' + line + '\n' + (err ? err.stack : '') + '</pre>';
-        };
-    </script>
-    <script type="text/babel">
+    <script type="text/babel" data-presets="react">
         const { useState, useEffect, useRef } = React;
 
         // --- SVG Icons ---
@@ -1519,11 +1514,7 @@ const HighlightText = ({ text }) => {
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        try {
-            root.render(<App />);
-        } catch(e) {
-            document.getElementById('root').innerHTML = '<pre style="color:red;padding:20px;font-size:14px">RENDER ERROR:\n' + e.message + '\n' + e.stack + '</pre>';
-        }
+        root.render(<App />);
     </script>
 </body>
 </html>
