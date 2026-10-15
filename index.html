@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>William Liu - Game Developer Portfolio</title>
-    <meta name="description" content="William Liu (刘军佑) — Game Developer & Software Engineer. UNSW Computer Science undergrad specializing in Unreal Engine 5, C++, and physics simulation. View projects including Binary Echoes and Sydney Harbour Dioxin Calculator." />
+    <title>William Liu 刘军佑 — Game Developer & Software Engineer</title>
+    <meta name="description" content="刘军佑 William Liu，UNSW 计算机科学 2026 届毕业生，现居广东。独立开发并发行《糖果工坊 2048》，专注 Godot / Unreal Engine 5 游戏开发、全栈工程与 LLM Agent 系统。" />
+    <link rel="canonical" href="https://williamliu-io.pages.dev/" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="William Liu - Game Developer Portfolio" />
-    <meta property="og:description" content="Game Developer & Software Engineer based in Sydney. Specializing in Unreal Engine 5, C++, and physics simulation." />
+    <meta property="og:title" content="William Liu 刘军佑 — Game Developer & Software Engineer" />
+    <meta property="og:description" content="UNSW CS graduate · Guangdong, China · Creator of Candy Factory 2048 on TapTap. Gameplay engineering, full-stack development and LLM Agent systems." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://williamliu5318851.github.io/" />
+    <meta property="og:url" content="https://williamliu-io.pages.dev/" />
+    <meta property="og:image" content="https://williamliu-io.pages.dev/assets/candy2048/promo.png" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="William Liu - Game Developer Portfolio" />
-    <meta name="twitter:description" content="Game Developer & Software Engineer based in Sydney. Specializing in Unreal Engine 5, C++, and physics simulation." />
+    <meta name="twitter:title" content="William Liu — Game Developer & Software Engineer" />
+    <meta name="twitter:description" content="UNSW CS graduate. Creator of Candy Factory 2048 on TapTap. Godot, Unreal Engine 5, full-stack engineering and LLM Agents." />
 
     <!-- 字体 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,6 +56,8 @@
         .font-cjk { font-family: 'Outfit', 'Noto Sans SC', sans-serif; }
         .font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', monospace !important; }
         h1, h2 { font-family: 'Unbounded', 'Noto Sans SC', sans-serif; }
+        section[id], footer[id], article[id] { scroll-margin-top: 100px; }
+        a:focus-visible, button:focus-visible { outline: 2px solid #22d3ee; outline-offset: 5px; }
         
         /* 动画：淡入上浮 */
         @keyframes fadeInUp {
@@ -169,7 +173,10 @@
                 nav: { about: "ABT", proj: "PROJ", skill: "SKILL", edu: "EDU", contact: "CNT" },
                 hero: {
                     name: "JUNYOU (WILLIAM) LIU",
-                    role: "SOFTWARE ENGINEER | AI SYSTEMS | GAME DEVELOPER | CS UNDERGRAD",
+                    role: "GAME DEVELOPER · SOFTWARE ENGINEER · UNSW CS 2026",
+                    intro: "I build games from first mechanic to release, and software from interface to backend. Based in Guangdong, China; open to roles in Shenzhen, Shanghai and Guangzhou.",
+                    release: "SHIPPED ON TAPTAP · CANDY FACTORY 2048",
+                    btn_resume: "DOWNLOAD RÉSUMÉ",
                     btn_proj: "VIEW PROJECTS",
                     btn_contact: "CONTACT ME"
                 },
@@ -177,26 +184,44 @@
                     title: "About Me",
                     paragraphs: [
                         {
-                            head: "Global Background, Local Impact",
-                            text: "From Sacramento to UNSW Sydney, my journey has been defined by adaptability. Fluent in three languages and raised across different cultures, I strive to build software that connects with people—whether through immersive entertainment or practical utilities."
+                            head: "From Prototype to Published Game",
+                            text: "I'm a *2026 UNSW Computer Science graduate*, now based in Guangdong. I independently designed, developed and published *Candy Factory 2048* on TapTap under *W&MGame*, taking a mobile game through gameplay design, implementation, store preparation and release."
                         },
                         {
-                            head: "Building Systems That Matter",
-                            text: "From *SoFake*, an LLM-agent simulation platform I led as *Scrum Master* for UNSW's capstone (123/265 commits, 46%), to engineering custom gravity in *Binary Echoes* with *vector math*, I build complex systems end-to-end. Whether it's *FastAPI + Docker* microservices or *Unreal Engine 5* gameplay, I tackle the hard engineering problems."
+                            head: "Gameplay, Full Stack & AI Systems",
+                            text: "In *Binary Echoes*, I built gravity mechanics and character state transitions with *Unreal Engine 5*. For *SoFake*, UNSW's capstone, I served as *Scrum Master and lead developer* (123/265 commits, 46%), building a multi-service *React + FastAPI + Docker* platform for LLM-agent simulations."
                         },
                         {
-                            head: "...And Solving Real Problems",
-                            text: "I believe technology should serve the community. Beyond game dev, I build practical applications like the *Sydney Harbour Dioxin Calculator*, a tool designed to help locals navigate environmental safety data. Whether it's optimizing a pipeline with *Generative AI* or parsing health data, my goal remains the same: using code to solve complex problems efficiently."
+                            head: "A Player's Perspective, An Engineer's Approach",
+                            text: "My experience spans shooters, strategy, simulation and open-world games, informing how I think about mechanics and player feedback. I also build practical tools: *Poker Advisor Pro* applies Monte Carlo simulation to hand equity, while the *Sydney Harbour Dioxin Calculator* makes environmental guidance easier to use. Fluent in *Cantonese, Mandarin and English*."
                         }
                     ],
                     toolkit_title: "MY TOOLKIT",
-                    loc: "Sydney, NSW",
-                    grad: "Graduation: Sep 2026",
+                    loc: "Guangdong, China",
+                    grad: "UNSW · Class of 2026",
                     lang: "Eng / Mand / Cant"
+                },
+                candy_project: {
+                    title: "Candy Factory 2048",
+                    subtitle: "INDEPENDENT MOBILE GAME · GODOT / GDSCRIPT",
+                    status: "LIVE ON TAPTAP",
+                    role: "SOLO DEVELOPER & PUBLISHER · W&MGame",
+                    date: "Released 12 Oct 2026 · Android",
+                    desc: "A candy-themed take on 2048, designed, built and independently published on TapTap. Three skills share one energy meter, turning each merge into a choice about when to save energy and when to change the board.",
+                    features: [
+                        { title: "Three skills, one shared resource", text: "Clear a row, rotate a 2×2 area, or fuse matching tiles across the board. Each skill draws from the same energy meter." },
+                        { title: "Classic, endless & daily challenge", text: "Reach 2048, continue in endless mode, or solve the day's seeded board. Track completion, best results and progress in a local calendar." },
+                        { title: "A complete offline game", text: "Save and resume a run, retain local records, learn through skill tutorials and play offline. Includes seven interface languages." }
+                    ],
+                    tech_list: ["Godot", "GDScript", "Android", "Offline Saves", "7 Languages", "TapTap"],
+                    gallery: "IN-GAME SCREENSHOTS · OPEN TO VIEW FULL SIZE",
+                    shots: ["Classic merging", "Row clear result", "2×2 rotation selection", "Cross-board fusion", "Daily challenge"],
+                    promo_alt: "Candy Factory 2048 promotional artwork showing the candy workshop and three skills",
+                    btn_text: "VIEW ON TAPTAP"
                 },
                 project: {
                     title: "Selected Projects",
-                    subtitle: "3D PUZZLE PLATFORMER • UNREAL ENGINE 5",
+                    subtitle: "3D PUZZLE PLATFORMER • UNREAL ENGINE 5 • SEP–DEC 2025",
                     tabs: { mechanics: "MECHANICS", audio: "AUDIO", tech: "TECH" },
                     mech_title: "Gravitational Attunement",
                     mech_desc: "A custom physics system utilizing real-time vector math to calculate dual-body gravitational pulls.",
@@ -206,7 +231,7 @@
                     audio_list: ["Music evolves with level progression.", "Links gameplay directly to audio engine parameters."],
                     tech_title: "Pipeline Optimization",
                     tech_desc: "Solved asset production bottlenecks for a small team using modern tech.",
-                    tech_list: ["Generative AI for 80% of environmental models/textures.", "Complex 3rd-person camera logic in C++."],
+                    tech_list: ["Generative AI for approximately 80% of environmental models/textures.", "Blueprint state transitions, collision detection and physics constraints."],
                     role_label: "ROLE: CORE GAMEPLAY ENGINEER",
                     read_proposal: "READ PROPOSAL",
                     view_code: "VIEW CODE"
@@ -214,15 +239,16 @@
                 web_project: {
                     title: "Sydney Harbour Dioxin Calculator",
                     subtitle: "HEALTH & SAFETY WEB APP • JAVASCRIPT",
-                    desc: "A responsive web application helping Sydney residents track dioxin intake from harbour seafood, strictly adhering to NSW Food Authority guidelines. Features real-time intake visualization, safe consumption forecasting, and local data persistence.",
+                    desc: "A responsive tool based on NSW Food Authority guidance for tracking dioxin intake from Sydney Harbour seafood. Includes monthly totals, intake warnings and Chart.js visualizations, with localStorage history and automatic removal of records older than 30 days.",
                     tech_list: ["HTML5 / JavaScript (ES6+)", "Tailwind CSS", "Chart.js", "LocalStorage API"],
                     btn_text: "LAUNCH APP"
                 },
                 poker_project: {
                     title: "Poker Advisor Pro",
-                    subtitle: "GTO DECISION TOOL • REACT.JS",
-                    desc: "A real-time Texas Hold'em advisor powered by Monte Carlo simulation. Calculates hand equity against multiple opponents, provides GTO-based action recommendations (raise/call/fold/bluff), and intelligently suggests bet sizing based on board texture and player position.",
-                    tech_list: ["React.js", "Chart.js", "Monte Carlo Sim", "Jest"],
+                    tag: "Monte Carlo & Probability",
+                    subtitle: "MONTE CARLO POKER ADVISOR • REACT",
+                    desc: "A Texas Hold'em decision assistant using Monte Carlo simulation to estimate hand equity across multiple hands and players. Combines hand strength, pot odds, position and stack-to-pot ratio for action recommendations, with automatic side-pot splitting and a responsive interface.",
+                    tech_list: ["React", "Tailwind CSS", "JavaScript", "Monte Carlo Simulation"],
                     btn_text: "LAUNCH APP"
                 },
                 hooklogic_project: {
@@ -238,7 +264,7 @@
                     subtitle: "FAKE NEWS EVOLUTION SIMULATOR • UNSW CAPSTONE 2026",
                     tag: "AI-Driven Simulation",
                     role: "SCRUM MASTER / LEAD DEVELOPER • 123/265 COMMITS (46%)",
-                    desc: "Led development of an LLM-agent platform that simulates semantic drift of ground-truth news across configurable social networks. Architected a Dockerised multi-service system with React frontend, FastAPI backend, LLM Agent Service, 9-dimensional FUSE-EVAL scoring, and SQLite storage. Implemented parallel multi-run simulation with run switching and FUSE score trend comparison.",
+                    desc: "Built an LLM-agent platform simulating news distortion across social networks. Integrated React, FastAPI, an Agent Service, a 9-dimensional FUSE-EVAL scorer and SQLite with Docker Compose. Implemented parallel runs and score comparison, evaluation against both original and parent posts, HEXACO personality visualization, Saved Runs and JSON export; configured GitHub Actions CI/CD.",
                     tech_list: ["React 19 / Vite", "FastAPI", "Docker Compose", "Groq Llama 3.1", "Anthropic Claude", "SQLite", "pytest", "GitHub Actions"],
                     btn_text: "VIEW CODE"
                 },
@@ -250,16 +276,16 @@
                     cat_domains: "Full Stack & AI",
                     items: {
                         lang: ["Python", "JavaScript", "Java", "C", "SQL", "HTML/CSS"],
-                        game: ["Unreal Engine 5", "Blueprint", "Gameplay Programming", "Physics Simulation", "State Machines", "3D Vector Math"],
-                        tools: ["Git / GitHub", "Docker Compose", "GitHub Actions", "pytest", "VS Code", "Visual Studio"],
-                        domains: ["React / FastAPI", "LLM Agents", "Monte Carlo Simulation", "Computer Vision", "Algorithm Design"]
+                        game: ["Godot / GDScript", "Unreal Engine 5", "Blueprint", "Gameplay Programming", "Physics Simulation", "State Machines", "3D Vector Math", "Android / TapTap Release"],
+                        tools: ["Git / GitHub", "Docker Compose", "GitHub Actions", "pytest", "ESLint", "Visual Studio", "Jira / Agile / Scrum"],
+                        domains: ["React / Vite", "FastAPI / REST API", "SQLite", "LLM Agents / Claude / Groq", "Monte Carlo Simulation", "Tailwind CSS / Chart.js"]
                     }
                 },
                 education: {
                     title: "Academic Journey",
                     map_instruction: "Click on a location to see details",
                     locations: [
-                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "University of New South Wales", degree: "Bachelor of Computer Science", period: "Expected Sep 2026", details: "Coursework: Computer Graphics, Computer Vision, Algorithms, AI" },
+                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "University of New South Wales", degree: "Bachelor of Computer Science", period: "Sep 2020 – Sep 2026", details: "Sydney, Australia · Class of 2026. Coursework: Computer Graphics, Computer Vision, AI, Algorithms, Software Engineering, Databases & Web Development." },
                         { id: 'cbhs', name: 'CBHS', x: 15, y: 35, full: "Christian Brothers High School", degree: "High School Diploma", period: "Graduated 2020", details: "Sacramento, CA, USA" },
                         { id: 'zs', name: 'Zhongshan', x: 78, y: 45, full: "Sun Yat-sen Memorial Middle School", degree: "Middle School Diploma", period: "Graduated 2016", details: "Zhongshan, Guangdong, China" }
                     ]
@@ -269,21 +295,21 @@
                     items: [
                         {
                             title: "Student Intern - Enterprise Dev",
-                            date: "Dec 2024",
+                            date: "Dec 2024 – Jan 2025",
                             loc: "Zhongshan Overseas Scholars Science & Technology Innovation Park",
-                            desc: "Assisted in technical feasibility analysis and market research for local tech startups. Collaborated with cross-functional teams to optimize business plans."
+                            desc: "Supported technical feasibility analysis, industry research and market information gathering for tech startups; helped refine business plans and project materials, coordinate meetings and support cross-functional communication."
                         },
                         {
                             title: "Student Manager",
                             date: "2019 - 2020",
                             loc: "Non-Profit Coffee Shop, Sacramento, CA",
-                            desc: "Led a team of 5+ staff, managed operational scheduling and inventory logistics."
+                            desc: "Managed scheduling, task allocation, inventory and peak-hour coordination for a five-person team. Helped train new staff and improve daily workflows."
                         }
                     ]
                 },
                 contact: {
                     title: "INITIALIZE_CONNECTION",
-                    desc: "Currently looking for opportunities in Game Development and Software Engineering. Let's build something extraordinary together.",
+                    desc: "Open to game client / engine, game AI, backend and full-stack opportunities in Shenzhen, Shanghai and Guangzhou. Based in Guangdong; fluent in Cantonese, Mandarin and English.",
                     labels: { email: "EMAIL", linkedin: "LINKEDIN", github: "GITHUB" },
                     footer_rights: "© 2026 William Liu. All systems nominal."
                 }
@@ -292,7 +318,10 @@
                 nav: { about: "关于", proj: "项目", skill: "技能", edu: "教育", contact: "联系" },
                 hero: {
                     name: "刘军佑 (WILLIAM LIU)",
-                    role: "软件工程师 | AI 系统 | 游戏开发者 | 计算机科学本科生",
+                    role: "游戏开发 · 软件工程 · UNSW 计算机科学 2026 届",
+                    intro: "从玩法原型到独立发行，从前端交互到后端与 AI 系统。现居广东，可到岗深圳、上海、广州。",
+                    release: "独立开发作品已上线 TAPTAP · 糖果工坊 2048",
+                    btn_resume: "下载简历",
                     btn_proj: "查看项目",
                     btn_contact: "联系我"
                 },
@@ -300,26 +329,44 @@
                     title: "关于我",
                     paragraphs: [
                         {
-                            head: "从虚拟世界到现实关怀",
-                            text: "从萨克拉门托到悉尼 *UNSW*，跨文化的背景让我不仅是一名程序员，更是一个生活的观察者。我热衷于用代码构建世界——无论是宏大的游戏场景，还是服务社区的实用工具。"
+                            head: "把游戏做完，也把它带给玩家",
+                            text: "我是 *UNSW 计算机科学 2026 届毕业生*，现居广东。以 *W&MGame* 独立开发并发行休闲手游 *《糖果工坊 2048》*，完成玩法设计、系统实现、商店物料准备到 TapTap 上线的完整流程。"
                         },
                         {
-                            head: "构建真正有价值的系统",
-                            text: "从主导 *SoFake* 开发（UNSW 毕设项目，担任 *Scrum Master*，贡献 123/265 commits）到在 *Binary Echoes* 中用向量数学构建自定义引力系统，我擅长端对端解决复杂工程问题。无论是 *FastAPI + Docker* 微服务架构，还是 *Unreal Engine 5* 游戏玩法，我都全力以赴。"
+                            head: "玩法开发、全栈工程与 AI 系统",
+                            text: "在 *Binary Echoes* 中，使用 *Unreal Engine 5* 实现引力机制与角色状态切换。在 UNSW 毕设 *SoFake* 中担任 *Scrum Master 与主力开发者*（123/265 commits，46%），构建基于 *React + FastAPI + Docker* 的多服务 LLM Agent 仿真平台。"
                         },
                         {
-                            head: "现实应用与技术理念",
-                            text: "我也关注现实问题，开发了 *Sydney Harbour Dioxin Calculator*，致力于用技术帮助悉尼社区解读环境数据，保障生活健康。\n\n我的理念是：无论是用 *AI* 优化开发管线，还是编写实用的数据工具，我始终追求技术深度与实际价值的统一。"
+                            head: "用玩家的视角理解系统",
+                            text: "长期体验射击、策略、模拟经营和开放世界游戏，关注玩法机制、数值设计与玩家反馈。也将算法应用到实用工具：*Poker Advisor Pro* 用蒙特卡洛模拟估算胜率，*悉尼港海鲜二恶英计算器* 将环境指引转化为可交互的数据工具。可使用 *粤语、普通话、英语* 流利沟通。"
                         }
                     ],
                     toolkit_title: "我的工具箱",
-                    loc: "澳大利亚 悉尼",
-                    grad: "毕业时间：2026 年 9 月",
+                    loc: "中国 · 广东",
+                    grad: "UNSW · 2026 届毕业生",
                     lang: "英语 / 普通话 / 粵語"
+                },
+                candy_project: {
+                    title: "糖果工坊 2048",
+                    subtitle: "独立休闲手游 · GODOT / GDSCRIPT",
+                    status: "已上线 TAPTAP",
+                    role: "独立开发 · 独立发行 · W&MGame",
+                    date: "2026.10.12 上线 · Android",
+                    desc: "独立完成玩法设计、系统开发与 TapTap 发行的糖果主题 2048。清行、旋转、融合三种技能共用能量槽，让每次合并都带来蓄能与改变盘面的策略选择。",
+                    features: [
+                        { title: "三种技能，共享能量", text: "清除整行、旋转 2×2 选区、跨格融合同值糖块；围绕同一能量槽安排技能使用时机。" },
+                        { title: "经典、无尽与每日挑战", text: "达成 2048 后继续无尽模式，或挑战每日固定种子盘面；本地保存完成纪录、最佳成绩与打卡月历。" },
+                        { title: "完整的离线游玩体验", text: "支持对局保存与继续、本地纪录、技能教程与七语言界面，覆盖从首次上手到反复游玩的完整流程。" }
+                    ],
+                    tech_list: ["Godot", "GDScript", "Android", "离线存档", "七语言", "TapTap 发行"],
+                    gallery: "实机画面 · 点击查看原图",
+                    shots: ["经典合并", "清行结果", "2×2 旋转选区", "跨格融合", "每日挑战"],
+                    promo_alt: "糖果工坊 2048 宣传美术：糖果工坊场景与清行、旋转、融合三种技能",
+                    btn_text: "前往 TAPTAP"
                 },
                 project: {
                     title: "精选项目",
-                    subtitle: "3D 解谜平台游戏 • UNREAL ENGINE 5",
+                    subtitle: "3D 解谜平台游戏 • UNREAL ENGINE 5 • 2025.09–12",
                     tabs: { mechanics: "核心机制", audio: "音频系统", tech: "技术管线" },
                     mech_title: "引力调谐系统",
                     mech_desc: "利用实时向量数学计算双体引力牵引的自定义物理系统。",
@@ -329,7 +376,7 @@
                     audio_list: ["音乐随关卡进度演变。", "将游戏玩法直接关联至音频引擎参数。"],
                     tech_title: "管线优化",
                     tech_desc: "利用现代技术解决小团队的资产生产瓶颈。",
-                    tech_list: ["利用生成式 AI 制作 80% 的环境模型/纹理。", "C++ 实现复杂的第三人称相机逻辑。"],
+                    tech_list: ["利用生成式 AI 辅助制作约 80% 的场景模型与纹理。", "使用 Blueprint 实现状态切换、碰撞检测与物理约束。"],
                     role_label: "角色：核心玩法工程师",
                     read_proposal: "阅读提案",
                     view_code: "查看代码"
@@ -337,15 +384,16 @@
                 web_project: {
                     title: "悉尼港海鲜二恶英计算器",
                     subtitle: "健康与安全 WEB 应用 • JAVASCRIPT",
-                    desc: "一款直观的 Web 应用，帮助悉尼居民追踪和管理因食用海港大桥以东海鲜而产生的二恶英摄入量。所有计算严格遵循新南威尔士州食品管理局官方指南，并支持本地数据持久化。",
+                    desc: "依据 NSW Food Authority 官方指引，计算悉尼港海鲜的二恶英摄入量，提供月度统计、摄入超标预警和 Chart.js 可视化；使用 localStorage 保存历史纪录，并自动清理 30 天前的数据。",
                     tech_list: ["HTML5 / JavaScript (ES6+)", "Tailwind CSS", "Chart.js", "LocalStorage API"],
                     btn_text: "启动应用"
                 },
                 poker_project: {
                     title: "德州扑克助手 Pro",
-                    subtitle: "GTO 决策工具 • REACT.JS",
-                    desc: "基于蒙特卡洛模拟的德州扑克实时辅助工具。支持多人对战胜率计算、GTO 策略建议（加注/跟注/弃牌/诈唬）、智能下注尺寸推荐，并根据牌面纹理和位置动态调整策略，内置保守/激进/鲨鱼三种风格。",
-                    tech_list: ["React.js", "Chart.js", "蒙特卡洛模拟", "Jest"],
+                    tag: "蒙特卡洛与概率计算",
+                    subtitle: "蒙特卡洛决策助手 • REACT",
+                    desc: "基于蒙特卡洛模拟估算德州扑克胜率，支持多手牌、多玩家场景。结合手牌强度、底池赔率、玩家位置和 SPR 给出决策建议，实现边池自动拆分，并使用 React 与 Tailwind CSS 构建响应式界面。",
+                    tech_list: ["React", "Tailwind CSS", "JavaScript", "蒙特卡洛模拟"],
                     btn_text: "启动应用"
                 },
                 hooklogic_project: {
@@ -361,7 +409,7 @@
                     subtitle: "假新闻传播演化模拟器 • UNSW CAPSTONE 2026",
                     tag: "AI 驱动的仿真系统",
                     role: "SCRUM MASTER / 主力开发者 • 123/265 COMMITS (46%)",
-                    desc: "主导开发基于 LLM 智能体的新闻传播仿真平台，模拟真实新闻在可配置社交网络中的语义漂移。构建 Docker 化多服务架构，整合 React 前端、FastAPI 后端、LLM 智能体服务、9 维 FUSE-EVAL 评分器与 SQLite 存储。实现多路并行仿真，支持运行切换与 FUSE 分数趋势对比。",
+                    desc: "构建 LLM Agent 新闻传播仿真平台，以 Docker Compose 整合 React、FastAPI、Agent 服务、9 维 FUSE-EVAL 评分服务与 SQLite。实现并行仿真与趋势对比、相对原文和父帖的双重评分、HEXACO 人格网络图谱、Saved Runs 历史页与 JSON 导出，并配置 GitHub Actions CI/CD。",
                     tech_list: ["React 19 / Vite", "FastAPI", "Docker Compose", "Groq Llama 3.1", "Anthropic Claude", "SQLite", "pytest", "GitHub Actions"],
                     btn_text: "查看代码"
                 },
@@ -373,16 +421,16 @@
                     cat_domains: "全栈 & AI",
                     items: {
                         lang: ["Python", "JavaScript", "Java", "C", "SQL", "HTML/CSS"],
-                        game: ["Unreal Engine 5", "Blueprint", "Gameplay Programming", "Physics Simulation", "State Machines", "3D Vector Math"],
-                        tools: ["Git / GitHub", "Docker Compose", "GitHub Actions", "pytest", "VS Code", "Visual Studio"],
-                        domains: ["React / FastAPI", "LLM Agents", "Monte Carlo Simulation", "Computer Vision", "Algorithm Design"]
+                        game: ["Godot / GDScript", "Unreal Engine 5", "Blueprint", "玩法系统", "物理模拟", "状态机", "3D 向量数学", "Android / TapTap 发行"],
+                        tools: ["Git / GitHub", "Docker Compose", "GitHub Actions", "pytest", "ESLint", "Visual Studio", "Jira / Agile / Scrum"],
+                        domains: ["React / Vite", "FastAPI / REST API", "SQLite", "LLM Agent / Claude / Groq", "蒙特卡洛模拟", "Tailwind CSS / Chart.js"]
                     }
                 },
                 education: {
                     title: "求学足迹",
                     map_instruction: "点击地点查看详情",
                     locations: [
-                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "新南威尔士大学 (UNSW)", degree: "计算机科学学士", period: "预计 2026 年 9 月毕业", details: "悉尼，澳大利亚 | 课程：图形学，计算机视觉，算法" },
+                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "新南威尔士大学 (UNSW)", degree: "计算机科学学士", period: "2020.09 – 2026.09", details: "悉尼，澳大利亚 · 2026 届。相关课程：计算机图形学、计算机视觉、人工智能、算法、软件工程、数据库与 Web 开发。" },
                         { id: 'cbhs', name: 'CBHS', x: 15, y: 35, full: "Christian Brothers High School", degree: "高中毕业文凭", period: "2020 毕业", details: "萨克拉门托，加州，美国" },
                         { id: 'zs', name: '中山', x: 78, y: 45, full: "中山纪念中学", degree: "初中毕业", period: "2016 毕业", details: "中山，广东，中国" }
                     ]
@@ -392,21 +440,21 @@
                     items: [
                         {
                             title: "实习生",
-                            date: "2024 年 12 月",
+                            date: "2024.12 – 2025.01",
                             loc: "中国中山留学人员创业园 (Zhongshan OSTA)",
-                            desc: "协助初创科技企业进行技术可行性分析和市场调研。与跨职能团队合作，优化商业计划书与服务策略。"
+                            desc: "协助科技初创企业开展技术可行性分析、行业调研与市场信息整理，优化商业计划与项目资料，并参与项目对接、会议支持与跨部门沟通。"
                         },
                         {
                             title: "学生经理",
                             date: "2019 - 2020",
                             loc: "非营利咖啡店, 美国萨克拉门托",
-                            desc: "领导 5 人以上的团队，管理运营排班和库存物流。"
+                            desc: "负责 5 人团队的日常排班、岗位分工、库存管理与高峰期运营协调，协助培训新成员并优化店内工作流程。"
                         }
                     ]
                 },
                 contact: {
                     title: "建立连接",
-                    desc: "目前正在寻找游戏开发和软件工程领域的工作机会。让我们一起创造非凡。",
+                    desc: "寻找游戏客户端 / 引擎、游戏 AI、后端与全栈开发机会。现居广东，可到岗深圳、上海、广州；粤语、普通话、英语流利。",
                     labels: { email: "邮箱", linkedin: "领英", github: "GITHUB" },
                     footer_rights: "© 2026 刘军佑. 所有系统正常运行。"
                 }
@@ -415,7 +463,10 @@
                 nav: { about: "關於", proj: "專案", skill: "技能", edu: "教育", contact: "聯絡" },
                 hero: {
                     name: "劉軍佑 (WILLIAM LIU)",
-                    role: "軟體工程師 | AI 系統 | 遊戲開發者 | 計算機科學本科生",
+                    role: "遊戲開發 · 軟體工程 · UNSW 計算機科學 2026 屆",
+                    intro: "從玩法原型到獨立發行，從前端互動到後端與 AI 系統。現居廣東，可到崗深圳、上海、廣州。",
+                    release: "獨立開發作品已上線 TAPTAP · 糖果工坊 2048",
+                    btn_resume: "下載履歷",
                     btn_proj: "檢視專案",
                     btn_contact: "聯絡我"
                 },
@@ -423,26 +474,44 @@
                     title: "關於我",
                     paragraphs: [
                         {
-                            head: "從虛擬世界到現實關懷",
-                            text: "從薩克拉門托到雪梨 *UNSW*，跨文化的背景讓我不僅是一名程式設計師，更是一個生活的觀察者。我熱衷於用程式碼構建世界——無論是宏大的遊戲場景，還是服務社區的實用工具。"
+                            head: "把遊戲完成，也把它帶給玩家",
+                            text: "我是 *UNSW 計算機科學 2026 屆畢業生*，現居廣東。以 *W&MGame* 獨立開發並發行休閒手遊 *《糖果工坊 2048》*，完成玩法設計、系統實作、商店素材準備到 TapTap 上線的完整流程。"
                         },
                         {
-                            head: "構建真正有價值的系統",
-                            text: "從主導 *SoFake* 開發（UNSW 畢設專案，擔任 *Scrum Master*，貢獻 123/265 commits）到在 *Binary Echoes* 中以向量數學構建自訂引力系統，我擅長端對端解決複雜工程問題。無論是 *FastAPI + Docker* 微服務架構，還是 *Unreal Engine 5* 遊戲玩法，我都全力以赴。"
+                            head: "玩法開發、全端工程與 AI 系統",
+                            text: "在 *Binary Echoes* 中，使用 *Unreal Engine 5* 實作引力機制與角色狀態切換。在 UNSW 畢設 *SoFake* 中擔任 *Scrum Master 與主力開發者*（123/265 commits，46%），構建基於 *React + FastAPI + Docker* 的多服務 LLM Agent 仿真平台。"
                         },
                         {
-                            head: "現實應用與技術理念",
-                            text: "我也關注現實問題，開發了 *Sydney Harbour Dioxin Calculator*，致力於用技術幫助雪梨社區解讀環境數據，保障生活健康。\n\n我的理念是：無論是用 *AI* 最佳化開發管線，還是編寫實用的數據工具，我始終追求技術深度與實際價值的統一。"
+                            head: "用玩家的視角理解系統",
+                            text: "長期體驗射擊、策略、模擬經營和開放世界遊戲，關注玩法機制、數值設計與玩家回饋。也將演算法應用到實用工具：*Poker Advisor Pro* 用蒙地卡羅模擬估算勝率，*雪梨港海鮮戴奧辛計算器* 將環境指引轉化為互動數據工具。可使用 *粵語、普通話、英語* 流利溝通。"
                         }
                     ],
                     toolkit_title: "我的工具箱",
-                    loc: "澳洲 雪梨",
-                    grad: "畢業時間：2026 年 9 月",
+                    loc: "中國 · 廣東",
+                    grad: "UNSW · 2026 屆畢業生",
                     lang: "英語 / 普通話 / 粵語"
+                },
+                candy_project: {
+                    title: "糖果工坊 2048",
+                    subtitle: "獨立休閒手遊 · GODOT / GDSCRIPT",
+                    status: "已上線 TAPTAP",
+                    role: "獨立開發 · 獨立發行 · W&MGame",
+                    date: "2026.10.12 上線 · Android",
+                    desc: "獨立完成玩法設計、系統開發與 TapTap 發行的糖果主題 2048。清行、旋轉、融合三種技能共用能量槽，讓每次合併都帶來蓄能與改變盤面的策略選擇。",
+                    features: [
+                        { title: "三種技能，共享能量", text: "清除整行、旋轉 2×2 選區、跨格融合同值糖塊；圍繞同一能量槽安排技能使用時機。" },
+                        { title: "經典、無盡與每日挑戰", text: "達成 2048 後繼續無盡模式，或挑戰每日固定種子盤面；本地儲存完成紀錄、最佳成績與打卡月曆。" },
+                        { title: "完整的離線遊玩體驗", text: "支援對局儲存與繼續、本地紀錄、技能教學與七語言介面，涵蓋從首次上手到反覆遊玩的完整流程。" }
+                    ],
+                    tech_list: ["Godot", "GDScript", "Android", "離線存檔", "七語言", "TapTap 發行"],
+                    gallery: "實機畫面 · 點擊查看原圖",
+                    shots: ["經典合併", "清行結果", "2×2 旋轉選區", "跨格融合", "每日挑戰"],
+                    promo_alt: "糖果工坊 2048 宣傳美術：糖果工坊場景與清行、旋轉、融合三種技能",
+                    btn_text: "前往 TAPTAP"
                 },
                 project: {
                     title: "精選專案",
-                    subtitle: "3D 解謎平台遊戲 • UNREAL ENGINE 5",
+                    subtitle: "3D 解謎平台遊戲 • UNREAL ENGINE 5 • 2025.09–12",
                     tabs: { mechanics: "核心機制", audio: "音訊系統", tech: "技術管線" },
                     mech_title: "引力調諧系統",
                     mech_desc: "利用即時向量數學計算雙體引力牽引的自定義物理系統。",
@@ -452,7 +521,7 @@
                     audio_list: ["音樂隨關卡進度演變。", "將遊戲玩法直接關聯至音訊引擎參數。"],
                     tech_title: "管線最佳化",
                     tech_desc: "利用現代技術解決小團隊的資產生產瓶頸。",
-                    tech_list: ["利用生成式 AI 製作 80% 的環境模型/紋理。", "C++ 實現複雜的第三人稱相機邏輯。"],
+                    tech_list: ["利用生成式 AI 輔助製作約 80% 的場景模型與紋理。", "使用 Blueprint 實作狀態切換、碰撞檢測與物理約束。"],
                     role_label: "角色：核心玩法工程師",
                     read_proposal: "閱讀提案",
                     view_code: "查看程式碼"
@@ -460,15 +529,16 @@
                 web_project: {
                     title: "雪梨港海鮮戴奧辛計算器",
                     subtitle: "健康與安全 WEB 應用 • JAVASCRIPT",
-                    desc: "一款直觀的 Web 應用，幫助雪梨居民追蹤和管理因食用海港大橋以東海鮮而產生的戴奧辛攝入量。所有計算嚴格遵循新南威爾斯州食品管理局官方指南，並支援本地數據持久化。",
+                    desc: "依據 NSW Food Authority 官方指引，計算雪梨港海鮮的戴奧辛攝入量，提供月度統計、攝入超標預警與 Chart.js 視覺化；以 localStorage 儲存歷史紀錄，並自動清理 30 天前的資料。",
                     tech_list: ["HTML5 / JavaScript (ES6+)", "Tailwind CSS", "Chart.js", "LocalStorage API"],
                     btn_text: "啟動應用"
                 },
                 poker_project: {
                     title: "德州撲克助手 Pro",
-                    subtitle: "GTO 決策工具 • REACT.JS",
-                    desc: "基於蒙特卡洛模擬的德州撲克即時輔助工具。支援多人對戰勝率計算、GTO 策略建議（加注/跟注/棄牌/詐唬）、智慧下注尺寸推薦，並根據牌面紋理和位置動態調整策略，內建保守/積極/鯊魚三種風格。",
-                    tech_list: ["React.js", "Chart.js", "蒙特卡洛模擬", "Jest"],
+                    tag: "蒙地卡羅與機率計算",
+                    subtitle: "蒙地卡羅決策助手 • REACT",
+                    desc: "基於蒙地卡羅模擬估算德州撲克勝率，支援多手牌、多玩家情境。結合手牌強度、底池賠率、玩家位置和 SPR 提供決策建議，實作邊池自動拆分，並以 React 與 Tailwind CSS 建構響應式介面。",
+                    tech_list: ["React", "Tailwind CSS", "JavaScript", "蒙地卡羅模擬"],
                     btn_text: "啟動應用"
                 },
                 hooklogic_project: {
@@ -484,7 +554,7 @@
                     subtitle: "假新聞傳播演化模擬器 • UNSW CAPSTONE 2026",
                     tag: "AI 驅動的仿真系統",
                     role: "SCRUM MASTER / 主力開發者 • 123/265 COMMITS (46%)",
-                    desc: "主導開發基於 LLM 智能體的新聞傳播仿真平台，模擬真實新聞在可配置社交網路中的語義漂移。構建 Docker 化多服務架構，整合 React 前端、FastAPI 後端、LLM 智能體服務、9 維 FUSE-EVAL 評分器與 SQLite 儲存。實現多路並行仿真，支援運行切換與 FUSE 分數趨勢對比。",
+                    desc: "構建 LLM Agent 新聞傳播仿真平台，以 Docker Compose 整合 React、FastAPI、Agent 服務、9 維 FUSE-EVAL 評分服務與 SQLite。實作並行仿真與趨勢比較、相對原文與父帖的雙重評分、HEXACO 人格網路圖譜、Saved Runs 歷史頁與 JSON 匯出，並配置 GitHub Actions CI/CD。",
                     tech_list: ["React 19 / Vite", "FastAPI", "Docker Compose", "Groq Llama 3.1", "Anthropic Claude", "SQLite", "pytest", "GitHub Actions"],
                     btn_text: "查看程式碼"
                 },
@@ -496,16 +566,16 @@
                     cat_domains: "全端 & AI",
                     items: {
                         lang: ["Python", "JavaScript", "Java", "C", "SQL", "HTML/CSS"],
-                        game: ["Unreal Engine 5", "Blueprint", "Gameplay Programming", "Physics Simulation", "State Machines", "3D Vector Math"],
-                        tools: ["Git / GitHub", "Docker Compose", "GitHub Actions", "pytest", "VS Code", "Visual Studio"],
-                        domains: ["React / FastAPI", "LLM Agents", "Monte Carlo Simulation", "Computer Vision", "Algorithm Design"]
+                        game: ["Godot / GDScript", "Unreal Engine 5", "Blueprint", "玩法系統", "物理模擬", "狀態機", "3D 向量數學", "Android / TapTap 發行"],
+                        tools: ["Git / GitHub", "Docker Compose", "GitHub Actions", "pytest", "ESLint", "Visual Studio", "Jira / Agile / Scrum"],
+                        domains: ["React / Vite", "FastAPI / REST API", "SQLite", "LLM Agent / Claude / Groq", "蒙地卡羅模擬", "Tailwind CSS / Chart.js"]
                     }
                 },
                 education: {
                     title: "求學足跡",
                     map_instruction: "點擊地點查看詳情",
                     locations: [
-                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "新南威爾斯大學 (UNSW)", degree: "計算機科學學士", period: "預計 2026 年 9 月畢業", details: "雪梨，澳洲 | 課程：圖學，電腦視覺，演算法" },
+                        { id: 'unsw', name: 'UNSW', x: 85, y: 80, full: "新南威爾斯大學 (UNSW)", degree: "計算機科學學士", period: "2020.09 – 2026.09", details: "雪梨，澳洲 · 2026 屆。相關課程：電腦圖學、電腦視覺、人工智慧、演算法、軟體工程、資料庫與 Web 開發。" },
                         { id: 'cbhs', name: 'CBHS', x: 15, y: 35, full: "Christian Brothers High School", degree: "高中畢業文憑", period: "2020 畢業", details: "薩克拉門托，加州，美國" },
                         { id: 'zs', name: '中山', x: 78, y: 45, full: "中山紀念中學", degree: "初中畢業", period: "2016 畢業", details: "中山，廣東，中國" }
                     ]
@@ -515,21 +585,21 @@
                     items: [
                         {
                             title: "實習生",
-                            date: "2024 年 12 月",
+                            date: "2024.12 – 2025.01",
                             loc: "中國中山留學人員創業園 (Zhongshan OSTA)",
-                            desc: "協助初創科技企業進行技術可行性分析和市場調研。與跨職能團隊合作，最佳化商業計劃書與服務策略。"
+                            desc: "協助科技初創企業進行技術可行性分析、產業調研與市場資訊整理，優化商業計畫與專案資料，並參與專案對接、會議支援與跨部門溝通。"
                         },
                         {
                             title: "學生經理",
                             date: "2019 - 2020",
                             loc: "非營利咖啡店, 美國薩克拉門托",
-                            desc: "領導 5 人以上的團隊，管理營運排班和庫存物流。"
+                            desc: "負責 5 人團隊的日常排班、職務分工、庫存管理與高峰時段營運協調，協助培訓新成員並優化店內工作流程。"
                         }
                     ]
                 },
                 contact: {
                     title: "建立連線",
-                    desc: "目前正在尋找遊戲開發和軟體工程領域的工作機會。讓我們一起創造非凡。",
+                    desc: "尋找遊戲客戶端 / 引擎、遊戲 AI、後端與全端開發機會。現居廣東，可到崗深圳、上海、廣州；粵語、普通話、英語流利。",
                     labels: { email: "信箱", linkedin: "領英", github: "GITHUB" },
                     footer_rights: "© 2026 劉軍佑. 所有系統正常運行。"
                 }
@@ -562,7 +632,7 @@
                         s.z -= s.speed * 2; if (s.z <= 0) { s.z = width; s.x = Math.random() * width; s.y = Math.random() * height; }
                         const x = (s.x - width / 2) * (width / s.z) + width / 2;
                         const y = (s.y - height / 2) * (width / s.z) + height / 2;
-                        const sz = (1 - s.z / width) * s.size * 2;
+                        const sz = Math.max(0, 1 - s.z / width) * s.size * 2;
                         if (x >= 0 && x <= width && y >= 0 && y <= height) {
                             ctx.fillStyle = `rgba(255, 255, 255, ${1 - s.z / width})`; ctx.beginPath(); ctx.arc(x, y, sz, 0, Math.PI * 2); ctx.fill();
                         }
@@ -598,7 +668,7 @@ const HighlightText = ({ text }) => {
                 if (!el) return;
                 const observer = new IntersectionObserver(
                     ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); observer.disconnect(); } },
-                    { threshold: 0.1 }
+                    { threshold: 0 }
                 );
                 observer.observe(el);
                 return () => observer.disconnect();
@@ -706,6 +776,10 @@ const HighlightText = ({ text }) => {
             const t = translations[lang];
 
             useEffect(() => {
+                document.documentElement.lang = { en: 'en', zhCN: 'zh-CN', zhTW: 'zh-TW' }[lang];
+            }, [lang]);
+
+            useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 50);
                 window.addEventListener('scroll', handleScroll);
                 return () => window.removeEventListener('scroll', handleScroll);
@@ -756,6 +830,8 @@ const HighlightText = ({ text }) => {
                                     className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5"
                                     onClick={() => setMobileMenuOpen(o => !o)}
                                     aria-label="Toggle menu"
+                                    aria-expanded={mobileMenuOpen}
+                                    aria-controls="mobile-navigation"
                                 >
                                     <span className={`block w-6 h-0.5 bg-cyan-400 transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
                                     <span className={`block w-6 h-0.5 bg-cyan-400 transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
@@ -765,7 +841,7 @@ const HighlightText = ({ text }) => {
                         </div>
 
                         {/* 移动端展开菜单 */}
-                        <div className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-64 border-t border-gray-800' : 'max-h-0'}`}>
+                        <div id="mobile-navigation" inert={mobileMenuOpen ? undefined : ''} className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-64 border-t border-gray-800' : 'max-h-0'}`}>
                             <div className="flex flex-col py-4 px-6 space-y-4 font-mono text-sm text-cyan-400 bg-black/90 backdrop-blur">
                                 <button onClick={() => scrollTo('about')} className="text-left hover:text-white transition-colors">{t.nav.about}</button>
                                 <button onClick={() => scrollTo('education')} className="text-left hover:text-white transition-colors">{t.nav.edu}</button>
@@ -777,17 +853,21 @@ const HighlightText = ({ text }) => {
                     </nav>
 
                     {/* Hero */}
-                    <header className="min-h-screen flex flex-col justify-center items-center relative px-4 text-center">
+                    <header className="min-h-screen flex flex-col justify-center items-center relative px-5 pt-32 pb-24 text-center">
                         <div className="absolute top-1/4 w-64 h-64 2xl:w-96 2xl:h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-                        <h1 className="text-4xl sm:text-5xl md:text-7xl 2xl:text-9xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 mb-6 2xl:mb-10 tracking-tight z-10 font-cjk">
+                        <a href="#candy2048" onClick={(e) => {e.preventDefault(); scrollTo('candy2048')}} className="relative mb-8 inline-flex max-w-full items-center justify-center gap-3 rounded-full border border-amber-400/30 bg-amber-400/5 px-4 py-2 text-xs md:text-sm font-mono text-amber-200 hover:border-amber-300 transition-colors">
+                            <span className="h-2 w-2 shrink-0 rounded-full bg-amber-300"></span>{t.hero.release}<Icons.ExternalLink className="w-4 h-4 shrink-0" />
+                        </a>
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl 2xl:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500 mb-6 2xl:mb-10 tracking-tight z-10 font-cjk">
                             {t.hero.name}
                         </h1>
                         <div className="flex items-center gap-4 2xl:gap-8 mb-10 2xl:mb-16">
-                            <span className="h-px w-12 2xl:w-24 bg-gray-600"></span>
+                            <span className="hidden sm:block h-px w-12 2xl:w-24 bg-gray-600"></span>
                             <p className="text-lg md:text-xl 2xl:text-3xl text-gray-400 font-mono tracking-wide uppercase">{t.hero.role}</p>
-                            <span className="h-px w-12 2xl:w-24 bg-gray-600"></span>
+                            <span className="hidden sm:block h-px w-12 2xl:w-24 bg-gray-600"></span>
                         </div>
-                        <div className="flex gap-6 2xl:gap-10 z-10">
+                        <p className="relative max-w-2xl 2xl:max-w-4xl text-base md:text-lg 2xl:text-2xl text-gray-400 leading-relaxed mb-8">{t.hero.intro}</p>
+                        <div className="flex flex-wrap justify-center gap-4 2xl:gap-8 z-10">
                             <a href="#projects" onClick={(e) => {e.preventDefault(); scrollTo('projects')}} className="px-8 2xl:px-12 py-3 2xl:py-5 bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-base 2xl:text-2xl rounded-sm border-b-4 border-cyan-800 active:border-b-0 active:translate-y-1 transition-all flex items-center gap-3 cursor-pointer">
                                 <Icons.Gamepad2 size={24} className="2xl:w-8 2xl:h-8" /> {t.hero.btn_proj}
                             </a>
@@ -795,6 +875,7 @@ const HighlightText = ({ text }) => {
                                 {t.hero.btn_contact}
                             </a>
                         </div>
+                        <a href="assets/William-Liu-Game-Developer-Resume.docx" download className="relative mt-6 text-sm 2xl:text-lg font-mono text-gray-400 underline underline-offset-4 hover:text-white transition-colors">{t.hero.btn_resume} <span className="text-gray-500">· DOCX / 中文</span></a>
                         <div className="absolute bottom-10 2xl:bottom-20 animate-bounce cursor-pointer" onClick={() => scrollTo('about')}>
                             <Icons.ChevronDown className="text-cyan-500 w-8 h-8 2xl:w-12 2xl:h-12" />
                         </div>
@@ -821,8 +902,8 @@ const HighlightText = ({ text }) => {
                                         <span className="text-xs 2xl:text-lg font-bold">UNREAL 5</span>
                                     </div>
                                     <div className="flex flex-col items-center gap-3 group">
-                                        <BrandIcons.Cpp className="w-10 h-10 2xl:w-20 2xl:h-20 group-hover:text-blue-400 transition-colors" />
-                                        <span className="text-xs 2xl:text-lg font-bold">C++</span>
+                                        <Icons.Gamepad2 className="w-10 h-10 2xl:w-20 2xl:h-20 group-hover:text-blue-400 transition-colors" />
+                                        <span className="text-xs 2xl:text-lg font-bold">GODOT</span>
                                     </div>
                                     <div className="flex flex-col items-center gap-3 group">
                                         <BrandIcons.Python className="w-10 h-10 2xl:w-20 2xl:h-20 group-hover:text-yellow-400 transition-colors" />
@@ -892,6 +973,49 @@ const HighlightText = ({ text }) => {
                     {/* Featured Projects Section (Game + Web) */}
                     <Section title={t.project.title} icon={Icons.Gamepad2} id="projects">
                         <div className="space-y-16">
+                            <article id="candy2048" aria-labelledby="candy2048-title" className="overflow-hidden rounded-lg border border-amber-300/30 bg-gray-950 shadow-2xl shadow-amber-950/20">
+                                <div className="grid lg:grid-cols-2">
+                                    <div className="flex flex-col bg-amber-950/10">
+                                        <img src="assets/candy2048/promo.png" width="1920" height="1080" alt={t.candy_project.promo_alt} loading="lazy" className="w-full h-auto" />
+                                        <div className="p-6 md:p-8 2xl:p-12 flex-1 flex flex-col justify-center">
+                                            <span className="mb-4 inline-flex items-center gap-2 self-start rounded-full border border-amber-300/30 px-3 py-1 text-xs font-mono text-amber-200"><span className="w-1.5 h-1.5 rounded-full bg-amber-300"></span>{t.candy_project.status}</span>
+                                            <p className="text-xs 2xl:text-base text-amber-300/80 font-mono tracking-wider mb-3">{t.candy_project.subtitle}</p>
+                                            <h3 id="candy2048-title" className="text-3xl md:text-4xl 2xl:text-5xl font-bold text-white mb-4">{t.candy_project.title}</h3>
+                                            <p className="text-gray-300 text-base 2xl:text-xl leading-relaxed mb-5">{t.candy_project.desc}</p>
+                                            <p className="text-xs 2xl:text-base text-amber-200 font-mono">{t.candy_project.role}</p>
+                                            <p className="text-sm 2xl:text-lg text-gray-400 mt-2">{t.candy_project.date}</p>
+                                        </div>
+                                    </div>
+                                    <div className="p-6 md:p-8 2xl:p-12 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-amber-300/15">
+                                        <div className="space-y-6 2xl:space-y-10">
+                                            {t.candy_project.features.map((feature, i) => (
+                                                <div key={feature.title} className="flex gap-4">
+                                                    <span className="text-amber-300/50 font-mono text-sm pt-1">0{i + 1}</span>
+                                                    <div>
+                                                        <h4 className="text-lg 2xl:text-2xl font-bold text-white mb-2">{feature.title}</h4>
+                                                        <p className="text-sm 2xl:text-lg text-gray-400 leading-relaxed">{feature.text}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="flex flex-wrap gap-2 mt-8">
+                                            {t.candy_project.tech_list.map(tech => <span key={tech} className="rounded border border-amber-300/15 bg-amber-300/5 px-3 py-1 text-xs 2xl:text-base text-amber-100/80">{tech}</span>)}
+                                        </div>
+                                        <a href="https://www.taptap.cn/app/959503" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 self-start mt-8 rounded bg-amber-300 px-6 py-3 text-sm 2xl:text-lg font-bold text-gray-950 hover:bg-amber-200 transition-colors">{t.candy_project.btn_text}<Icons.ExternalLink className="w-4 h-4" /></a>
+                                    </div>
+                                </div>
+                                <div className="border-t border-amber-300/15 p-6 md:p-8 2xl:p-12">
+                                    <p className="text-xs 2xl:text-base text-gray-400 font-mono tracking-wide mb-5">{t.candy_project.gallery}</p>
+                                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                                        {['classic', 'clear', 'rotate', 'fuse', 'daily'].map((shot, i) => (
+                                            <figure key={shot}>
+                                                <a href={`assets/candy2048/${shot}.jpg`} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded border border-amber-300/15 hover:border-amber-300 transition-colors"><img src={`assets/candy2048/${shot}.jpg`} alt={`${t.candy_project.title} — ${t.candy_project.shots[i]}`} width="1080" height="2400" loading="lazy" className="w-full h-auto" /></a>
+                                                <figcaption className="mt-3 text-xs 2xl:text-base text-gray-400"><span className="font-mono text-amber-300/60 mr-2">0{i + 1}</span>{t.candy_project.shots[i]}</figcaption>
+                                            </figure>
+                                        ))}
+                                    </div>
+                                </div>
+                            </article>
                             {/* 1. Game Project (Binary Echoes) */}
                             <div className="relative group">
                                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
@@ -1309,7 +1433,7 @@ const HighlightText = ({ text }) => {
                                             </div>
                                             <div className="z-10 text-center">
                                                 <h3 className="text-2xl 2xl:text-4xl font-bold text-white tracking-widest mb-2">POKER ADVISOR</h3>
-                                                <p className="text-red-400 font-mono text-xs 2xl:text-lg uppercase">GTO Engine v7.0 • Monte Carlo</p>
+                                                <p className="text-red-400 font-mono text-xs 2xl:text-lg uppercase">Monte Carlo · Hand Equity</p>
                                             </div>
                                         </div>
 
@@ -1317,7 +1441,7 @@ const HighlightText = ({ text }) => {
                                         <div className="md:col-span-7 bg-gray-950 p-6 md:p-10 2xl:p-16 flex flex-col justify-center">
                                             <div className="mb-2 flex items-center gap-2">
                                                 <Icons.Zap className="text-red-500" size={20} />
-                                                <span className="text-red-500 font-mono text-sm tracking-wider uppercase">GTO Strategy</span>
+                                                <span className="text-red-500 font-mono text-sm tracking-wider uppercase">{t.poker_project.tag}</span>
                                             </div>
                                             <h3 className="text-2xl 2xl:text-4xl font-bold text-white mb-2">{t.poker_project.title}</h3>
                                             <p className="text-gray-500 font-mono text-sm 2xl:text-lg mb-6 uppercase">{t.poker_project.subtitle}</p>
@@ -1454,12 +1578,8 @@ const HighlightText = ({ text }) => {
                                     </div>
                                 </div>
                                 <h3 className="text-xl 2xl:text-3xl font-bold text-white mt-10 2xl:mt-16 mb-6 2xl:mb-10 border-l-4 border-yellow-500 pl-4 2xl:pl-6">{t.skills.cat_tools}</h3>
-                                <div className="flex gap-6 2xl:gap-12 text-gray-400 flex-wrap">
-                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 2xl:p-5 bg-gray-800 rounded-full group-hover:bg-purple-900/30 transition-colors"><Icons.Github size={20} className="2xl:w-10 2xl:h-10 group-hover:text-purple-400 transition-colors" /></div><span className="text-xs 2xl:text-lg">Git</span></div>
-                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 2xl:p-5 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><Icons.Terminal size={20} className="2xl:w-10 2xl:h-10 group-hover:text-blue-400 transition-colors" /></div><span className="text-xs 2xl:text-lg">Visual Studio</span></div>
-                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 2xl:p-5 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><BrandIcons.VsCode className="w-5 h-5 2xl:w-10 2xl:h-10 group-hover:text-blue-400 transition-colors" /></div><span className="text-xs 2xl:text-lg">VS Code</span></div>
-                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 2xl:p-5 bg-gray-800 rounded-full group-hover:bg-yellow-900/30 transition-colors"><BrandIcons.Linux className="w-5 h-5 2xl:w-10 2xl:h-10 group-hover:text-yellow-400 transition-colors" /></div><span className="text-xs 2xl:text-lg">Linux</span></div>
-                                    <div className="flex flex-col items-center gap-2 group"><div className="p-3 2xl:p-5 bg-gray-800 rounded-full group-hover:bg-blue-900/30 transition-colors"><BrandIcons.Jira className="w-5 h-5 2xl:w-10 2xl:h-10 group-hover:text-blue-500 transition-colors" /></div><span className="text-xs 2xl:text-lg">Jira</span></div>
+                                <div className="flex gap-3 2xl:gap-6 flex-wrap">
+                                    {t.skills.items.tools.map(skill => <span key={skill} className="px-3 2xl:px-5 py-1 2xl:py-3 bg-gray-800 border border-gray-700 rounded text-sm 2xl:text-xl text-yellow-100">{skill}</span>)}
                                 </div>
                             </div>
                         </div>
@@ -1505,7 +1625,7 @@ const HighlightText = ({ text }) => {
                                 <div className="flex items-center gap-2">
                                     <span>{t.contact.footer_rights}</span>
                                 </div>
-                                <div className="font-mono text-xs 2xl:text-base text-cyan-900">ID: 819849368 // LOC: SYD_AU</div>
+                                <div className="font-mono text-xs 2xl:text-base text-cyan-900">W&MGame // GUANGDONG, CN // 2026.10</div>
                             </div>
                         </div>
                     </footer>
